@@ -1,0 +1,5 @@
+INDEX VERSION 1.131
+/Users/bayc/Documents/javaproject/connect/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/1670310939.index
+/webadmin/src
+/Users/bayc/Documents/javaproject/connect/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/3539197301.index
+/webadmin/src

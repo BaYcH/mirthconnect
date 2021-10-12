@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workingSetManager>
+<workingSet editPageId="org.eclipse.jdt.internal.ui.DynamicSourcesWorkingSet" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1573781316397_0" label="Java Main Sources" name="Java Main Sources">
+<item elementID="=client/src" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=client/test" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=command/src" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=command/conf" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=command/test" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=donkey/src\/main\/java" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=donkey/conf" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=donkey/donkeydbconf" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=donkey/src\/test\/java" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=generator/src" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=manager/src" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=server/src" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=server/test" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=server/conf" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=server/dbconf" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=simplesender/src" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=webadmin/src" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.jdt.internal.ui.DynamicSourcesWorkingSet" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1573781316416_1" label="Java Test Sources" name="Java Test Sources"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1573781320572_2" label="Window Working Set" name="Aggregate for window 1573781320571"/>
+</workingSetManager>

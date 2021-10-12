@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/log4j-1.2.16.jar"/>
+	<classpathentry kind="lib" path="lib/wizard.jar"/>
+	<classpathentry kind="lib" path="lib/xpp3-1.1.4c.jar"/>
+	<classpathentry kind="lib" path="lib/commons-codec-1.6.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/xstream-1.4.7.jar"/>
+	<classpathentry kind="lib" path="lib/looks-2.3.1.jar"/>
+	<classpathentry kind="lib" path="lib/xercesImpl-2.9.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-io-2.3.jar"/>
+	<classpathentry kind="lib" path="lib/commons-lang-2.6.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://commons.apache.org/lang/api-2.6/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/commons-lang3-3.4.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://commons.apache.org/lang/api/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/hapi-1.1.jar"/>
+	<classpathentry kind="lib" path="/Users/bayc/Documents/javaproject/connect/server/lib/extensions/dicomviewer/ij.jar"/>
+	<classpathentry kind="lib" path="/Users/bayc/Documents/javaproject/connect/server/lib/extensions/pdfviewer/PDFRenderer.jar"/>
+	<classpathentry kind="lib" path="lib/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="lib/swingx-core-1.6.2.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://www.jarvana.com/jarvana/view/org/swinglabs/swingx-core/1.6.2-2/swingx-core-1.6.2-2-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/bayc/Documents/javaproject/connect/server/lib/extensions/dimse/dcm4che-core-2.0.28.jar"/>
+	<classpathentry kind="lib" path="/Users/bayc/Documents/javaproject/connect/server/lib/extensions/dimse/slf4j-api-1.6.1.jar"/>
+	<classpathentry kind="lib" path="/Users/bayc/Documents/javaproject/connect/server/lib/extensions/dimse/slf4j-log4j12-1.6.1.jar"/>
+	<classpathentry kind="lib" path="/Users/bayc/Documents/javaproject/connect/server/setup/client-lib/userutil-sources.jar"/>
+	<classpathentry kind="lib" path="lib/not-yet-commons-ssl-0.3.11.jar"/>
+	<classpathentry kind="lib" path="lib/mirth-crypto.jar"/>
+	<classpathentry kind="lib" path="lib/commons-compress-1.4.1.jar"/>
+	<classpathentry kind="lib" path="lib/miglayout-swing-4.2.jar"/>
+	<classpathentry kind="lib" path="lib/miglayout-core-4.2.jar"/>
+	<classpathentry kind="lib" path="lib/commons-vfs2-2.0.jar"/>
+	<classpathentry kind="lib" path="lib/commons-beanutils-1.8.2.jar"/>
+	<classpathentry kind="lib" path="lib/velocity-1.7.jar"/>
+	<classpathentry kind="lib" path="lib/velocity-tools-2.0.jar"/>
+	<classpathentry kind="lib" path="lib/commons-configuration-1.7.jar"/>
+	<classpathentry kind="lib" path="lib/javax.mail-1.5.0.jar"/>
+	<classpathentry kind="lib" path="lib/bcprov-jdk15on-151.jar"/>
+	<classpathentry kind="lib" path="lib/bcprov-ext-jdk15on-151.jar"/>
+	<classpathentry kind="lib" path="lib/bcpkix-jdk15on-151.jar"/>
+	<classpathentry kind="lib" path="lib/rsyntaxtextarea-2.5.6.jar"/>
+	<classpathentry kind="lib" path="lib/autocomplete-2.5.4.jar"/>
+	<classpathentry kind="lib" path="lib/language_support.jar"/>
+	<classpathentry kind="lib" path="lib/javaparser-1.0.8.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-annotations-2.5.3.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-core-2.5.3.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-databind-2.5.3.jar"/>
+	<classpathentry kind="lib" path="lib/rhino-1.7.6.jar"/>
+	<classpathentry kind="lib" path="lib/quartz-all-2.1.7.jar"/>
+	<classpathentry kind="lib" path="lib/jai_imageio.jar"/>
+	<classpathentry kind="lib" path="lib/javax.ws.rs-api-2.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/swagger-annotations-1.5.4.jar"/>
+	<classpathentry kind="lib" path="lib/jersey-client-2.22.1.jar"/>
+	<classpathentry kind="lib" path="lib/jersey-proxy-client-2.22.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-collections4-4.0.jar"/>
+	<classpathentry kind="lib" path="lib/reflections-0.9.10.jar"/>
+	<classpathentry kind="lib" path="lib/jersey-common-2.22.1.jar"/>
+	<classpathentry kind="lib" path="lib/httpclient-4.5.1.jar"/>
+	<classpathentry kind="lib" path="lib/httpcore-4.4.3.jar"/>
+	<classpathentry kind="lib" path="lib/httpmime-4.5.1.jar"/>
+	<classpathentry kind="lib" path="lib/hk2-api-2.4.0-b31.jar"/>
+	<classpathentry kind="lib" path="lib/hk2-locator-2.4.0-b31.jar"/>
+	<classpathentry kind="lib" path="lib/hk2-utils-2.4.0-b31.jar"/>
+	<classpathentry kind="lib" path="lib/jersey-guava-2.22.1.jar"/>
+	<classpathentry kind="lib" path="lib/guava-18.0.jar"/>
+	<classpathentry kind="lib" path="lib/javassist-3.19.0-GA.jar"/>
+	<classpathentry kind="lib" path="lib/javax.inject-2.4.0-b31.jar"/>
+	<classpathentry kind="lib" path="lib/javax.annotation-api-1.2.jar"/>
+	<classpathentry kind="lib" path="lib/jersey-media-multipart-2.22.1.jar"/>
+	<classpathentry kind="lib" path="lib/mimepull-1.9.6.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/donkey"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/server"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

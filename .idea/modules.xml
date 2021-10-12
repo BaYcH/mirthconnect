@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/client/Client.iml" filepath="$PROJECT_DIR$/client/Client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/command/Command.iml" filepath="$PROJECT_DIR$/command/Command.iml" />
+      <module fileurl="file://$PROJECT_DIR$/donkey/Donkey.iml" filepath="$PROJECT_DIR$/donkey/Donkey.iml" />
+      <module fileurl="file://$PROJECT_DIR$/generator/Generator.iml" filepath="$PROJECT_DIR$/generator/Generator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/manager/Manager.iml" filepath="$PROJECT_DIR$/manager/Manager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/server/Server.iml" filepath="$PROJECT_DIR$/server/Server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/simplesender/SimpleSender.iml" filepath="$PROJECT_DIR$/simplesender/SimpleSender.iml" />
+      <module fileurl="file://$PROJECT_DIR$/webadmin/WebAdmin.iml" filepath="$PROJECT_DIR$/webadmin/WebAdmin.iml" />
+    </modules>
+  </component>
+</project>

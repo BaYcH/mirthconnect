@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="webadmin">
+    <output-path>$PROJECT_DIR$/out/artifacts/webadmin</output-path>
+    <root id="archive" name="webadmin.war">
+      <element id="dir-copy" path="$PROJECT_DIR$/webadmin/WebContent" />
+    </root>
+  </artifact>
+</component>
