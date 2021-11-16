@@ -9,28 +9,16 @@
 
 package com.mirth.connect.server.controllers;
 
-import java.util.Calendar;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-
 import com.mirth.commons.encryption.Digester;
 import com.mirth.commons.encryption.Encryptor;
 import com.mirth.connect.client.core.ControllerException;
 import com.mirth.connect.donkey.server.StartException;
 import com.mirth.connect.donkey.server.StopException;
-import com.mirth.connect.model.ChannelDependency;
-import com.mirth.connect.model.DatabaseSettings;
-import com.mirth.connect.model.DriverInfo;
-import com.mirth.connect.model.EncryptionSettings;
-import com.mirth.connect.model.PasswordRequirements;
-import com.mirth.connect.model.ServerConfiguration;
-import com.mirth.connect.model.ServerSettings;
-import com.mirth.connect.model.UpdateSettings;
+import com.mirth.connect.model.*;
 import com.mirth.connect.util.ConfigurationProperty;
 import com.mirth.connect.util.ConnectionTestResponse;
+
+import java.util.*;
 
 /**
  * The ConfigurationController provides access to the Mirth configuration.
@@ -50,13 +38,13 @@ public abstract class ConfigurationController extends Controller {
 
     /**
      * Initializes several items relates to security. Specifically:
-     * 
+     *
      * <ol>
      * <li>Instantiates the default encryptor and digester</li>
      * <li>Loads or generates the default keystore and certificate</li>
      * <li>Loads or generates the default truststore</li>
      * </ol>
-     * 
+     *
      */
     public abstract void initializeSecuritySettings();
 
@@ -312,4 +300,6 @@ public abstract class ConfigurationController extends Controller {
     public abstract void setChannelDependencies(Set<ChannelDependency> dependencies);
 
     public abstract ConnectionTestResponse sendTestEmail(Properties properties) throws Exception;
+
+    public abstract Properties getPropertiesByPrefix(String prefix, boolean isRemovePrefix);
 }

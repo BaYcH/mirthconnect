@@ -213,6 +213,8 @@ public class BufferedDao implements DonkeyDao {
             } else {
                 dao.commit(durable);
             }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         } finally {
             if (dao != null) {
                 dao.close();

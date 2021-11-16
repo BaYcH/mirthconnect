@@ -1504,3 +1504,374 @@ ERROR 2021-07-08 17:55:01,635 [Shutdown Hook Thread] Server: 	at com.mirth.conne
 ERROR 2021-07-08 17:55:01,635 [Shutdown Hook Thread] Server: Caused by: java.lang.NullPointerException
 ERROR 2021-07-08 17:55:01,635 [Shutdown Hook Thread] Server: 	at com.mirth.connect.server.util.SqlConfig.init(SqlConfig.java:75)
 ERROR 2021-07-08 17:55:01,635 [Shutdown Hook Thread] Server: 	... 3 more
+INFO  2021-11-16 15:53:41,812 [Main Server Thread] com.mirth.connect.server.Mirth: this is a test
+INFO  2021-11-16 15:54:06,980 [Main Server Thread] com.mirth.connect.server.Mirth: Mirth Connect 3.4.1 (Built on 六月 18, 2021) server successfully started.
+INFO  2021-11-16 15:54:06,981 [Main Server Thread] com.mirth.connect.server.Mirth: This product was developed by Mirth Corporation (http://www.mirthcorp.com) and its contributors (c)2005-2021.
+INFO  2021-11-16 15:54:06,981 [Main Server Thread] com.mirth.connect.server.Mirth: Running Java HotSpot(TM) 64-Bit Server VM 1.8.0_291 on Windows 10 (10.0, amd64), derby, with charset UTF-8.
+INFO  2021-11-16 15:54:06,994 [Main Server Thread] com.mirth.connect.server.Mirth: Web server running at http://172.24.112.1:8080/ and https://172.24.112.1:8443/
+INFO  2021-11-16 16:37:36,658 [Shutdown Hook Thread] com.mirth.connect.server.Mirth: shutting down mirth due to normal request
+INFO  2021-11-16 16:38:04,685 [Main Server Thread] com.mirth.connect.server.Mirth: this is a test
+INFO  2021-11-16 16:39:49,141 [Main Server Thread] com.mirth.connect.server.Mirth: Mirth Connect 3.4.1 (Built on 六月 18, 2021) server successfully started.
+INFO  2021-11-16 16:39:49,143 [Main Server Thread] com.mirth.connect.server.Mirth: This product was developed by Mirth Corporation (http://www.mirthcorp.com) and its contributors (c)2005-2021.
+INFO  2021-11-16 16:39:49,143 [Main Server Thread] com.mirth.connect.server.Mirth: Running Java HotSpot(TM) 64-Bit Server VM 1.8.0_291 on Windows 10 (10.0, amd64), derby, with charset UTF-8.
+INFO  2021-11-16 16:39:49,152 [Main Server Thread] com.mirth.connect.server.Mirth: Web server running at http://172.24.112.1:8080/ and https://172.24.112.1:8443/
+INFO  2021-11-16 16:46:25,309 [Shutdown Hook Thread] com.mirth.connect.server.Mirth: shutting down mirth due to normal request
+INFO  2021-11-16 16:47:14,615 [Main Server Thread] com.mirth.connect.server.Mirth: Mirth Connect 3.4.1 (Built on 六月 18, 2021) server successfully started.
+INFO  2021-11-16 16:47:14,617 [Main Server Thread] com.mirth.connect.server.Mirth: This product was developed by Mirth Corporation (http://www.mirthcorp.com) and its contributors (c)2005-2021.
+INFO  2021-11-16 16:47:14,617 [Main Server Thread] com.mirth.connect.server.Mirth: Running Java HotSpot(TM) 64-Bit Server VM 1.8.0_291 on Windows 10 (10.0, amd64), derby, with charset UTF-8.
+INFO  2021-11-16 16:47:14,626 [Main Server Thread] com.mirth.connect.server.Mirth: Web server running at http://172.24.112.1:8080/ and https://172.24.112.1:8443/
+INFO  2021-11-16 16:48:36,289 [Shutdown Hook Thread] com.mirth.connect.server.Mirth: shutting down mirth due to normal request
+INFO  2021-11-16 17:07:08,520 [Main Server Thread] com.mirth.connect.server.Mirth: Mirth Connect 3.4.1 (Built on 六月 18, 2021) server successfully started.
+INFO  2021-11-16 17:07:08,522 [Main Server Thread] com.mirth.connect.server.Mirth: This product was developed by Mirth Corporation (http://www.mirthcorp.com) and its contributors (c)2005-2021.
+INFO  2021-11-16 17:07:08,522 [Main Server Thread] com.mirth.connect.server.Mirth: Running Java HotSpot(TM) 64-Bit Server VM 1.8.0_291 on Windows 10 (10.0, amd64), derby, with charset UTF-8.
+INFO  2021-11-16 17:07:08,532 [Main Server Thread] com.mirth.connect.server.Mirth: Web server running at http://172.24.112.1:8080/ and https://172.24.112.1:8443/
+ERROR 2021-11-16 17:08:56,693 [pool-10-thread-2] Server: java.lang.ClassCastException: java.lang.String cannot be cast to com.alibaba.fastjson.JSONObject
+ERROR 2021-11-16 17:08:56,695 [pool-10-thread-2] Server: 	at com.mirth.connect.donkey.server.data.mq.KafkaDao.redisPush(KafkaDao.java:461)
+ERROR 2021-11-16 17:08:56,695 [pool-10-thread-2] Server: 	at com.mirth.connect.donkey.server.data.mq.KafkaDao.executeBatchInsertMessageContent(KafkaDao.java:93)
+ERROR 2021-11-16 17:09:00,390 [pool-10-thread-2] Server: 	at com.mirth.connect.donkey.server.data.buffered.BufferedDao.executeTasks(BufferedDao.java:127)
+ERROR 2021-11-16 17:09:03,709 [pool-10-thread-2] Server: 	at com.mirth.connect.donkey.server.data.buffered.BufferedDao.lambda$commit$0(BufferedDao.java:88)
+ERROR 2021-11-16 17:09:03,709 [pool-10-thread-2] Server: 	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+ERROR 2021-11-16 17:09:03,709 [pool-10-thread-2] Server: 	at java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:266)
+ERROR 2021-11-16 17:09:03,709 [pool-10-thread-2] Server: 	at java.util.concurrent.FutureTask.run(FutureTask.java)
+ERROR 2021-11-16 17:09:03,710 [pool-10-thread-2] Server: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+ERROR 2021-11-16 17:09:03,710 [pool-10-thread-2] Server: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+ERROR 2021-11-16 17:09:03,710 [pool-10-thread-2] Server: 	at java.lang.Thread.run(Thread.java:748)
+ERROR 2021-11-16 17:13:23,719 [pool-10-thread-2] Server: java.lang.ClassCastException: java.lang.String cannot be cast to com.alibaba.fastjson.JSONObject
+ERROR 2021-11-16 17:13:23,720 [pool-10-thread-2] Server: 	at com.mirth.connect.donkey.server.data.mq.KafkaDao.redisPush(KafkaDao.java:461)
+ERROR 2021-11-16 17:13:23,720 [pool-10-thread-2] Server: 	at com.mirth.connect.donkey.server.data.mq.KafkaDao.executeBatchInsertMessageContent(KafkaDao.java:93)
+ERROR 2021-11-16 17:13:23,720 [pool-10-thread-2] Server: 	at com.mirth.connect.donkey.server.data.buffered.BufferedDao.executeTasks(BufferedDao.java:127)
+ERROR 2021-11-16 17:13:23,721 [pool-10-thread-2] Server: 	at com.mirth.connect.donkey.server.data.buffered.BufferedDao.lambda$commit$0(BufferedDao.java:88)
+ERROR 2021-11-16 17:13:23,721 [pool-10-thread-2] Server: 	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+ERROR 2021-11-16 17:13:23,721 [pool-10-thread-2] Server: 	at java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:266)
+ERROR 2021-11-16 17:13:23,721 [pool-10-thread-2] Server: 	at java.util.concurrent.FutureTask.run(FutureTask.java)
+ERROR 2021-11-16 17:13:23,721 [pool-10-thread-2] Server: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+ERROR 2021-11-16 17:13:23,722 [pool-10-thread-2] Server: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+ERROR 2021-11-16 17:13:23,722 [pool-10-thread-2] Server: 	at java.lang.Thread.run(Thread.java:748)
+INFO  2021-11-16 17:13:23,748 [Shutdown Hook Thread] com.mirth.connect.server.Mirth: shutting down mirth due to normal request
+INFO  2021-11-16 17:13:56,810 [Main Server Thread] com.mirth.connect.server.Mirth: Mirth Connect 3.4.1 (Built on 六月 18, 2021) server successfully started.
+INFO  2021-11-16 17:13:56,811 [Main Server Thread] com.mirth.connect.server.Mirth: This product was developed by Mirth Corporation (http://www.mirthcorp.com) and its contributors (c)2005-2021.
+INFO  2021-11-16 17:13:56,812 [Main Server Thread] com.mirth.connect.server.Mirth: Running Java HotSpot(TM) 64-Bit Server VM 1.8.0_291 on Windows 10 (10.0, amd64), derby, with charset UTF-8.
+INFO  2021-11-16 17:13:56,821 [Main Server Thread] com.mirth.connect.server.Mirth: Web server running at http://172.24.112.1:8080/ and https://172.24.112.1:8443/
+ERROR 2021-11-16 17:14:57,772 [pool-10-thread-2] Server: java.lang.ClassCastException: java.lang.String cannot be cast to com.alibaba.fastjson.JSONObject
+ERROR 2021-11-16 17:14:57,773 [pool-10-thread-2] Server: 	at com.mirth.connect.donkey.server.data.mq.KafkaDao.redisPush(KafkaDao.java:461)
+ERROR 2021-11-16 17:14:57,773 [pool-10-thread-2] Server: 	at com.mirth.connect.donkey.server.data.mq.KafkaDao.executeBatchInsertMessageContent(KafkaDao.java:93)
+ERROR 2021-11-16 17:14:57,773 [pool-10-thread-2] Server: 	at com.mirth.connect.donkey.server.data.buffered.BufferedDao.executeTasks(BufferedDao.java:127)
+ERROR 2021-11-16 17:14:57,773 [pool-10-thread-2] Server: 	at com.mirth.connect.donkey.server.data.buffered.BufferedDao.lambda$commit$0(BufferedDao.java:88)
+ERROR 2021-11-16 17:14:57,774 [pool-10-thread-2] Server: 	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+ERROR 2021-11-16 17:14:57,774 [pool-10-thread-2] Server: 	at java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:266)
+ERROR 2021-11-16 17:14:57,774 [pool-10-thread-2] Server: 	at java.util.concurrent.FutureTask.run(FutureTask.java)
+ERROR 2021-11-16 17:14:57,774 [pool-10-thread-2] Server: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+ERROR 2021-11-16 17:14:57,774 [pool-10-thread-2] Server: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+ERROR 2021-11-16 17:14:57,774 [pool-10-thread-2] Server: 	at java.lang.Thread.run(Thread.java:748)
+INFO  2021-11-16 17:59:31,426 [Shutdown Hook Thread] com.mirth.connect.server.Mirth: shutting down mirth due to normal request
+ERROR 2021-11-16 19:40:15,303 [Thread-23] Server: Exception in thread "Thread-23" java.lang.RuntimeException: 获取KafkaConsumer连接异常
+ERROR 2021-11-16 19:40:15,305 [Thread-23] Server: 	at com.mirth.connect.donkey.server.data.mq.KafkaPool.getConsumer(KafkaPool.java:78)
+ERROR 2021-11-16 19:40:15,305 [Thread-23] Server: 	at com.mirth.connect.donkey.server.data.mq.MessageConsumer.run(MessageConsumer.java:47)
+ERROR 2021-11-16 19:40:15,305 [Thread-23] Server: 	at java.lang.Thread.run(Thread.java:748)
+ERROR 2021-11-16 19:40:15,306 [Thread-23] Server: Caused by: org.apache.kafka.common.config.ConfigException: Missing required configuration "key.deserializer" which has no default value.
+ERROR 2021-11-16 19:40:15,306 [Thread-23] Server: 	at org.apache.kafka.common.config.ConfigDef.parseValue(ConfigDef.java:478)
+ERROR 2021-11-16 19:40:15,306 [Thread-23] Server: 	at org.apache.kafka.common.config.ConfigDef.parse(ConfigDef.java:468)
+ERROR 2021-11-16 19:40:15,306 [Thread-23] Server: 	at org.apache.kafka.common.config.AbstractConfig.<init>(AbstractConfig.java:108)
+ERROR 2021-11-16 19:40:15,306 [Thread-23] Server: 	at org.apache.kafka.common.config.AbstractConfig.<init>(AbstractConfig.java:129)
+ERROR 2021-11-16 19:40:15,306 [Thread-23] Server: 	at org.apache.kafka.clients.consumer.ConsumerConfig.<init>(ConsumerConfig.java:603)
+ERROR 2021-11-16 19:40:15,306 [Thread-23] Server: 	at org.apache.kafka.clients.consumer.KafkaConsumer.<init>(KafkaConsumer.java:667)
+ERROR 2021-11-16 19:40:15,307 [Thread-23] Server: 	at org.apache.kafka.clients.consumer.KafkaConsumer.<init>(KafkaConsumer.java:647)
+ERROR 2021-11-16 19:40:15,307 [Thread-23] Server: 	at com.mirth.connect.donkey.server.data.mq.KafkaConsumerPooledObjectFactory.makeObject(KafkaConsumerPooledObjectFactory.java:28)
+ERROR 2021-11-16 19:40:15,307 [Thread-23] Server: 	at org.apache.commons.pool2.impl.GenericObjectPool.create(GenericObjectPool.java:861)
+ERROR 2021-11-16 19:40:15,307 [Thread-23] Server: 	at org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:435)
+ERROR 2021-11-16 19:40:15,307 [Thread-23] Server: 	at org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:363)
+ERROR 2021-11-16 19:40:15,308 [Thread-23] Server: 	at com.mirth.connect.donkey.server.data.mq.KafkaPool.getConsumer(KafkaPool.java:75)
+ERROR 2021-11-16 19:40:15,308 [Thread-23] Server: 	... 2 more
+INFO  2021-11-16 19:40:35,220 [Shutdown Hook Thread] com.mirth.connect.server.Mirth: shutting down mirth due to normal request
+INFO  2021-11-16 19:40:35,741 [Main Server Thread] com.mirth.connect.server.Mirth: Mirth Connect 3.4.1 (Built on 六月 18, 2021) server successfully started.
+INFO  2021-11-16 19:40:35,741 [Main Server Thread] com.mirth.connect.server.Mirth: This product was developed by Mirth Corporation (http://www.mirthcorp.com) and its contributors (c)2005-2021.
+INFO  2021-11-16 19:40:35,741 [Main Server Thread] com.mirth.connect.server.Mirth: Running Java HotSpot(TM) 64-Bit Server VM 1.8.0_291 on Windows 10 (10.0, amd64), derby, with charset UTF-8.
+INFO  2021-11-16 19:40:35,751 [Main Server Thread] com.mirth.connect.server.Mirth: Web server running at http://172.24.112.1:8080/ and https://172.24.112.1:8443/
+ERROR 2021-11-16 19:42:45,014 [KafkaConsumer Thread] Server: Exception in thread "KafkaConsumer Thread" java.lang.RuntimeException: 获取KafkaConsumer连接异常
+ERROR 2021-11-16 19:42:45,016 [KafkaConsumer Thread] Server: 	at com.mirth.connect.donkey.server.data.mq.KafkaPool.getConsumer(KafkaPool.java:78)
+ERROR 2021-11-16 19:42:45,016 [KafkaConsumer Thread] Server: 	at com.mirth.connect.donkey.server.data.mq.MessageConsumer.run(MessageConsumer.java:47)
+ERROR 2021-11-16 19:42:45,016 [KafkaConsumer Thread] Server: 	at java.lang.Thread.run(Thread.java:748)
+ERROR 2021-11-16 19:42:45,016 [KafkaConsumer Thread] Server: Caused by: org.apache.kafka.common.config.ConfigException: Missing required configuration "key.deserializer" which has no default value.
+ERROR 2021-11-16 19:42:45,016 [KafkaConsumer Thread] Server: 	at org.apache.kafka.common.config.ConfigDef.parseValue(ConfigDef.java:478)
+ERROR 2021-11-16 19:42:45,016 [KafkaConsumer Thread] Server: 	at org.apache.kafka.common.config.ConfigDef.parse(ConfigDef.java:468)
+ERROR 2021-11-16 19:42:45,016 [KafkaConsumer Thread] Server: 	at org.apache.kafka.common.config.AbstractConfig.<init>(AbstractConfig.java:108)
+ERROR 2021-11-16 19:42:45,016 [KafkaConsumer Thread] Server: 	at org.apache.kafka.common.config.AbstractConfig.<init>(AbstractConfig.java:129)
+ERROR 2021-11-16 19:42:45,017 [KafkaConsumer Thread] Server: 	at org.apache.kafka.clients.consumer.ConsumerConfig.<init>(ConsumerConfig.java:603)
+ERROR 2021-11-16 19:42:45,017 [KafkaConsumer Thread] Server: 	at org.apache.kafka.clients.consumer.KafkaConsumer.<init>(KafkaConsumer.java:667)
+ERROR 2021-11-16 19:42:45,017 [KafkaConsumer Thread] Server: 	at org.apache.kafka.clients.consumer.KafkaConsumer.<init>(KafkaConsumer.java:647)
+ERROR 2021-11-16 19:42:45,017 [KafkaConsumer Thread] Server: 	at com.mirth.connect.donkey.server.data.mq.KafkaConsumerPooledObjectFactory.makeObject(KafkaConsumerPooledObjectFactory.java:28)
+ERROR 2021-11-16 19:42:45,017 [KafkaConsumer Thread] Server: 	at org.apache.commons.pool2.impl.GenericObjectPool.create(GenericObjectPool.java:861)
+ERROR 2021-11-16 19:42:45,017 [KafkaConsumer Thread] Server: 	at org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:435)
+ERROR 2021-11-16 19:42:45,017 [KafkaConsumer Thread] Server: 	at org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:363)
+ERROR 2021-11-16 19:42:45,019 [KafkaConsumer Thread] Server: 	at com.mirth.connect.donkey.server.data.mq.KafkaPool.getConsumer(KafkaPool.java:75)
+ERROR 2021-11-16 19:42:45,019 [KafkaConsumer Thread] Server: 	... 2 more
+INFO  2021-11-16 19:42:45,047 [Shutdown Hook Thread] com.mirth.connect.server.Mirth: shutting down mirth due to normal request
+ERROR 2021-11-16 19:44:54,773 [KafkaConsumer Thread] Server: Exception in thread "KafkaConsumer Thread" java.lang.RuntimeException: 获取KafkaConsumer连接异常
+ERROR 2021-11-16 19:44:54,775 [KafkaConsumer Thread] Server: 	at com.mirth.connect.donkey.server.data.mq.KafkaPool.getConsumer(KafkaPool.java:78)
+ERROR 2021-11-16 19:44:54,775 [KafkaConsumer Thread] Server: 	at com.mirth.connect.donkey.server.data.mq.MessageConsumer.run(MessageConsumer.java:47)
+ERROR 2021-11-16 19:44:54,775 [KafkaConsumer Thread] Server: 	at java.lang.Thread.run(Thread.java:748)
+ERROR 2021-11-16 19:44:54,775 [KafkaConsumer Thread] Server: Caused by: org.apache.kafka.common.config.ConfigException: Missing required configuration "key.deserializer" which has no default value.
+ERROR 2021-11-16 19:44:54,775 [KafkaConsumer Thread] Server: 	at org.apache.kafka.common.config.ConfigDef.parseValue(ConfigDef.java:478)
+ERROR 2021-11-16 19:44:54,776 [KafkaConsumer Thread] Server: 	at org.apache.kafka.common.config.ConfigDef.parse(ConfigDef.java:468)
+ERROR 2021-11-16 19:44:54,776 [KafkaConsumer Thread] Server: 	at org.apache.kafka.common.config.AbstractConfig.<init>(AbstractConfig.java:108)
+ERROR 2021-11-16 19:44:54,776 [KafkaConsumer Thread] Server: 	at org.apache.kafka.common.config.AbstractConfig.<init>(AbstractConfig.java:129)
+ERROR 2021-11-16 19:44:54,776 [KafkaConsumer Thread] Server: 	at org.apache.kafka.clients.consumer.ConsumerConfig.<init>(ConsumerConfig.java:603)
+ERROR 2021-11-16 19:44:54,776 [KafkaConsumer Thread] Server: 	at org.apache.kafka.clients.consumer.KafkaConsumer.<init>(KafkaConsumer.java:667)
+ERROR 2021-11-16 19:44:54,776 [KafkaConsumer Thread] Server: 	at org.apache.kafka.clients.consumer.KafkaConsumer.<init>(KafkaConsumer.java:647)
+ERROR 2021-11-16 19:44:54,776 [KafkaConsumer Thread] Server: 	at com.mirth.connect.donkey.server.data.mq.KafkaConsumerPooledObjectFactory.makeObject(KafkaConsumerPooledObjectFactory.java:28)
+ERROR 2021-11-16 19:44:54,777 [KafkaConsumer Thread] Server: 	at org.apache.commons.pool2.impl.GenericObjectPool.create(GenericObjectPool.java:861)
+ERROR 2021-11-16 19:44:54,777 [KafkaConsumer Thread] Server: 	at org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:435)
+ERROR 2021-11-16 19:44:54,777 [KafkaConsumer Thread] Server: 	at org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:363)
+ERROR 2021-11-16 19:44:54,778 [KafkaConsumer Thread] Server: 	at com.mirth.connect.donkey.server.data.mq.KafkaPool.getConsumer(KafkaPool.java:75)
+ERROR 2021-11-16 19:44:54,779 [KafkaConsumer Thread] Server: 	... 2 more
+INFO  2021-11-16 19:45:17,578 [Shutdown Hook Thread] com.mirth.connect.server.Mirth: shutting down mirth due to normal request
+INFO  2021-11-16 19:45:17,742 [Main Server Thread] com.mirth.connect.server.Mirth: Mirth Connect 3.4.1 (Built on 六月 18, 2021) server successfully started.
+INFO  2021-11-16 19:45:17,742 [Main Server Thread] com.mirth.connect.server.Mirth: This product was developed by Mirth Corporation (http://www.mirthcorp.com) and its contributors (c)2005-2021.
+INFO  2021-11-16 19:45:17,742 [Main Server Thread] com.mirth.connect.server.Mirth: Running Java HotSpot(TM) 64-Bit Server VM 1.8.0_291 on Windows 10 (10.0, amd64), derby, with charset UTF-8.
+INFO  2021-11-16 19:45:17,750 [Main Server Thread] com.mirth.connect.server.Mirth: Web server running at http://172.24.112.1:8080/ and https://172.24.112.1:8443/
+INFO  2021-11-16 19:48:44,943 [Shutdown Hook Thread] com.mirth.connect.server.Mirth: shutting down mirth due to normal request
+ERROR 2021-11-16 19:48:45,015 [KafkaConsumer Thread] Server: Exception in thread "KafkaConsumer Thread" java.lang.RuntimeException: 获取KafkaConsumer连接异常
+ERROR 2021-11-16 19:48:45,016 [KafkaConsumer Thread] Server: 	at com.mirth.connect.donkey.server.data.mq.KafkaPool.getConsumer(KafkaPool.java:78)
+ERROR 2021-11-16 19:48:45,016 [KafkaConsumer Thread] Server: 	at com.mirth.connect.donkey.server.data.mq.MessageConsumer.run(MessageConsumer.java:47)
+ERROR 2021-11-16 19:48:45,016 [KafkaConsumer Thread] Server: 	at java.lang.Thread.run(Thread.java:748)
+ERROR 2021-11-16 19:48:45,016 [KafkaConsumer Thread] Server: Caused by: org.apache.kafka.common.config.ConfigException: Missing required configuration "key.deserializer" which has no default value.
+ERROR 2021-11-16 19:48:45,016 [KafkaConsumer Thread] Server: 	at org.apache.kafka.common.config.ConfigDef.parseValue(ConfigDef.java:478)
+ERROR 2021-11-16 19:48:45,016 [KafkaConsumer Thread] Server: 	at org.apache.kafka.common.config.ConfigDef.parse(ConfigDef.java:468)
+ERROR 2021-11-16 19:48:45,016 [KafkaConsumer Thread] Server: 	at org.apache.kafka.common.config.AbstractConfig.<init>(AbstractConfig.java:108)
+ERROR 2021-11-16 19:48:45,017 [KafkaConsumer Thread] Server: 	at org.apache.kafka.common.config.AbstractConfig.<init>(AbstractConfig.java:129)
+ERROR 2021-11-16 19:48:45,017 [KafkaConsumer Thread] Server: 	at org.apache.kafka.clients.consumer.ConsumerConfig.<init>(ConsumerConfig.java:603)
+ERROR 2021-11-16 19:48:45,017 [KafkaConsumer Thread] Server: 	at org.apache.kafka.clients.consumer.KafkaConsumer.<init>(KafkaConsumer.java:667)
+ERROR 2021-11-16 19:48:45,017 [KafkaConsumer Thread] Server: 	at org.apache.kafka.clients.consumer.KafkaConsumer.<init>(KafkaConsumer.java:647)
+ERROR 2021-11-16 19:48:45,017 [KafkaConsumer Thread] Server: 	at com.mirth.connect.donkey.server.data.mq.KafkaConsumerPooledObjectFactory.makeObject(KafkaConsumerPooledObjectFactory.java:28)
+ERROR 2021-11-16 19:48:45,017 [KafkaConsumer Thread] Server: 	at org.apache.commons.pool2.impl.GenericObjectPool.create(GenericObjectPool.java:861)
+ERROR 2021-11-16 19:48:45,017 [KafkaConsumer Thread] Server: 	at org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:435)
+ERROR 2021-11-16 19:48:45,019 [KafkaConsumer Thread] Server: 	at org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:363)
+ERROR 2021-11-16 19:48:45,020 [KafkaConsumer Thread] Server: 	at com.mirth.connect.donkey.server.data.mq.KafkaPool.getConsumer(KafkaPool.java:75)
+ERROR 2021-11-16 19:48:45,020 [KafkaConsumer Thread] Server: 	... 2 more
+ERROR 2021-11-16 19:55:37,073 [KafkaConsumer Thread] Server: Exception in thread "KafkaConsumer Thread" java.lang.IllegalStateException: Consumer is not subscribed to any topics or assigned any partitions
+ERROR 2021-11-16 19:55:37,075 [KafkaConsumer Thread] Server: 	at org.apache.kafka.clients.consumer.KafkaConsumer.poll(KafkaConsumer.java:1222)
+ERROR 2021-11-16 19:55:37,075 [KafkaConsumer Thread] Server: 	at org.apache.kafka.clients.consumer.KafkaConsumer.poll(KafkaConsumer.java:1210)
+ERROR 2021-11-16 19:55:37,075 [KafkaConsumer Thread] Server: 	at com.mirth.connect.donkey.server.data.mq.MessageConsumer.run(MessageConsumer.java:52)
+ERROR 2021-11-16 19:55:37,075 [KafkaConsumer Thread] Server: 	at java.lang.Thread.run(Thread.java:748)
+INFO  2021-11-16 19:55:49,254 [Main Server Thread] com.mirth.connect.server.Mirth: Mirth Connect 3.4.1 (Built on 六月 18, 2021) server successfully started.
+INFO  2021-11-16 19:55:49,254 [Main Server Thread] com.mirth.connect.server.Mirth: This product was developed by Mirth Corporation (http://www.mirthcorp.com) and its contributors (c)2005-2021.
+INFO  2021-11-16 19:55:49,254 [Main Server Thread] com.mirth.connect.server.Mirth: Running Java HotSpot(TM) 64-Bit Server VM 1.8.0_291 on Windows 10 (10.0, amd64), derby, with charset UTF-8.
+INFO  2021-11-16 19:55:49,264 [Main Server Thread] com.mirth.connect.server.Mirth: Web server running at http://172.24.112.1:8080/ and https://172.24.112.1:8443/
+INFO  2021-11-16 19:57:17,599 [Shutdown Hook Thread] com.mirth.connect.server.Mirth: shutting down mirth due to normal request
+INFO  2021-11-16 19:57:50,782 [Main Server Thread] com.mirth.connect.server.Mirth: Mirth Connect 3.4.1 (Built on 六月 18, 2021) server successfully started.
+INFO  2021-11-16 19:57:50,783 [Main Server Thread] com.mirth.connect.server.Mirth: This product was developed by Mirth Corporation (http://www.mirthcorp.com) and its contributors (c)2005-2021.
+INFO  2021-11-16 19:57:50,784 [Main Server Thread] com.mirth.connect.server.Mirth: Running Java HotSpot(TM) 64-Bit Server VM 1.8.0_291 on Windows 10 (10.0, amd64), derby, with charset UTF-8.
+INFO  2021-11-16 19:57:50,792 [Main Server Thread] com.mirth.connect.server.Mirth: Web server running at http://172.24.112.1:8080/ and https://172.24.112.1:8443/
+INFO  2021-11-16 20:07:08,027 [Shutdown Hook Thread] com.mirth.connect.server.Mirth: shutting down mirth due to normal request
+INFO  2021-11-16 20:07:39,566 [Main Server Thread] com.mirth.connect.server.Mirth: Mirth Connect 3.4.1 (Built on 六月 18, 2021) server successfully started.
+INFO  2021-11-16 20:07:39,568 [Main Server Thread] com.mirth.connect.server.Mirth: This product was developed by Mirth Corporation (http://www.mirthcorp.com) and its contributors (c)2005-2021.
+INFO  2021-11-16 20:07:39,568 [Main Server Thread] com.mirth.connect.server.Mirth: Running Java HotSpot(TM) 64-Bit Server VM 1.8.0_291 on Windows 10 (10.0, amd64), derby, with charset UTF-8.
+INFO  2021-11-16 20:07:39,579 [Main Server Thread] com.mirth.connect.server.Mirth: Web server running at http://172.24.112.1:8080/ and https://172.24.112.1:8443/
+INFO  2021-11-16 20:08:30,737 [Shutdown Hook Thread] com.mirth.connect.server.Mirth: shutting down mirth due to normal request
+INFO  2021-11-16 20:08:44,795 [Main Server Thread] com.mirth.connect.server.Mirth: Mirth Connect 3.4.1 (Built on 六月 18, 2021) server successfully started.
+INFO  2021-11-16 20:08:44,797 [Main Server Thread] com.mirth.connect.server.Mirth: This product was developed by Mirth Corporation (http://www.mirthcorp.com) and its contributors (c)2005-2021.
+INFO  2021-11-16 20:08:44,797 [Main Server Thread] com.mirth.connect.server.Mirth: Running Java HotSpot(TM) 64-Bit Server VM 1.8.0_291 on Windows 10 (10.0, amd64), derby, with charset UTF-8.
+INFO  2021-11-16 20:08:44,806 [Main Server Thread] com.mirth.connect.server.Mirth: Web server running at http://172.24.112.1:8080/ and https://172.24.112.1:8443/
+ERROR 2021-11-16 20:10:01,665 [pool-10-thread-1] Server: org.apache.kafka.common.errors.SerializationException: Can't convert value of class com.mirth.connect.donkey.model.mq.MessageIdRequest to class org.apache.kafka.common.serialization.StringSerializer specified in value.serializer
+ERROR 2021-11-16 20:10:01,665 [pool-10-thread-1] Server: Caused by: java.lang.ClassCastException: com.mirth.connect.donkey.model.mq.MessageIdRequest cannot be cast to java.lang.String
+ERROR 2021-11-16 20:10:01,665 [pool-10-thread-1] Server: 	at org.apache.kafka.common.serialization.StringSerializer.serialize(StringSerializer.java:28)
+ERROR 2021-11-16 20:10:01,665 [pool-10-thread-1] Server: 	at org.apache.kafka.common.serialization.Serializer.serialize(Serializer.java:62)
+ERROR 2021-11-16 20:10:01,665 [pool-10-thread-1] Server: 	at org.apache.kafka.clients.producer.KafkaProducer.doSend(KafkaProducer.java:910)
+ERROR 2021-11-16 20:10:01,666 [pool-10-thread-1] Server: 	at org.apache.kafka.clients.producer.KafkaProducer.send(KafkaProducer.java:870)
+ERROR 2021-11-16 20:10:01,666 [pool-10-thread-1] Server: 	at org.apache.kafka.clients.producer.KafkaProducer.send(KafkaProducer.java:758)
+ERROR 2021-11-16 20:10:01,666 [pool-10-thread-1] Server: 	at com.mirth.connect.donkey.server.data.mq.KafkaDao.insertMessage(KafkaDao.java:67)
+ERROR 2021-11-16 20:10:01,666 [pool-10-thread-1] Server: 	at com.mirth.connect.donkey.server.data.buffered.BufferedDao.executeTasks(BufferedDao.java:115)
+ERROR 2021-11-16 20:10:01,666 [pool-10-thread-1] Server: 	at com.mirth.connect.donkey.server.data.buffered.BufferedDao.lambda$commit$0(BufferedDao.java:88)
+ERROR 2021-11-16 20:10:01,666 [pool-10-thread-1] Server: 	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+ERROR 2021-11-16 20:10:01,666 [pool-10-thread-1] Server: 	at java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:266)
+ERROR 2021-11-16 20:10:01,667 [pool-10-thread-1] Server: 	at java.util.concurrent.FutureTask.run(FutureTask.java)
+ERROR 2021-11-16 20:10:01,667 [pool-10-thread-1] Server: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+ERROR 2021-11-16 20:10:01,668 [pool-10-thread-1] Server: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+ERROR 2021-11-16 20:10:01,668 [pool-10-thread-1] Server: 	at java.lang.Thread.run(Thread.java:748)
+INFO  2021-11-16 20:10:01,704 [Shutdown Hook Thread] com.mirth.connect.server.Mirth: shutting down mirth due to normal request
+INFO  2021-11-16 20:12:41,172 [Main Server Thread] com.mirth.connect.server.Mirth: Mirth Connect 3.4.1 (Built on 六月 18, 2021) server successfully started.
+INFO  2021-11-16 20:12:41,174 [Main Server Thread] com.mirth.connect.server.Mirth: This product was developed by Mirth Corporation (http://www.mirthcorp.com) and its contributors (c)2005-2021.
+INFO  2021-11-16 20:12:41,174 [Main Server Thread] com.mirth.connect.server.Mirth: Running Java HotSpot(TM) 64-Bit Server VM 1.8.0_291 on Windows 10 (10.0, amd64), derby, with charset UTF-8.
+INFO  2021-11-16 20:12:41,189 [Main Server Thread] com.mirth.connect.server.Mirth: Web server running at http://172.24.112.1:8080/ and https://172.24.112.1:8443/
+ERROR 2021-11-16 20:13:26,830 [KafkaConsumer Thread] Server: com.alibaba.fastjson.JSONException: syntax error, expect {, actual error, pos 0, fastjson-version 1.2.76
+ERROR 2021-11-16 20:13:26,831 [KafkaConsumer Thread] Server: 	at com.alibaba.fastjson.parser.deserializer.JavaBeanDeserializer.deserialze(JavaBeanDeserializer.java:510)
+ERROR 2021-11-16 20:13:26,831 [KafkaConsumer Thread] Server: 	at com.alibaba.fastjson.parser.deserializer.JavaBeanDeserializer.parseRest(JavaBeanDeserializer.java:1628)
+ERROR 2021-11-16 20:13:26,831 [KafkaConsumer Thread] Server: 	at com.alibaba.fastjson.parser.deserializer.FastjsonASMDeserializer_2_MQMessage.deserialze(Unknown Source)
+ERROR 2021-11-16 20:13:26,831 [KafkaConsumer Thread] Server: 	at com.alibaba.fastjson.parser.deserializer.JavaBeanDeserializer.deserialze(JavaBeanDeserializer.java:291)
+ERROR 2021-11-16 20:13:26,831 [KafkaConsumer Thread] Server: 	at com.alibaba.fastjson.parser.DefaultJSONParser.parseObject(DefaultJSONParser.java:708)
+ERROR 2021-11-16 20:13:26,831 [KafkaConsumer Thread] Server: 	at com.alibaba.fastjson.JSON.parseObject(JSON.java:394)
+ERROR 2021-11-16 20:13:26,831 [KafkaConsumer Thread] Server: 	at com.alibaba.fastjson.JSON.parseObject(JSON.java:298)
+ERROR 2021-11-16 20:13:26,831 [KafkaConsumer Thread] Server: 	at com.alibaba.fastjson.JSON.parseObject(JSON.java:588)
+ERROR 2021-11-16 20:13:26,831 [KafkaConsumer Thread] Server: 	at com.mirth.connect.donkey.server.data.mq.MessageConsumer.run(MessageConsumer.java:67)
+ERROR 2021-11-16 20:13:26,831 [KafkaConsumer Thread] Server: 	at java.lang.Thread.run(Thread.java:748)
+INFO  2021-11-16 20:14:26,367 [Shutdown Hook Thread] com.mirth.connect.server.Mirth: shutting down mirth due to normal request
+INFO  2021-11-16 20:15:05,278 [Main Server Thread] com.mirth.connect.server.Mirth: Mirth Connect 3.4.1 (Built on 六月 18, 2021) server successfully started.
+INFO  2021-11-16 20:15:05,280 [Main Server Thread] com.mirth.connect.server.Mirth: This product was developed by Mirth Corporation (http://www.mirthcorp.com) and its contributors (c)2005-2021.
+INFO  2021-11-16 20:15:05,280 [Main Server Thread] com.mirth.connect.server.Mirth: Running Java HotSpot(TM) 64-Bit Server VM 1.8.0_291 on Windows 10 (10.0, amd64), derby, with charset UTF-8.
+INFO  2021-11-16 20:15:05,291 [Main Server Thread] com.mirth.connect.server.Mirth: Web server running at http://172.24.112.1:8080/ and https://172.24.112.1:8443/
+ERROR 2021-11-16 20:15:26,172 [KafkaConsumer Thread] Server: com.alibaba.fastjson.JSONException: syntax error, expect {, actual error, pos 0, fastjson-version 1.2.76
+ERROR 2021-11-16 20:15:26,172 [KafkaConsumer Thread] Server: 	at com.alibaba.fastjson.parser.deserializer.JavaBeanDeserializer.deserialze(JavaBeanDeserializer.java:510)
+ERROR 2021-11-16 20:15:26,172 [KafkaConsumer Thread] Server: 	at com.alibaba.fastjson.parser.deserializer.JavaBeanDeserializer.parseRest(JavaBeanDeserializer.java:1628)
+ERROR 2021-11-16 20:15:26,172 [KafkaConsumer Thread] Server: 	at com.alibaba.fastjson.parser.deserializer.FastjsonASMDeserializer_2_MQMessage.deserialze(Unknown Source)
+ERROR 2021-11-16 20:15:26,172 [KafkaConsumer Thread] Server: 	at com.alibaba.fastjson.parser.deserializer.JavaBeanDeserializer.deserialze(JavaBeanDeserializer.java:291)
+ERROR 2021-11-16 20:15:26,172 [KafkaConsumer Thread] Server: 	at com.alibaba.fastjson.parser.DefaultJSONParser.parseObject(DefaultJSONParser.java:708)
+ERROR 2021-11-16 20:15:26,173 [KafkaConsumer Thread] Server: 	at com.alibaba.fastjson.JSON.parseObject(JSON.java:394)
+ERROR 2021-11-16 20:15:26,173 [KafkaConsumer Thread] Server: 	at com.alibaba.fastjson.JSON.parseObject(JSON.java:298)
+ERROR 2021-11-16 20:15:26,173 [KafkaConsumer Thread] Server: 	at com.alibaba.fastjson.JSON.parseObject(JSON.java:588)
+ERROR 2021-11-16 20:15:26,173 [KafkaConsumer Thread] Server: 	at com.mirth.connect.donkey.server.data.mq.MessageConsumer.run(MessageConsumer.java:68)
+ERROR 2021-11-16 20:15:26,173 [KafkaConsumer Thread] Server: 	at java.lang.Thread.run(Thread.java:748)
+INFO  2021-11-16 20:16:32,712 [Shutdown Hook Thread] com.mirth.connect.server.Mirth: shutting down mirth due to normal request
+INFO  2021-11-16 20:16:46,171 [Main Server Thread] com.mirth.connect.server.Mirth: Mirth Connect 3.4.1 (Built on 六月 18, 2021) server successfully started.
+INFO  2021-11-16 20:16:46,173 [Main Server Thread] com.mirth.connect.server.Mirth: This product was developed by Mirth Corporation (http://www.mirthcorp.com) and its contributors (c)2005-2021.
+INFO  2021-11-16 20:16:46,173 [Main Server Thread] com.mirth.connect.server.Mirth: Running Java HotSpot(TM) 64-Bit Server VM 1.8.0_291 on Windows 10 (10.0, amd64), derby, with charset UTF-8.
+INFO  2021-11-16 20:16:46,183 [Main Server Thread] com.mirth.connect.server.Mirth: Web server running at http://172.24.112.1:8080/ and https://172.24.112.1:8443/
+ERROR 2021-11-16 20:17:37,884 [KafkaConsumer Thread] Server: com.alibaba.fastjson.JSONException: syntax error, expect {, actual error, pos 0, fastjson-version 1.2.76
+ERROR 2021-11-16 20:17:37,885 [KafkaConsumer Thread] Server: 	at com.alibaba.fastjson.parser.deserializer.JavaBeanDeserializer.deserialze(JavaBeanDeserializer.java:510)
+ERROR 2021-11-16 20:17:37,885 [KafkaConsumer Thread] Server: 	at com.alibaba.fastjson.parser.deserializer.JavaBeanDeserializer.parseRest(JavaBeanDeserializer.java:1628)
+ERROR 2021-11-16 20:17:37,885 [KafkaConsumer Thread] Server: 	at com.alibaba.fastjson.parser.deserializer.FastjsonASMDeserializer_2_MQMessage.deserialze(Unknown Source)
+ERROR 2021-11-16 20:17:37,885 [KafkaConsumer Thread] Server: 	at com.alibaba.fastjson.parser.deserializer.JavaBeanDeserializer.deserialze(JavaBeanDeserializer.java:291)
+ERROR 2021-11-16 20:17:37,885 [KafkaConsumer Thread] Server: 	at com.alibaba.fastjson.parser.DefaultJSONParser.parseObject(DefaultJSONParser.java:708)
+ERROR 2021-11-16 20:17:37,885 [KafkaConsumer Thread] Server: 	at com.alibaba.fastjson.JSON.parseObject(JSON.java:394)
+ERROR 2021-11-16 20:17:37,885 [KafkaConsumer Thread] Server: 	at com.alibaba.fastjson.JSON.parseObject(JSON.java:298)
+ERROR 2021-11-16 20:17:37,885 [KafkaConsumer Thread] Server: 	at com.alibaba.fastjson.JSON.parseObject(JSON.java:588)
+ERROR 2021-11-16 20:17:37,885 [KafkaConsumer Thread] Server: 	at com.mirth.connect.donkey.server.data.mq.MessageConsumer.run(MessageConsumer.java:69)
+ERROR 2021-11-16 20:17:37,885 [KafkaConsumer Thread] Server: 	at java.lang.Thread.run(Thread.java:748)
+INFO  2021-11-16 20:24:39,329 [Shutdown Hook Thread] com.mirth.connect.server.Mirth: shutting down mirth due to normal request
+INFO  2021-11-16 20:24:53,119 [Main Server Thread] com.mirth.connect.server.Mirth: Mirth Connect 3.4.1 (Built on 六月 18, 2021) server successfully started.
+INFO  2021-11-16 20:24:53,121 [Main Server Thread] com.mirth.connect.server.Mirth: This product was developed by Mirth Corporation (http://www.mirthcorp.com) and its contributors (c)2005-2021.
+INFO  2021-11-16 20:24:53,121 [Main Server Thread] com.mirth.connect.server.Mirth: Running Java HotSpot(TM) 64-Bit Server VM 1.8.0_291 on Windows 10 (10.0, amd64), derby, with charset UTF-8.
+INFO  2021-11-16 20:24:53,131 [Main Server Thread] com.mirth.connect.server.Mirth: Web server running at http://172.24.112.1:8080/ and https://172.24.112.1:8443/
+ERROR 2021-11-16 20:25:10,494 [KafkaConsumer Thread] Server: com.mirth.connect.donkey.server.data.DonkeyDaoException: java.sql.SQLIntegrityConstraintViolationException: INSERT on table 'D_MC2' caused a violation of foreign key constraint 'D_MC2_FKEY' for key (17,0).  The statement has been rolled back.
+ERROR 2021-11-16 20:25:10,494 [KafkaConsumer Thread] Server: 	at com.mirth.connect.donkey.server.data.jdbc.JdbcDao.insertContent(JdbcDao.java:273)
+ERROR 2021-11-16 20:25:10,494 [KafkaConsumer Thread] Server: 	at com.mirth.connect.donkey.server.data.jdbc.JdbcDao.insertMessageContent(JdbcDao.java:192)
+ERROR 2021-11-16 20:25:10,494 [KafkaConsumer Thread] Server: 	at com.mirth.connect.donkey.server.data.mq.MessageConsumer.run(MessageConsumer.java:79)
+ERROR 2021-11-16 20:25:10,494 [KafkaConsumer Thread] Server: 	at java.lang.Thread.run(Thread.java:748)
+ERROR 2021-11-16 20:25:10,495 [KafkaConsumer Thread] Server: Caused by: java.sql.SQLIntegrityConstraintViolationException: INSERT on table 'D_MC2' caused a violation of foreign key constraint 'D_MC2_FKEY' for key (17,0).  The statement has been rolled back.
+ERROR 2021-11-16 20:25:10,495 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.getSQLException(Unknown Source)
+ERROR 2021-11-16 20:25:10,495 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Unknown Source)
+ERROR 2021-11-16 20:25:10,495 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.TransactionResourceImpl.wrapInSQLException(Unknown Source)
+ERROR 2021-11-16 20:25:10,495 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.TransactionResourceImpl.handleException(Unknown Source)
+ERROR 2021-11-16 20:25:10,495 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.EmbedConnection.handleException(Unknown Source)
+ERROR 2021-11-16 20:25:10,495 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.ConnectionChild.handleException(Unknown Source)
+ERROR 2021-11-16 20:25:10,499 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.EmbedStatement.executeStatement(Unknown Source)
+ERROR 2021-11-16 20:25:10,499 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.EmbedPreparedStatement.executeStatement(Unknown Source)
+ERROR 2021-11-16 20:25:10,499 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.EmbedPreparedStatement.executeLargeUpdate(Unknown Source)
+ERROR 2021-11-16 20:25:10,499 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.EmbedPreparedStatement.executeUpdate(Unknown Source)
+ERROR 2021-11-16 20:25:10,500 [KafkaConsumer Thread] Server: 	at com.mirth.connect.donkey.server.data.jdbc.JdbcDao.insertContent(JdbcDao.java:270)
+ERROR 2021-11-16 20:25:10,500 [KafkaConsumer Thread] Server: 	... 3 more
+ERROR 2021-11-16 20:25:10,500 [KafkaConsumer Thread] Server: Caused by: java.sql.SQLException: INSERT on table 'D_MC2' caused a violation of foreign key constraint 'D_MC2_FKEY' for key (17,0).  The statement has been rolled back.
+ERROR 2021-11-16 20:25:10,500 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
+ERROR 2021-11-16 20:25:10,500 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.wrapArgsForTransportAcrossDRDA(Unknown Source)
+ERROR 2021-11-16 20:25:10,500 [KafkaConsumer Thread] Server: 	... 14 more
+ERROR 2021-11-16 20:25:10,501 [KafkaConsumer Thread] Server: Caused by: ERROR 23503: INSERT on table 'D_MC2' caused a violation of foreign key constraint 'D_MC2_FKEY' for key (17,0).  The statement has been rolled back.
+ERROR 2021-11-16 20:25:10,501 [KafkaConsumer Thread] Server: 	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
+ERROR 2021-11-16 20:25:10,501 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.sql.execute.ForeignKeyRIChecker.doCheck(Unknown Source)
+ERROR 2021-11-16 20:25:10,501 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.sql.execute.GenericRIChecker.doCheck(Unknown Source)
+ERROR 2021-11-16 20:25:10,501 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.sql.execute.RISetChecker.doFKCheck(Unknown Source)
+ERROR 2021-11-16 20:25:10,501 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.sql.execute.InsertResultSet.normalInsertCore(Unknown Source)
+ERROR 2021-11-16 20:25:10,501 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.sql.execute.InsertResultSet.open(Unknown Source)
+ERROR 2021-11-16 20:25:10,502 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.sql.GenericPreparedStatement.executeStmt(Unknown Source)
+ERROR 2021-11-16 20:25:10,502 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.sql.GenericPreparedStatement.execute(Unknown Source)
+ERROR 2021-11-16 20:25:10,502 [KafkaConsumer Thread] Server: 	... 8 more
+ERROR 2021-11-16 20:26:30,092 [KafkaConsumer Thread] Server: com.mirth.connect.donkey.server.data.DonkeyDaoException: java.sql.SQLIntegrityConstraintViolationException: INSERT on table 'D_MC2' caused a violation of foreign key constraint 'D_MC2_FKEY' for key (18,0).  The statement has been rolled back.
+ERROR 2021-11-16 20:26:30,092 [KafkaConsumer Thread] Server: 	at com.mirth.connect.donkey.server.data.jdbc.JdbcDao.insertContent(JdbcDao.java:273)
+ERROR 2021-11-16 20:26:30,092 [KafkaConsumer Thread] Server: 	at com.mirth.connect.donkey.server.data.jdbc.JdbcDao.insertMessageContent(JdbcDao.java:192)
+ERROR 2021-11-16 20:26:30,092 [KafkaConsumer Thread] Server: 	at com.mirth.connect.donkey.server.data.mq.MessageConsumer.run(MessageConsumer.java:79)
+ERROR 2021-11-16 20:26:30,092 [KafkaConsumer Thread] Server: 	at java.lang.Thread.run(Thread.java:748)
+ERROR 2021-11-16 20:26:30,092 [KafkaConsumer Thread] Server: Caused by: java.sql.SQLIntegrityConstraintViolationException: INSERT on table 'D_MC2' caused a violation of foreign key constraint 'D_MC2_FKEY' for key (18,0).  The statement has been rolled back.
+ERROR 2021-11-16 20:26:30,092 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.getSQLException(Unknown Source)
+ERROR 2021-11-16 20:26:30,092 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Unknown Source)
+ERROR 2021-11-16 20:26:30,092 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.TransactionResourceImpl.wrapInSQLException(Unknown Source)
+ERROR 2021-11-16 20:26:30,093 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.TransactionResourceImpl.handleException(Unknown Source)
+ERROR 2021-11-16 20:26:30,093 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.EmbedConnection.handleException(Unknown Source)
+ERROR 2021-11-16 20:26:30,093 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.ConnectionChild.handleException(Unknown Source)
+ERROR 2021-11-16 20:26:30,093 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.EmbedStatement.executeStatement(Unknown Source)
+ERROR 2021-11-16 20:26:30,093 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.EmbedPreparedStatement.executeStatement(Unknown Source)
+ERROR 2021-11-16 20:26:30,093 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.EmbedPreparedStatement.executeLargeUpdate(Unknown Source)
+ERROR 2021-11-16 20:26:30,093 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.EmbedPreparedStatement.executeUpdate(Unknown Source)
+ERROR 2021-11-16 20:26:30,093 [KafkaConsumer Thread] Server: 	at com.mirth.connect.donkey.server.data.jdbc.JdbcDao.insertContent(JdbcDao.java:270)
+ERROR 2021-11-16 20:26:30,093 [KafkaConsumer Thread] Server: 	... 3 more
+ERROR 2021-11-16 20:26:30,093 [KafkaConsumer Thread] Server: Caused by: java.sql.SQLException: INSERT on table 'D_MC2' caused a violation of foreign key constraint 'D_MC2_FKEY' for key (18,0).  The statement has been rolled back.
+ERROR 2021-11-16 20:26:30,093 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
+ERROR 2021-11-16 20:26:30,093 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.wrapArgsForTransportAcrossDRDA(Unknown Source)
+ERROR 2021-11-16 20:26:30,093 [KafkaConsumer Thread] Server: 	... 14 more
+ERROR 2021-11-16 20:26:30,093 [KafkaConsumer Thread] Server: Caused by: ERROR 23503: INSERT on table 'D_MC2' caused a violation of foreign key constraint 'D_MC2_FKEY' for key (18,0).  The statement has been rolled back.
+ERROR 2021-11-16 20:26:30,093 [KafkaConsumer Thread] Server: 	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
+ERROR 2021-11-16 20:26:30,093 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.sql.execute.ForeignKeyRIChecker.doCheck(Unknown Source)
+ERROR 2021-11-16 20:26:30,094 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.sql.execute.GenericRIChecker.doCheck(Unknown Source)
+ERROR 2021-11-16 20:26:30,094 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.sql.execute.RISetChecker.doFKCheck(Unknown Source)
+ERROR 2021-11-16 20:26:30,094 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.sql.execute.InsertResultSet.normalInsertCore(Unknown Source)
+ERROR 2021-11-16 20:26:30,094 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.sql.execute.InsertResultSet.open(Unknown Source)
+ERROR 2021-11-16 20:26:30,094 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.sql.GenericPreparedStatement.executeStmt(Unknown Source)
+ERROR 2021-11-16 20:26:30,094 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.sql.GenericPreparedStatement.execute(Unknown Source)
+ERROR 2021-11-16 20:26:30,094 [KafkaConsumer Thread] Server: 	... 8 more
+ERROR 2021-11-16 20:26:59,200 [KafkaConsumer Thread] Server: com.mirth.connect.donkey.server.data.DonkeyDaoException: java.sql.SQLIntegrityConstraintViolationException: INSERT on table 'D_MC2' caused a violation of foreign key constraint 'D_MC2_FKEY' for key (19,0).  The statement has been rolled back.
+ERROR 2021-11-16 20:26:59,200 [KafkaConsumer Thread] Server: 	at com.mirth.connect.donkey.server.data.jdbc.JdbcDao.insertContent(JdbcDao.java:273)
+ERROR 2021-11-16 20:26:59,200 [KafkaConsumer Thread] Server: 	at com.mirth.connect.donkey.server.data.jdbc.JdbcDao.insertMessageContent(JdbcDao.java:192)
+ERROR 2021-11-16 20:26:59,200 [KafkaConsumer Thread] Server: 	at com.mirth.connect.donkey.server.data.mq.MessageConsumer.run(MessageConsumer.java:79)
+ERROR 2021-11-16 20:26:59,200 [KafkaConsumer Thread] Server: 	at java.lang.Thread.run(Thread.java:748)
+ERROR 2021-11-16 20:26:59,200 [KafkaConsumer Thread] Server: Caused by: java.sql.SQLIntegrityConstraintViolationException: INSERT on table 'D_MC2' caused a violation of foreign key constraint 'D_MC2_FKEY' for key (19,0).  The statement has been rolled back.
+ERROR 2021-11-16 20:26:59,200 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.getSQLException(Unknown Source)
+ERROR 2021-11-16 20:26:59,200 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Unknown Source)
+ERROR 2021-11-16 20:26:59,200 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.TransactionResourceImpl.wrapInSQLException(Unknown Source)
+ERROR 2021-11-16 20:26:59,200 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.TransactionResourceImpl.handleException(Unknown Source)
+ERROR 2021-11-16 20:26:59,200 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.EmbedConnection.handleException(Unknown Source)
+ERROR 2021-11-16 20:26:59,200 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.ConnectionChild.handleException(Unknown Source)
+ERROR 2021-11-16 20:26:59,200 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.EmbedStatement.executeStatement(Unknown Source)
+ERROR 2021-11-16 20:26:59,200 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.EmbedPreparedStatement.executeStatement(Unknown Source)
+ERROR 2021-11-16 20:26:59,200 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.EmbedPreparedStatement.executeLargeUpdate(Unknown Source)
+ERROR 2021-11-16 20:26:59,201 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.EmbedPreparedStatement.executeUpdate(Unknown Source)
+ERROR 2021-11-16 20:26:59,201 [KafkaConsumer Thread] Server: 	at com.mirth.connect.donkey.server.data.jdbc.JdbcDao.insertContent(JdbcDao.java:270)
+ERROR 2021-11-16 20:26:59,201 [KafkaConsumer Thread] Server: 	... 3 more
+ERROR 2021-11-16 20:26:59,201 [KafkaConsumer Thread] Server: Caused by: java.sql.SQLException: INSERT on table 'D_MC2' caused a violation of foreign key constraint 'D_MC2_FKEY' for key (19,0).  The statement has been rolled back.
+ERROR 2021-11-16 20:26:59,201 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
+ERROR 2021-11-16 20:26:59,201 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.wrapArgsForTransportAcrossDRDA(Unknown Source)
+ERROR 2021-11-16 20:26:59,201 [KafkaConsumer Thread] Server: 	... 14 more
+ERROR 2021-11-16 20:26:59,201 [KafkaConsumer Thread] Server: Caused by: ERROR 23503: INSERT on table 'D_MC2' caused a violation of foreign key constraint 'D_MC2_FKEY' for key (19,0).  The statement has been rolled back.
+ERROR 2021-11-16 20:26:59,201 [KafkaConsumer Thread] Server: 	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
+ERROR 2021-11-16 20:26:59,201 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.sql.execute.ForeignKeyRIChecker.doCheck(Unknown Source)
+ERROR 2021-11-16 20:26:59,201 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.sql.execute.GenericRIChecker.doCheck(Unknown Source)
+ERROR 2021-11-16 20:26:59,201 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.sql.execute.RISetChecker.doFKCheck(Unknown Source)
+ERROR 2021-11-16 20:26:59,202 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.sql.execute.InsertResultSet.normalInsertCore(Unknown Source)
+ERROR 2021-11-16 20:26:59,202 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.sql.execute.InsertResultSet.open(Unknown Source)
+ERROR 2021-11-16 20:26:59,202 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.sql.GenericPreparedStatement.executeStmt(Unknown Source)
+ERROR 2021-11-16 20:26:59,202 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.sql.GenericPreparedStatement.execute(Unknown Source)
+ERROR 2021-11-16 20:26:59,202 [KafkaConsumer Thread] Server: 	... 8 more
+INFO  2021-11-16 20:28:08,328 [Shutdown Hook Thread] com.mirth.connect.server.Mirth: shutting down mirth due to normal request
+INFO  2021-11-16 20:28:19,425 [Main Server Thread] com.mirth.connect.server.Mirth: Mirth Connect 3.4.1 (Built on 六月 18, 2021) server successfully started.
+INFO  2021-11-16 20:28:19,426 [Main Server Thread] com.mirth.connect.server.Mirth: This product was developed by Mirth Corporation (http://www.mirthcorp.com) and its contributors (c)2005-2021.
+INFO  2021-11-16 20:28:19,426 [Main Server Thread] com.mirth.connect.server.Mirth: Running Java HotSpot(TM) 64-Bit Server VM 1.8.0_291 on Windows 10 (10.0, amd64), derby, with charset UTF-8.
+INFO  2021-11-16 20:28:19,433 [Main Server Thread] com.mirth.connect.server.Mirth: Web server running at http://172.24.112.1:8080/ and https://172.24.112.1:8443/
+ERROR 2021-11-16 20:29:50,237 [KafkaConsumer Thread] Server: com.mirth.connect.donkey.server.data.DonkeyDaoException: java.sql.SQLIntegrityConstraintViolationException: INSERT on table 'D_MC2' caused a violation of foreign key constraint 'D_MC2_FKEY' for key (20,0).  The statement has been rolled back.
+ERROR 2021-11-16 20:29:50,237 [KafkaConsumer Thread] Server: 	at com.mirth.connect.donkey.server.data.jdbc.JdbcDao.insertContent(JdbcDao.java:273)
+ERROR 2021-11-16 20:29:50,237 [KafkaConsumer Thread] Server: 	at com.mirth.connect.donkey.server.data.jdbc.JdbcDao.insertMessageContent(JdbcDao.java:192)
+ERROR 2021-11-16 20:29:50,238 [KafkaConsumer Thread] Server: 	at com.mirth.connect.donkey.server.data.mq.MessageConsumer.run(MessageConsumer.java:79)
+ERROR 2021-11-16 20:29:50,238 [KafkaConsumer Thread] Server: 	at java.lang.Thread.run(Thread.java:748)
+ERROR 2021-11-16 20:29:50,238 [KafkaConsumer Thread] Server: Caused by: java.sql.SQLIntegrityConstraintViolationException: INSERT on table 'D_MC2' caused a violation of foreign key constraint 'D_MC2_FKEY' for key (20,0).  The statement has been rolled back.
+ERROR 2021-11-16 20:29:50,238 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.getSQLException(Unknown Source)
+ERROR 2021-11-16 20:29:50,238 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Unknown Source)
+ERROR 2021-11-16 20:29:50,238 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.TransactionResourceImpl.wrapInSQLException(Unknown Source)
+ERROR 2021-11-16 20:29:50,238 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.TransactionResourceImpl.handleException(Unknown Source)
+ERROR 2021-11-16 20:29:50,238 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.EmbedConnection.handleException(Unknown Source)
+ERROR 2021-11-16 20:29:50,238 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.ConnectionChild.handleException(Unknown Source)
+ERROR 2021-11-16 20:29:50,239 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.EmbedStatement.executeStatement(Unknown Source)
+ERROR 2021-11-16 20:29:50,239 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.EmbedPreparedStatement.executeStatement(Unknown Source)
+ERROR 2021-11-16 20:29:50,239 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.EmbedPreparedStatement.executeLargeUpdate(Unknown Source)
+ERROR 2021-11-16 20:29:50,239 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.EmbedPreparedStatement.executeUpdate(Unknown Source)
+ERROR 2021-11-16 20:29:50,239 [KafkaConsumer Thread] Server: 	at com.mirth.connect.donkey.server.data.jdbc.JdbcDao.insertContent(JdbcDao.java:270)
+ERROR 2021-11-16 20:29:50,240 [KafkaConsumer Thread] Server: 	... 3 more
+ERROR 2021-11-16 20:29:50,240 [KafkaConsumer Thread] Server: Caused by: java.sql.SQLException: INSERT on table 'D_MC2' caused a violation of foreign key constraint 'D_MC2_FKEY' for key (20,0).  The statement has been rolled back.
+ERROR 2021-11-16 20:29:50,240 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
+ERROR 2021-11-16 20:29:50,240 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.wrapArgsForTransportAcrossDRDA(Unknown Source)
+ERROR 2021-11-16 20:29:50,240 [KafkaConsumer Thread] Server: 	... 14 more
+ERROR 2021-11-16 20:29:50,240 [KafkaConsumer Thread] Server: Caused by: ERROR 23503: INSERT on table 'D_MC2' caused a violation of foreign key constraint 'D_MC2_FKEY' for key (20,0).  The statement has been rolled back.
+ERROR 2021-11-16 20:29:50,240 [KafkaConsumer Thread] Server: 	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
+ERROR 2021-11-16 20:29:50,240 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.sql.execute.ForeignKeyRIChecker.doCheck(Unknown Source)
+ERROR 2021-11-16 20:29:50,240 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.sql.execute.GenericRIChecker.doCheck(Unknown Source)
+ERROR 2021-11-16 20:29:50,240 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.sql.execute.RISetChecker.doFKCheck(Unknown Source)
+ERROR 2021-11-16 20:29:50,241 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.sql.execute.InsertResultSet.normalInsertCore(Unknown Source)
+ERROR 2021-11-16 20:29:50,241 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.sql.execute.InsertResultSet.open(Unknown Source)
+ERROR 2021-11-16 20:29:50,241 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.sql.GenericPreparedStatement.executeStmt(Unknown Source)
+ERROR 2021-11-16 20:29:50,241 [KafkaConsumer Thread] Server: 	at org.apache.derby.impl.sql.GenericPreparedStatement.execute(Unknown Source)
+ERROR 2021-11-16 20:29:50,241 [KafkaConsumer Thread] Server: 	... 8 more
+INFO  2021-11-16 20:32:40,075 [Shutdown Hook Thread] com.mirth.connect.server.Mirth: shutting down mirth due to normal request

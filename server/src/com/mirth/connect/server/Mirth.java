@@ -492,8 +492,6 @@ public class Mirth extends Thread {
         for (Enumeration<?> en = Logger.getRootLogger().getAllAppenders(); en.hasMoreElements(); ) {
             ((Appender) en.nextElement()).addFilter(new MirthLog4jFilter());
         }
-
-        logger.info("this is a test");
     }
 
     private class UsageSenderTask extends TimerTask {

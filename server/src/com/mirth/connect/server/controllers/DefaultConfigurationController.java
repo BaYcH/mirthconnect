@@ -1273,4 +1273,24 @@ public class DefaultConfigurationController extends ConfigurationController {
             return new ConnectionTestResponse(ConnectionTestResponse.Type.FAILURE, e.getMessage());
         }
     }
+
+    @Override
+    public Properties getPropertiesByPrefix(String prefix, boolean isRemovePrefix) {
+        Properties properties = new Properties();
+        String tempKey = "";
+        Properties mirthProperties = ConfigurationConverter.getProperties(mirthConfig);
+        for (String stringPropertyName : mirthProperties.stringPropertyNames()) {
+            tempKey = stringPropertyName;
+            if (stringPropertyName.startsWith(prefix)) {
+                if (isRemovePrefix) {
+                    tempKey = stringPropertyName.substring(prefix.length());
+                    if (tempKey.length() > 0) {
+                        tempKey = tempKey.substring(1);
+                    }
+                }
+                properties.put(tempKey, mirthProperties.getProperty(stringPropertyName));
+            }
+        }
+        return properties;
+    }
 }

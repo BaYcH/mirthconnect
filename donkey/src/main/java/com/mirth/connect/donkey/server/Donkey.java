@@ -9,36 +9,28 @@
 
 package com.mirth.connect.donkey.server;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
-import org.apache.log4j.Logger;
-
 import com.mirth.connect.donkey.server.channel.Channel;
 import com.mirth.connect.donkey.server.controllers.ChannelController;
 import com.mirth.connect.donkey.server.data.DonkeyDao;
-import com.mirth.connect.donkey.server.data.DonkeyDaoException;
 import com.mirth.connect.donkey.server.data.DonkeyDaoFactory;
 import com.mirth.connect.donkey.server.data.DonkeyStatisticsUpdater;
-import com.mirth.connect.donkey.server.data.jdbc.DBCPConnectionPool;
-import com.mirth.connect.donkey.server.data.jdbc.HikariConnectionPool;
-import com.mirth.connect.donkey.server.data.jdbc.JdbcDao;
-import com.mirth.connect.donkey.server.data.jdbc.JdbcDaoFactory;
-import com.mirth.connect.donkey.server.data.jdbc.XmlQuerySource;
+import com.mirth.connect.donkey.server.data.jdbc.*;
 import com.mirth.connect.donkey.server.data.jdbc.XmlQuerySource.XmlQuerySourceException;
+import com.mirth.connect.donkey.server.data.mq.KafkaDaoFactory;
+import com.mirth.connect.donkey.server.data.mq.KafkaPool;
+import com.mirth.connect.donkey.server.data.mq.MessageConsumer;
 import com.mirth.connect.donkey.server.event.EventDispatcher;
 import com.mirth.connect.donkey.util.Serializer;
 import com.mirth.connect.donkey.util.SerializerProvider;
 import com.mirth.connect.donkey.util.xstream.XStreamSerializer;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
+import org.apache.log4j.Logger;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
+
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Donkey {
     private static Donkey instance;
@@ -65,6 +57,7 @@ public class Donkey {
     private EventDispatcher eventDispatcher;
     private DonkeyStatisticsUpdater statisticsUpdater;
     private Logger logger = Logger.getLogger(getClass());
+    private Thread messageConsumerThread;
     private boolean running = false;
 
     public void startEngine(DonkeyConfiguration donkeyConfiguration) throws StartException {
@@ -96,6 +89,9 @@ public class Donkey {
         int updateInterval = NumberUtils.toInt(donkeyConfiguration.getDonkeyProperties().getProperty("donkey.statsupdateinterval"), DonkeyStatisticsUpdater.DEFAULT_UPDATE_INTERVAL);
         statisticsUpdater = new DonkeyStatisticsUpdater(daoFactory, updateInterval);
         statisticsUpdater.start();
+
+        messageConsumerThread = new Thread(new MessageConsumer(), "KafkaConsumer Thread");
+        messageConsumerThread.start();
 
         running = true;
     }
@@ -164,8 +160,22 @@ public class Donkey {
         } finally {
             dao.close();
         }
+        
+        KafkaPool.setConsumerProps(donkeyConfiguration.getPropertiesByprefix("mq.kafka.consumer", true));
+        KafkaPool.setProducerProps(donkeyConfiguration.getPropertiesByprefix("mq.kafka.producer", true));
 
-        daoFactory = jdbcDaoFactory;
+        JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
+        jedisPoolConfig.setMaxTotal(30);
+        jedisPoolConfig.setMaxIdle(8);
+        jedisPoolConfig.setTestOnBorrow(true);
+        jedisPoolConfig.setMaxWaitMillis(3000);
+        JedisPool jedisPool = new JedisPool(jedisPoolConfig, "127.0.0.1", 6379, 3000);
+
+        KafkaDaoFactory kafkaDaoFactory = new KafkaDaoFactory();
+        kafkaDaoFactory.setJdbcDaoFactory(jdbcDaoFactory);
+        kafkaDaoFactory.setJedisPool(jedisPool);
+        kafkaDaoFactory.setServerId(donkeyConfiguration.getServerId());
+        daoFactory = kafkaDaoFactory;
     }
 
     public DonkeyDaoFactory getDaoFactory() {

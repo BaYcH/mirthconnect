@@ -144,6 +144,9 @@ public class DonkeyEngineController implements EngineController {
         };
 
         Properties donkeyProperties = configurationController.getDatabaseSettings().getProperties();
+        donkeyProperties.putAll(configurationController.getPropertiesByPrefix("mq.kafka.consumer", false));
+        donkeyProperties.putAll(configurationController.getPropertiesByPrefix("mq.kafka.producer", false));
+        donkeyProperties.putAll(configurationController.getPropertiesByPrefix("redis", false));
         donkeyProperties.setProperty("donkey.statsupdateinterval", String.valueOf(configurationController.getStatsUpdateInterval()));
 
         donkey.startEngine(new DonkeyConfiguration(configurationController.getApplicationDataDir(), donkeyProperties, donkeyEncryptor, eventDispatcher, configurationController.getServerId()));

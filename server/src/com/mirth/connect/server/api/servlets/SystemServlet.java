@@ -9,22 +9,23 @@
 
 package com.mirth.connect.server.api.servlets;
 
-import java.io.File;
-import java.lang.management.ManagementFactory;
-import java.sql.DatabaseMetaData;
-import java.util.Calendar;
+import com.mirth.connect.client.core.ClientException;
+import com.mirth.connect.client.core.api.servlets.SystemServletInterface;
+import com.mirth.connect.donkey.server.Donkey;
+import com.mirth.connect.donkey.server.data.DonkeyDao;
+import com.mirth.connect.donkey.server.data.jdbc.JdbcDao;
+import com.mirth.connect.donkey.server.data.mq.KafkaDao;
+import com.mirth.connect.model.SystemInfo;
+import com.mirth.connect.model.SystemStats;
+import com.mirth.connect.server.api.MirthServlet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.SecurityContext;
-
-import com.mirth.connect.client.core.ClientException;
-import com.mirth.connect.client.core.api.servlets.SystemServletInterface;
-import com.mirth.connect.donkey.server.Donkey;
-import com.mirth.connect.donkey.server.data.jdbc.JdbcDao;
-import com.mirth.connect.model.SystemInfo;
-import com.mirth.connect.model.SystemStats;
-import com.mirth.connect.server.api.MirthServlet;
+import java.io.File;
+import java.lang.management.ManagementFactory;
+import java.sql.DatabaseMetaData;
+import java.util.Calendar;
 
 public class SystemServlet extends MirthServlet implements SystemServletInterface {
     public SystemServlet(@Context HttpServletRequest request, @Context SecurityContext sc) {
@@ -35,8 +36,13 @@ public class SystemServlet extends MirthServlet implements SystemServletInterfac
     public SystemInfo getInfo() throws ClientException {
         try {
             // TODO this isn't very safe, it assumes that the DaoFactory is always a JdbcDaoFactory
-            JdbcDao dao = (JdbcDao) Donkey.getInstance().getDaoFactory().getDao();
-
+            JdbcDao dao = null;
+            DonkeyDao donkeyDao = Donkey.getInstance().getDaoFactory().getDao();
+            if (donkeyDao instanceof JdbcDao) {
+                dao = (JdbcDao) donkeyDao;
+            } else if (donkeyDao instanceof KafkaDao) {
+                dao = ((KafkaDao) donkeyDao).getJdbcDao();
+            }
             try {
                 DatabaseMetaData metaData = dao.getConnection().getMetaData();
 

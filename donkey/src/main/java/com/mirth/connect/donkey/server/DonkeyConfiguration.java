@@ -9,9 +9,9 @@
 
 package com.mirth.connect.donkey.server;
 
-import java.util.Properties;
-
 import com.mirth.connect.donkey.server.event.EventDispatcher;
+
+import java.util.Properties;
 
 public class DonkeyConfiguration {
     private String appData;
@@ -39,6 +39,25 @@ public class DonkeyConfiguration {
     public Properties getDonkeyProperties() {
         return donkeyProperties;
     }
+
+    public Properties getPropertiesByprefix(String prefix, boolean removePrefix) {
+        Properties properties = new Properties();
+        String tempKey = "";
+        for (String stringPropertyName : donkeyProperties.stringPropertyNames()) {
+            tempKey = stringPropertyName;
+            if (stringPropertyName.startsWith(prefix)) {
+                if (removePrefix) {
+                    tempKey = stringPropertyName.substring(prefix.length());
+                    if (tempKey.length() > 0) {
+                        tempKey = tempKey.substring(1);
+                    }
+                }
+                properties.put(tempKey, donkeyProperties.getProperty(stringPropertyName));
+            }
+        }
+        return properties;
+    }
+
 
     public void setDonkeyProperties(Properties donkeyProperties) {
         this.donkeyProperties = donkeyProperties;
