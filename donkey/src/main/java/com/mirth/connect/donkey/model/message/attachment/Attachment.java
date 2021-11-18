@@ -11,8 +11,10 @@ package com.mirth.connect.donkey.model.message.attachment;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
+import java.io.Serializable;
+
 @XStreamAlias("attachment")
-public class Attachment {
+public class Attachment implements Serializable {
     private String id;
     private byte[] content;
     private String type;

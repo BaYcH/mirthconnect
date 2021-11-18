@@ -9,10 +9,11 @@
 
 package com.mirth.connect.donkey.model.message;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MapContent extends Content {
+public class MapContent extends Content implements Serializable {
     private Object content = new HashMap<String, Object>();
     private transient boolean persisted = false;
 

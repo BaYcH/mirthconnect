@@ -9,9 +9,10 @@
 
 package com.mirth.connect.donkey.model.message.attachment;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class AttachmentMessage {
+public class AttachmentMessage implements Serializable {
     private List<Attachment> attachments;
     private String replacedMessage;
 

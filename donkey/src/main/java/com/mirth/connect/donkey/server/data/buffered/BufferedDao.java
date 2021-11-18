@@ -19,6 +19,7 @@ import com.mirth.connect.donkey.server.channel.Statistics;
 import com.mirth.connect.donkey.server.data.DonkeyDao;
 import com.mirth.connect.donkey.server.data.DonkeyDaoFactory;
 import com.mirth.connect.donkey.server.data.StatisticsUpdater;
+import com.mirth.connect.donkey.server.data.mq.KafkaDao;
 import com.mirth.connect.donkey.util.SerializerProvider;
 import org.apache.log4j.Logger;
 
@@ -83,12 +84,12 @@ public class BufferedDao implements DonkeyDao {
         }
 
         logger.warn(Thread.currentThread().getName() + "：准备保存数据");
-        executors.submit(() -> {
-            logger.warn(Thread.currentThread().getName() + ":开始执行保存数据!");
-            executeTasks(durable);
-            logger.warn(Thread.currentThread().getName() + ":执行保存数据完毕!");
-        });
-//        executeTasks(durable);
+//        executors.submit(() -> {
+//            logger.warn(Thread.currentThread().getName() + ":开始执行保存数据!");
+//            executeTasks(durable);
+//            logger.warn(Thread.currentThread().getName() + ":执行保存数据完毕!");
+//        });
+        executeTasks(durable);
     }
 
     private DonkeyDao getDelegateDao() {
@@ -98,6 +99,9 @@ public class BufferedDao implements DonkeyDao {
         dao.setDecryptData(decryptData);
         dao.setStatisticsUpdater(statisticsUpdater);
 
+        if (dao instanceof KafkaDao) {
+            ((KafkaDao) dao).setSessionId(UUID.randomUUID().toString());
+        }
         return dao;
     }
 
@@ -108,6 +112,8 @@ public class BufferedDao implements DonkeyDao {
             while (!tasks.isEmpty()) {
                 DaoTask task = tasks.poll();
                 Object[] p = task.getParameters();
+
+                System.out.println("BufferedDao:" + task.getTaskType());
 
                 // @formatter:off
                 switch (task.getTaskType()) {
@@ -208,13 +214,18 @@ public class BufferedDao implements DonkeyDao {
                 // @formatter:on
             }
 
+
             if (durable == null) {
                 dao.commit();
             } else {
                 dao.commit(durable);
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+
+            if (dao instanceof KafkaDao) {
+                ((KafkaDao) dao).redisPush(DaoTaskType.COMMIT, "", "", -1);
+                ((KafkaDao) dao).sendCommit();
+            }
+
         } finally {
             if (dao != null) {
                 dao.close();

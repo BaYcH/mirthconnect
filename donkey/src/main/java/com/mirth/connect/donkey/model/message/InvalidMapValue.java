@@ -9,7 +9,9 @@
 
 package com.mirth.connect.donkey.model.message;
 
-public class InvalidMapValue {
+import java.io.Serializable;
+
+public class InvalidMapValue implements Serializable {
 
     private String valueXML;
 

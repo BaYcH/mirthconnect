@@ -20,10 +20,11 @@ public class KafkaDaoFactory implements DonkeyDaoFactory {
     private boolean decryptData;
     private StatisticsUpdater statisticsUpdater;
     private String serverId;
+    private SerializerProvider serializerProvider;
 
     @Override
     public KafkaDao getDao() {
-        return getDao(null);
+        return getDao(serializerProvider);
     }
 
     @Override
@@ -88,5 +89,13 @@ public class KafkaDaoFactory implements DonkeyDaoFactory {
 
     public void setServerId(String serverId) {
         this.serverId = serverId;
+    }
+
+    public SerializerProvider getSerializerProvider() {
+        return serializerProvider;
+    }
+
+    public void setSerializerProvider(SerializerProvider serializerProvider) {
+        this.serializerProvider = serializerProvider;
     }
 }

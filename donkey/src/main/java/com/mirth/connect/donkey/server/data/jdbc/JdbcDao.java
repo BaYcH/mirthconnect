@@ -9,43 +9,9 @@
 
 package com.mirth.connect.donkey.server.data.jdbc;
 
-import java.io.ByteArrayInputStream;
-import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Timestamp;
-import java.sql.Types;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.MapUtils;
-import org.apache.commons.dbutils.DbUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
-
 import com.mirth.connect.donkey.model.channel.MetaDataColumn;
 import com.mirth.connect.donkey.model.channel.MetaDataColumnType;
-import com.mirth.connect.donkey.model.message.ConnectorMessage;
-import com.mirth.connect.donkey.model.message.ContentType;
-import com.mirth.connect.donkey.model.message.ErrorContent;
-import com.mirth.connect.donkey.model.message.MapContent;
-import com.mirth.connect.donkey.model.message.Message;
-import com.mirth.connect.donkey.model.message.MessageContent;
-import com.mirth.connect.donkey.model.message.Status;
+import com.mirth.connect.donkey.model.message.*;
 import com.mirth.connect.donkey.model.message.attachment.Attachment;
 import com.mirth.connect.donkey.server.Donkey;
 import com.mirth.connect.donkey.server.Encryptor;
@@ -56,6 +22,17 @@ import com.mirth.connect.donkey.server.data.DonkeyDaoException;
 import com.mirth.connect.donkey.server.data.StatisticsUpdater;
 import com.mirth.connect.donkey.util.MapUtil;
 import com.mirth.connect.donkey.util.SerializerProvider;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.MapUtils;
+import org.apache.commons.dbutils.DbUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
+
+import java.io.ByteArrayInputStream;
+import java.math.BigDecimal;
+import java.sql.*;
+import java.util.*;
+import java.util.Map.Entry;
 
 public class JdbcDao implements DonkeyDao {
     private Donkey donkey;
@@ -260,6 +237,7 @@ public class JdbcDao implements DonkeyDao {
             }
 
             PreparedStatement statement = prepareStatement("insertMessageContent", channelId);
+            System.out.println("messageId:" + messageId + "   metaDataId:" + metaDataId + "  contentType:" + contentType.getContentTypeCode());
             statement.setInt(1, metaDataId);
             statement.setLong(2, messageId);
             statement.setInt(3, contentType.getContentTypeCode());
@@ -270,7 +248,8 @@ public class JdbcDao implements DonkeyDao {
             statement.executeUpdate();
             statement.clearParameters();
         } catch (SQLException e) {
-            throw new DonkeyDaoException(e);
+//            throw new DonkeyDaoException(e);
+            e.printStackTrace();
         }
     }
 
@@ -1615,6 +1594,9 @@ public class JdbcDao implements DonkeyDao {
             return connectorMessages;
         } catch (SQLException e) {
             throw new DonkeyDaoException(e);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            throw ex;
         } finally {
             close(resultSet);
         }
@@ -2242,6 +2224,9 @@ public class JdbcDao implements DonkeyDao {
             return connectorMessage;
         } catch (SQLException e) {
             throw new DonkeyDaoException(e);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            throw ex;
         }
     }
 
@@ -2274,6 +2259,9 @@ public class JdbcDao implements DonkeyDao {
             }
         } catch (SQLException e) {
             throw new DonkeyDaoException(e);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            throw ex;
         } finally {
             close(resultSet);
         }

@@ -9,7 +9,9 @@
 
 package com.mirth.connect.donkey.model.message;
 
-public class ErrorContent extends Content {
+import java.io.Serializable;
+
+public class ErrorContent extends Content implements Serializable {
     private String content = null;
     private transient boolean persisted = false;
 

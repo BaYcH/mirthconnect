@@ -1,7 +1,5 @@
 package com.mirth.connect.donkey.server.data.mq;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.mirth.connect.donkey.model.channel.MetaDataColumn;
 import com.mirth.connect.donkey.model.message.ConnectorMessage;
 import com.mirth.connect.donkey.model.message.Message;
@@ -16,15 +14,16 @@ import com.mirth.connect.donkey.server.data.buffered.DaoTaskType;
 import com.mirth.connect.donkey.server.data.jdbc.JdbcDao;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.clients.producer.RecordMetadata;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
 /**
  * @author BaYcT
@@ -39,10 +38,10 @@ public class KafkaDao implements DonkeyDao {
     private Jedis jedis;
     private String mirthServerKey;
     private String serverId;
-    private String channelId;
-    private String messageId;
+    private String sessionId;
 
     public static final String TOPIC_MESSAGE = "MIRTH_DATA_MESSAGE";
+    public static final String TOPIC_CHANNEL = "MIRTH_CHANNEL_ID";
     private static final String TOPIC_CONNECTOR_MESSAGE = "MIRTH_DATA_CONNECTOR_MESSAGE";
     private static final String TOPIC_MESSAGE_CONTENT = "MIRTH_DATA_MESSAGE_CONTENT";
     private static final String TOPIC_BATCH_MESSAGE_CONTENT = "MIRTH_DATA_BATCH_MESSAGE_CONTENT";
@@ -58,22 +57,6 @@ public class KafkaDao implements DonkeyDao {
     @Override
     public void insertMessage(Message message) {
         redisPush(DaoTaskType.INSERT_MESSAGE, message, message.getChannelId(), message.getMessageId());
-
-        MessageIdRequest messageIdRequest = new MessageIdRequest();
-        messageIdRequest.setMessageId(message.getMessageId());
-        messageIdRequest.setChannelId(message.getChannelId());
-        ProducerRecord<String, String> producerRecord = new ProducerRecord<>(TOPIC_MESSAGE, JSON.toJSONString(messageIdRequest, SerializerFeature.DisableCircularReferenceDetect));
-        KafkaProducer<String, String> producer = KafkaPool.getInstance().getProducer();
-        Future<RecordMetadata> send = producer.send(producerRecord);
-        try {
-            RecordMetadata recordMetadata = send.get();
-            System.out.println(recordMetadata.timestamp());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-        KafkaPool.getInstance().returnProducer(producer);
     }
 
     @Override
@@ -136,8 +119,7 @@ public class KafkaDao implements DonkeyDao {
 
     @Override
     public void addChannelStatistics(Statistics statistics) {
-        jdbcDao.addChannelStatistics(statistics);
-        //redisPush(DaoTaskType.STORE_CHANNEL_STATISTICS, statistics,statistics.);
+        redisPush(DaoTaskType.STORE_CHANNEL_STATISTICS, statistics, "", -1);
     }
 
     @Override
@@ -304,7 +286,7 @@ public class KafkaDao implements DonkeyDao {
 
     @Override
     public long getNextMessageId(String channelId) {
-        return jdbcDao.getNextMessageId(channelId);
+        return jedis.incr(TOPIC_CHANNEL + ":" + channelId);
     }
 
     @Override
@@ -394,8 +376,7 @@ public class KafkaDao implements DonkeyDao {
 
     @Override
     public void commit() {
-        jedisPool.returnResource(jedis);
-        jdbcDao.commit();
+        commit(true);
     }
 
     @Override
@@ -406,7 +387,7 @@ public class KafkaDao implements DonkeyDao {
 
     @Override
     public void rollback() {
-
+        jdbcDao.rollback();
     }
 
     @Override
@@ -453,16 +434,31 @@ public class KafkaDao implements DonkeyDao {
     }
 
     private String getRedisMessageKey(String channelId, long messageId) {
-        return TOPIC_MESSAGE + ":" + getServerId() + ":" + channelId + ":" + messageId;
+        return TOPIC_MESSAGE + ":" + getServerId();
     }
 
-    private void redisPush(DaoTaskType daoTaskType, Object parameter, String channelId, long messageId) {
+    public void redisPush(DaoTaskType daoTaskType, Object parameter, String channelId, long messageId) {
         MQMessage mqMessage = new MQMessage();
         mqMessage.setParameter(parameter);
         mqMessage.setDaoTaskType(daoTaskType);
 
-        String json = JSON.toJSONString(mqMessage, SerializerFeature.DisableCircularReferenceDetect);
-        jedis.lpush(getRedisMessageKey(channelId, messageId), json);
+        try {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            ObjectOutputStream oo = new ObjectOutputStream(byteArrayOutputStream);
+            oo.writeObject(mqMessage);
+            Base64.Encoder encoder = Base64.getEncoder();
+            String encode = encoder.encodeToString(byteArrayOutputStream.toByteArray());
+            jedis.rpush(getRedisMessageKey(channelId, messageId), encode);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void sendCommit() {
+        ProducerRecord<String, String> producerRecord = new ProducerRecord<>(TOPIC_MESSAGE, getRedisMessageKey("", -1));
+        KafkaProducer<String, String> producer = KafkaPool.getInstance().getProducer();
+        producer.send(producerRecord);
+        KafkaPool.getInstance().returnProducer(producer);
     }
 
     public JedisPool getJedisPool() {
@@ -472,4 +468,14 @@ public class KafkaDao implements DonkeyDao {
     public void setJedisPool(JedisPool jedisPool) {
         this.jedisPool = jedisPool;
     }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+
+
 }

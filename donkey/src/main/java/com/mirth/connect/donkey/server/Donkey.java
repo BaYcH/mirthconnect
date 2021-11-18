@@ -160,7 +160,9 @@ public class Donkey {
         } finally {
             dao.close();
         }
-        
+
+        daoFactory = jdbcDaoFactory;
+
         KafkaPool.setConsumerProps(donkeyConfiguration.getPropertiesByprefix("mq.kafka.consumer", true));
         KafkaPool.setProducerProps(donkeyConfiguration.getPropertiesByprefix("mq.kafka.producer", true));
 
@@ -175,6 +177,12 @@ public class Donkey {
         kafkaDaoFactory.setJdbcDaoFactory(jdbcDaoFactory);
         kafkaDaoFactory.setJedisPool(jedisPool);
         kafkaDaoFactory.setServerId(donkeyConfiguration.getServerId());
+        kafkaDaoFactory.setSerializerProvider(new SerializerProvider() {
+            @Override
+            public Serializer getSerializer(Integer metaDataId) {
+                return serializer;
+            }
+        });
         daoFactory = kafkaDaoFactory;
     }
 

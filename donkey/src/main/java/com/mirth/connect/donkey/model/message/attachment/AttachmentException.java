@@ -9,7 +9,9 @@
 
 package com.mirth.connect.donkey.model.message.attachment;
 
-public class AttachmentException extends Exception {
+import java.io.Serializable;
+
+public class AttachmentException extends Exception implements Serializable {
     public AttachmentException(Throwable cause) {
         super(cause);
     }

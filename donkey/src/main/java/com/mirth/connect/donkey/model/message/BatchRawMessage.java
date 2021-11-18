@@ -9,12 +9,13 @@
 
 package com.mirth.connect.donkey.model.message;
 
+import com.mirth.connect.donkey.server.message.batch.BatchMessageSource;
+
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.mirth.connect.donkey.server.message.batch.BatchMessageSource;
-
-public class BatchRawMessage {
+public class BatchRawMessage implements Serializable {
     private BatchMessageSource batchMessageSource;
     protected Map<String, Object> sourceMap = new HashMap<String, Object>();
 
