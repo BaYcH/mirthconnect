@@ -113,8 +113,6 @@ public class BufferedDao implements DonkeyDao {
                 DaoTask task = tasks.poll();
                 Object[] p = task.getParameters();
 
-                System.out.println("BufferedDao:" + task.getTaskType());
-
                 // @formatter:off
                 switch (task.getTaskType()) {
                     case INSERT_MESSAGE:

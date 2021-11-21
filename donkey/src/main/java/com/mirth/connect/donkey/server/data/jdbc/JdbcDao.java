@@ -237,7 +237,6 @@ public class JdbcDao implements DonkeyDao {
             }
 
             PreparedStatement statement = prepareStatement("insertMessageContent", channelId);
-            System.out.println("messageId:" + messageId + "   metaDataId:" + metaDataId + "  contentType:" + contentType.getContentTypeCode());
             statement.setInt(1, metaDataId);
             statement.setLong(2, messageId);
             statement.setInt(3, contentType.getContentTypeCode());
@@ -248,8 +247,10 @@ public class JdbcDao implements DonkeyDao {
             statement.executeUpdate();
             statement.clearParameters();
         } catch (SQLException e) {
+            logger.debug(e);
 //            throw new DonkeyDaoException(e);
-            e.printStackTrace();
+            // ToDo 需判断当前数据是否已经插入，目前处理方式为直接调用更新
+            storeContent(channelId, messageId, metaDataId, contentType, content, dataType, encrypted);
         }
     }
 

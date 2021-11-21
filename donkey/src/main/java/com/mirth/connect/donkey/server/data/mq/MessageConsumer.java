@@ -49,15 +49,23 @@ public class MessageConsumer implements Runnable {
         KafkaConsumer<String, String> consumer = KafkaPool.getInstance().getConsumer();
         consumer.subscribe(Collections.singleton(KafkaDao.TOPIC_MESSAGE));
         Base64.Decoder decoder = Base64.getDecoder();
-
+        int index = 0;
+        int pullTime = 500;
         while (true) {
             if (Thread.currentThread().interrupted()) {
                 break;
             }
-            ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(2000));
+            ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(pullTime));
+            if (index > 60) {
+                pullTime = 3000;
+            }
             if (records.isEmpty()) {
+                index++;
                 continue;
             }
+
+            index = 0;
+            pullTime = 500;
 
             JdbcDao jdbcDao = jdbcDaoFactory.getDao();
             for (ConsumerRecord<String, String> msg : records) {
@@ -71,7 +79,6 @@ public class MessageConsumer implements Runnable {
                             byte[] decode = decoder.decode(base64);
                             ObjectInputStream objectInputStream = new ObjectInputStream(new ByteArrayInputStream(decode));
                             MQMessage mqMessage = (MQMessage) objectInputStream.readObject();
-                            System.out.println("MessageConsumer:" + mqMessage.getDaoTaskType());
                             switch (mqMessage.getDaoTaskType()) {
                                 case INSERT_MESSAGE:
                                     jdbcDao.insertMessage((Message) mqMessage.getParameter());
@@ -170,29 +177,30 @@ public class MessageConsumer implements Runnable {
                                     break;
                                 case COMMIT:
                                     jdbcDao.commit(true);
+                                    jedis.expire(key, Long.valueOf(60));
                                     break;
                                 default:
                                     throw new RuntimeException("未知的处理模块！");
                             }
-                        } finally {
-
+                        } catch (Exception ex) {
+                            logger.error(ex);
                         }
 
                     }
                     jedisPool.returnResource(jedis);
 
                 } catch (Exception ex) {
-                    ex.printStackTrace();
+                    logger.error(ex);
                 }
                 try {
                     jdbcDao.commit(true);
                     consumer.commitSync();
                 } catch (Exception ex) {
-                    ex.printStackTrace();
+                    logger.debug(ex);
                 }
-
             }
-
         }
+
+        consumer.close();
     }
 }

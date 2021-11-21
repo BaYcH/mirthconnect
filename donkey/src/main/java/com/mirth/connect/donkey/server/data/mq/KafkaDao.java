@@ -434,7 +434,7 @@ public class KafkaDao implements DonkeyDao {
     }
 
     private String getRedisMessageKey(String channelId, long messageId) {
-        return TOPIC_MESSAGE + ":" + getServerId();
+        return TOPIC_MESSAGE + ":" + getSessionId();
     }
 
     public void redisPush(DaoTaskType daoTaskType, Object parameter, String channelId, long messageId) {
@@ -449,6 +449,7 @@ public class KafkaDao implements DonkeyDao {
             Base64.Encoder encoder = Base64.getEncoder();
             String encode = encoder.encodeToString(byteArrayOutputStream.toByteArray());
             jedis.rpush(getRedisMessageKey(channelId, messageId), encode);
+            jedis.expire(getRedisMessageKey(channelId, messageId), Long.valueOf(3600 * 24));
         } catch (IOException e) {
             e.printStackTrace();
         }
