@@ -35,9 +35,10 @@ public class KafkaDao implements DonkeyDao {
 
     private JedisPool jedisPool;
     private JdbcDao jdbcDao;
-    private Jedis jedis;
     private String mirthServerKey;
     private String serverId;
+    private String channelId;
+    private long messageId;
     private String sessionId;
 
     public static final String TOPIC_MESSAGE = "MIRTH_DATA_MESSAGE";
@@ -82,6 +83,7 @@ public class KafkaDao implements DonkeyDao {
     @Override
     public void executeBatchInsertMessageContent(String channelId) {
         redisPush(DaoTaskType.EXECUTE_BATCH_INSERT_MESSAGE_CONTENT, channelId, channelId, -1);
+        //jdbcDao.executeBatchInsertMessageContent(channelId);
     }
 
     @Override
@@ -120,6 +122,7 @@ public class KafkaDao implements DonkeyDao {
     @Override
     public void addChannelStatistics(Statistics statistics) {
         redisPush(DaoTaskType.STORE_CHANNEL_STATISTICS, statistics, "", -1);
+        //jdbcDao.addChannelStatistics(statistics);
     }
 
     @Override
@@ -286,7 +289,14 @@ public class KafkaDao implements DonkeyDao {
 
     @Override
     public long getNextMessageId(String channelId) {
-        return jedis.incr(TOPIC_CHANNEL + ":" + channelId);
+        Jedis jedis = jedisPool.getResource();
+        try {
+            return jedis.incr(TOPIC_CHANNEL + ":" + channelId);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        } finally {
+            jedis.close();
+        }
     }
 
     @Override
@@ -381,7 +391,6 @@ public class KafkaDao implements DonkeyDao {
 
     @Override
     public void commit(boolean durable) {
-        jedisPool.returnResource(jedis);
         jdbcDao.commit(durable);
     }
 
@@ -392,7 +401,6 @@ public class KafkaDao implements DonkeyDao {
 
     @Override
     public void close() {
-        jedis.close();
         jdbcDao.close();
     }
 
@@ -407,14 +415,6 @@ public class KafkaDao implements DonkeyDao {
 
     public void setJdbcDao(JdbcDao jdbcDao) {
         this.jdbcDao = jdbcDao;
-    }
-
-    public Jedis getJedis() {
-        return jedis;
-    }
-
-    public void setJedis(Jedis jedis) {
-        this.jedis = jedis;
     }
 
     public String getMirthServerKey() {
@@ -434,7 +434,7 @@ public class KafkaDao implements DonkeyDao {
     }
 
     private String getRedisMessageKey(String channelId, long messageId) {
-        return TOPIC_MESSAGE + ":" + getSessionId();
+        return TOPIC_MESSAGE + ":" + channelId + ":" + messageId;
     }
 
     public void redisPush(DaoTaskType daoTaskType, Object parameter, String channelId, long messageId) {
@@ -442,21 +442,30 @@ public class KafkaDao implements DonkeyDao {
         mqMessage.setParameter(parameter);
         mqMessage.setDaoTaskType(daoTaskType);
 
+        if (channelId != "" && messageId > -1) {
+            setChannelId(channelId);
+            setMessageId(messageId);
+        }
+        System.out.println(messageId + "：准备获取jedis");
+        Jedis jedis = jedisPool.getResource();
+        System.out.println(messageId + ":已获取");
         try {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             ObjectOutputStream oo = new ObjectOutputStream(byteArrayOutputStream);
             oo.writeObject(mqMessage);
             Base64.Encoder encoder = Base64.getEncoder();
             String encode = encoder.encodeToString(byteArrayOutputStream.toByteArray());
-            jedis.rpush(getRedisMessageKey(channelId, messageId), encode);
+            jedis.rpush(getRedisMessageKey(getChannelId(), getMessageId()), encode);
             jedis.expire(getRedisMessageKey(channelId, messageId), Long.valueOf(3600 * 24));
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            jedis.close();
         }
     }
 
     public void sendCommit() {
-        ProducerRecord<String, String> producerRecord = new ProducerRecord<>(TOPIC_MESSAGE, getRedisMessageKey("", -1));
+        ProducerRecord<String, String> producerRecord = new ProducerRecord<>(TOPIC_MESSAGE, getRedisMessageKey(getChannelId(), getMessageId()));
         KafkaProducer<String, String> producer = KafkaPool.getInstance().getProducer();
         producer.send(producerRecord);
         KafkaPool.getInstance().returnProducer(producer);
@@ -478,5 +487,19 @@ public class KafkaDao implements DonkeyDao {
         this.sessionId = sessionId;
     }
 
+    public String getChannelId() {
+        return channelId;
+    }
 
+    public void setChannelId(String channelId) {
+        this.channelId = channelId;
+    }
+
+    public long getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(long messageId) {
+        this.messageId = messageId;
+    }
 }

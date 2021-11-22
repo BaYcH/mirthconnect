@@ -32,7 +32,6 @@ public class KafkaDaoFactory implements DonkeyDaoFactory {
         KafkaDao kafkaDao = new KafkaDao();
         kafkaDao.setJedisPool(jedisPool);
         kafkaDao.setJdbcDao(jdbcDaoFactory.getDao(serializerProvider));
-        kafkaDao.setJedis(jedisPool.getResource());
         kafkaDao.setDecryptData(this.decryptData);
         kafkaDao.setEncryptData(this.encryptData);
         kafkaDao.setStatisticsUpdater(this.statisticsUpdater);

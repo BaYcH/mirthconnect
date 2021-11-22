@@ -26,6 +26,7 @@ import org.apache.log4j.Logger;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class BufferedDao implements DonkeyDao {
 
@@ -39,6 +40,7 @@ public class BufferedDao implements DonkeyDao {
     private Queue<DaoTask> tasks = new LinkedList<DaoTask>();
     private boolean closed = false;
     private Logger logger = Logger.getLogger(this.getClass());
+    private Future<?> executeResult;
 
     protected BufferedDao(DonkeyDaoFactory daoFactory, SerializerProvider serializerProvider, boolean encryptData, boolean decryptData, StatisticsUpdater statisticsUpdater) {
         this.daoFactory = daoFactory;
@@ -84,12 +86,18 @@ public class BufferedDao implements DonkeyDao {
         }
 
         logger.warn(Thread.currentThread().getName() + "：准备保存数据");
-//        executors.submit(() -> {
-//            logger.warn(Thread.currentThread().getName() + ":开始执行保存数据!");
-//            executeTasks(durable);
-//            logger.warn(Thread.currentThread().getName() + ":执行保存数据完毕!");
-//        });
-        executeTasks(durable);
+//        if (executeResult != null && !executeResult.isDone()) {
+//            try {
+//                executeResult.wait();
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+        executeResult = executors.submit(() -> {
+            logger.warn(Thread.currentThread().getName() + ":开始执行保存数据!");
+            executeTasks(durable);
+            logger.warn(Thread.currentThread().getName() + ":执行保存数据完毕!");
+        });
     }
 
     private DonkeyDao getDelegateDao() {

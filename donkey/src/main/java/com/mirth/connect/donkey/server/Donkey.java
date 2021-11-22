@@ -167,10 +167,15 @@ public class Donkey {
         KafkaPool.setProducerProps(donkeyConfiguration.getPropertiesByprefix("mq.kafka.producer", true));
 
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
-        jedisPoolConfig.setMaxTotal(30);
-        jedisPoolConfig.setMaxIdle(8);
+        jedisPoolConfig.setMaxTotal(50);
+        jedisPoolConfig.setMaxIdle(50);
+        jedisPoolConfig.setMinIdle(8);
+        jedisPoolConfig.setMaxWaitMillis(30 * 1000);
         jedisPoolConfig.setTestOnBorrow(true);
-        jedisPoolConfig.setMaxWaitMillis(3000);
+        jedisPoolConfig.setTestOnReturn(true);
+        jedisPoolConfig.setTimeBetweenEvictionRunsMillis(10 * 1000);
+        jedisPoolConfig.setMinEvictableIdleTimeMillis(30 * 1000);
+        jedisPoolConfig.setNumTestsPerEvictionRun(-1);
         JedisPool jedisPool = new JedisPool(jedisPoolConfig, "127.0.0.1", 6379, 3000);
 
         KafkaDaoFactory kafkaDaoFactory = new KafkaDaoFactory();

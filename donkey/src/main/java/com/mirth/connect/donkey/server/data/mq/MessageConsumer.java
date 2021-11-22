@@ -1,5 +1,6 @@
 package com.mirth.connect.donkey.server.data.mq;
 
+import com.google.common.util.concurrent.RateLimiter;
 import com.mirth.connect.donkey.model.message.ConnectorMessage;
 import com.mirth.connect.donkey.model.message.Message;
 import com.mirth.connect.donkey.model.message.MessageContent;
@@ -22,6 +23,7 @@ import java.time.Duration;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author BaYcT
@@ -32,6 +34,8 @@ import java.util.List;
 public class MessageConsumer implements Runnable {
 
     private Logger logger = Logger.getLogger(getClass());
+
+    private final RateLimiter rateLimiter = RateLimiter.create(15);
 
     @Override
     public void run() {
@@ -55,6 +59,7 @@ public class MessageConsumer implements Runnable {
             if (Thread.currentThread().interrupted()) {
                 break;
             }
+
             ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(pullTime));
             if (index > 60) {
                 pullTime = 3000;
@@ -73,8 +78,14 @@ public class MessageConsumer implements Runnable {
                     Jedis jedis = jedisPool.getResource();
                     String key = msg.value();
                     List<String> messages = Collections.EMPTY_LIST;
-                    while ((messages = jedis.blpop(3, key)) != null && messages.size() > 1) {
-                        String base64 = messages.get(1);
+                    String message = "";
+                    while ((message = jedis.lpop(key)) != null && null != message && message.length() > 0) {
+
+                        while (!rateLimiter.tryAcquire(500, TimeUnit.MILLISECONDS)) {
+                            System.out.println("已限流!");
+                        }
+
+                        String base64 = message;//messages.get(1);
                         try {
                             byte[] decode = decoder.decode(base64);
                             ObjectInputStream objectInputStream = new ObjectInputStream(new ByteArrayInputStream(decode));
@@ -185,19 +196,18 @@ public class MessageConsumer implements Runnable {
                         } catch (Exception ex) {
                             logger.error(ex);
                         }
-
                     }
-                    jedisPool.returnResource(jedis);
+                    jedis.close();
 
                 } catch (Exception ex) {
                     logger.error(ex);
                 }
-                try {
-                    jdbcDao.commit(true);
-                    consumer.commitSync();
-                } catch (Exception ex) {
-                    logger.debug(ex);
-                }
+            }
+            try {
+                jdbcDao.commit(true);
+                consumer.commitSync();
+            } catch (Exception ex) {
+                logger.error(ex);
             }
         }
 
