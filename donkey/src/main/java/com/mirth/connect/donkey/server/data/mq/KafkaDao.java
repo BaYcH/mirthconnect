@@ -446,9 +446,7 @@ public class KafkaDao implements DonkeyDao {
             setChannelId(channelId);
             setMessageId(messageId);
         }
-        System.out.println(messageId + "：准备获取jedis");
         Jedis jedis = jedisPool.getResource();
-        System.out.println(messageId + ":已获取");
         try {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             ObjectOutputStream oo = new ObjectOutputStream(byteArrayOutputStream);

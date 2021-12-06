@@ -73,9 +73,9 @@ public class MessageConsumer implements Runnable {
             pullTime = 500;
 
             JdbcDao jdbcDao = jdbcDaoFactory.getDao();
+            Jedis jedis = jedisPool.getResource();
             for (ConsumerRecord<String, String> msg : records) {
                 try {
-                    Jedis jedis = jedisPool.getResource();
                     String key = msg.value();
                     List<String> messages = Collections.EMPTY_LIST;
                     String message = "";
@@ -197,8 +197,7 @@ public class MessageConsumer implements Runnable {
                             logger.error(ex);
                         }
                     }
-                    jedis.close();
-
+                    jedis.expire(key, Long.valueOf(60));
                 } catch (Exception ex) {
                     logger.error(ex);
                 }
@@ -206,8 +205,11 @@ public class MessageConsumer implements Runnable {
             try {
                 jdbcDao.commit(true);
                 consumer.commitSync();
+                jedis.close();
             } catch (Exception ex) {
                 logger.error(ex);
+            } finally {
+                jdbcDao.close();
             }
         }
 

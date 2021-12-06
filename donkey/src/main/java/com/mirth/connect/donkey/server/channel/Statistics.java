@@ -9,25 +9,20 @@
 
 package com.mirth.connect.donkey.server.channel;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
-
-import org.apache.commons.lang3.ArrayUtils;
-
 import com.mirth.connect.donkey.model.event.MessageEventType;
 import com.mirth.connect.donkey.model.message.Status;
 import com.mirth.connect.donkey.server.Donkey;
 import com.mirth.connect.donkey.server.event.EventDispatcher;
 import com.mirth.connect.donkey.server.event.MessageEvent;
+import org.apache.commons.lang3.ArrayUtils;
 
-public class Statistics {
+import java.io.Serializable;
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
+
+public class Statistics implements Serializable {
 
     public static final Status[] TRACKED_STATUSES = new Status[]{Status.RECEIVED,
             Status.FILTERED, Status.SENT, Status.ERROR};

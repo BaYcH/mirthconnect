@@ -42,16 +42,19 @@ public class KafkaDaoFactory implements DonkeyDaoFactory {
     @Override
     public void setEncryptData(boolean encryptData) {
         this.encryptData = encryptData;
+        jdbcDaoFactory.setEncryptData(encryptData);
     }
 
     @Override
     public void setDecryptData(boolean decryptData) {
         this.decryptData = decryptData;
+        jdbcDaoFactory.setDecryptData(decryptData);
     }
 
     @Override
     public void setStatisticsUpdater(StatisticsUpdater statisticsUpdater) {
         this.statisticsUpdater = statisticsUpdater;
+        jdbcDaoFactory.setStatisticsUpdater(statisticsUpdater);
     }
 
     public JdbcDaoFactory getJdbcDaoFactory() {

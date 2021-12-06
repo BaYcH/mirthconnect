@@ -9,63 +9,22 @@
 
 package com.mirth.connect.model.converters;
 
-import java.io.Writer;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.log4j.Logger;
-
 import com.mirth.connect.donkey.model.channel.ConnectorProperties;
 import com.mirth.connect.donkey.util.DonkeyElement;
 import com.mirth.connect.donkey.util.DonkeyElement.DonkeyElementException;
 import com.mirth.connect.donkey.util.xstream.SerializerException;
 import com.mirth.connect.donkey.util.xstream.XStreamSerializer;
-import com.mirth.connect.model.ArchiveMetaData;
-import com.mirth.connect.model.Channel;
-import com.mirth.connect.model.ChannelDependency;
-import com.mirth.connect.model.ChannelGroup;
-import com.mirth.connect.model.ChannelHeader;
-import com.mirth.connect.model.ChannelProperties;
-import com.mirth.connect.model.ChannelStatistics;
-import com.mirth.connect.model.ChannelStatus;
-import com.mirth.connect.model.ChannelSummary;
-import com.mirth.connect.model.CodeTemplate;
-import com.mirth.connect.model.CodeTemplateLibrary;
-import com.mirth.connect.model.CodeTemplateLibrarySaveResult;
-import com.mirth.connect.model.Connector;
-import com.mirth.connect.model.ConnectorMetaData;
-import com.mirth.connect.model.ContextType;
-import com.mirth.connect.model.DashboardChannelInfo;
-import com.mirth.connect.model.DashboardStatus;
-import com.mirth.connect.model.DeployedChannelInfo;
-import com.mirth.connect.model.DriverInfo;
-import com.mirth.connect.model.ExtensionLibrary;
-import com.mirth.connect.model.Filter;
-import com.mirth.connect.model.InvalidChannel;
-import com.mirth.connect.model.MetaData;
-import com.mirth.connect.model.PasswordRequirements;
-import com.mirth.connect.model.PluginClass;
-import com.mirth.connect.model.PluginMetaData;
-import com.mirth.connect.model.ResourcePropertiesList;
-import com.mirth.connect.model.Rule;
-import com.mirth.connect.model.ServerConfiguration;
-import com.mirth.connect.model.ServerEvent;
-import com.mirth.connect.model.ServerSettings;
-import com.mirth.connect.model.Step;
-import com.mirth.connect.model.Transformer;
-import com.mirth.connect.model.UpdateSettings;
-import com.mirth.connect.model.User;
-import com.mirth.connect.model.alert.AlertAction;
-import com.mirth.connect.model.alert.AlertActionGroup;
-import com.mirth.connect.model.alert.AlertChannels;
-import com.mirth.connect.model.alert.AlertConnectors;
-import com.mirth.connect.model.alert.AlertModel;
-import com.mirth.connect.model.alert.AlertStatus;
-import com.mirth.connect.model.alert.DefaultTrigger;
+import com.mirth.connect.model.*;
+import com.mirth.connect.model.alert.*;
 import com.mirth.connect.model.filters.EventFilter;
 import com.mirth.connect.model.filters.MessageFilter;
 import com.mirth.connect.model.util.ImportConverter3_0_0;
 import com.mirth.connect.util.MigrationUtil;
+import org.apache.log4j.Logger;
+
+import java.io.Writer;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ObjectXMLSerializer extends XStreamSerializer {
     public final static String VERSION_ATTRIBUTE_NAME = "version";
@@ -316,5 +275,9 @@ public class ObjectXMLSerializer extends XStreamSerializer {
         }
 
         throw new SerializerException(e);
+    }
+
+    public static void main(String[] args) {
+
     }
 }
