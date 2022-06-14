@@ -11,7 +11,6 @@ package com.mirth.connect.donkey.server.data;
 
 import com.mirth.connect.donkey.model.message.Status;
 import com.mirth.connect.donkey.server.channel.Statistics;
-import com.mirth.connect.donkey.server.data.mq.KafkaDaoFactory;
 import org.apache.log4j.Logger;
 
 import java.util.Map;
@@ -37,9 +36,7 @@ public class DonkeyStatisticsUpdater extends Thread implements StatisticsUpdater
 
     public void setDaoFactory(DonkeyDaoFactory daoFactory) {
         this.daoFactory = daoFactory;
-        if (this.daoFactory instanceof KafkaDaoFactory) {
-            this.daoFactory = ((KafkaDaoFactory) this.daoFactory).getJdbcDaoFactory();
-        }
+
         if (this.daoFactory != null) {
             this.daoFactory.setStatisticsUpdater(this);
         }

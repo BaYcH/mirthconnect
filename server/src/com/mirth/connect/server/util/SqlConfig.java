@@ -1,22 +1,20 @@
 /*
  * Copyright (c) Mirth Corporation. All rights reserved.
- * 
+ *
  * http://www.mirthcorp.com
- * 
+ *
  * The software in this package is published under the terms of the MPL license a copy of which has
  * been included with this distribution in the LICENSE.txt file.
  */
 
 package com.mirth.connect.server.util;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.Reader;
-import java.io.StringReader;
-import java.util.Map;
-
-import javax.xml.parsers.DocumentBuilderFactory;
-
+import com.mirth.connect.donkey.util.DonkeyElement;
+import com.mirth.connect.model.DatabaseSettings;
+import com.mirth.connect.model.PluginMetaData;
+import com.mirth.connect.model.converters.DocumentSerializer;
+import com.mirth.connect.server.controllers.ControllerFactory;
+import com.mirth.connect.server.controllers.ExtensionController;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.io.Resources;
@@ -28,18 +26,19 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 
-import com.mirth.connect.donkey.util.DonkeyElement;
-import com.mirth.connect.model.DatabaseSettings;
-import com.mirth.connect.model.PluginMetaData;
-import com.mirth.connect.model.converters.DocumentSerializer;
-import com.mirth.connect.server.controllers.ControllerFactory;
-import com.mirth.connect.server.controllers.ExtensionController;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.Reader;
+import java.io.StringReader;
+import java.util.Map;
 
 public class SqlConfig {
     private static SqlSessionFactory sqlSessionfactory;
     private static SqlSessionManager sqlSessionManager = null;
 
-    private SqlConfig() {}
+    private SqlConfig() {
+    }
 
     public static SqlSessionManager getSqlSessionManager() {
         synchronized (SqlConfig.class) {
@@ -63,7 +62,8 @@ public class SqlConfig {
             LogFactory.useLog4JLogging();
             System.setProperty("derby.stream.error.method", "com.mirth.connect.server.Mirth.getNullOutputStream");
 
-            DatabaseSettings databaseSettings = ControllerFactory.getFactory().createConfigurationController().getDatabaseSettings();
+            // 获取公共配置数据库改为获取配置数据库
+            DatabaseSettings databaseSettings = ControllerFactory.getFactory().createConfigurationController().getConfigDatabaseSettings();
 
             BufferedReader br = new BufferedReader(Resources.getResourceAsReader("SqlMapConfig.xml"));
 

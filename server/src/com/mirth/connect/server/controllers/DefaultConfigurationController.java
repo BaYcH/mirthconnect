@@ -1,8 +1,8 @@
 /*
  * Copyright (c) Mirth Corporation. All rights reserved.
- * 
+ *
  * http://www.mirthcorp.com
- * 
+ *
  * The software in this package is published under the terms of the MPL license a copy of which has
  * been included with this distribution in the LICENSE.txt file.
  */
@@ -77,7 +77,6 @@ import java.util.Map.Entry;
 
 /**
  * The ConfigurationController provides access to the Mirth configuration.
- * 
  */
 public class DefaultConfigurationController extends ConfigurationController {
     public static final String PROPERTIES_CORE = "core";
@@ -103,7 +102,8 @@ public class DefaultConfigurationController extends ConfigurationController {
     private static PropertiesConfiguration versionConfig = new PropertiesConfiguration();
     private static PropertiesConfiguration mirthConfig = new PropertiesConfiguration();
     private static EncryptionSettings encryptionConfig;
-    private static DatabaseSettings databaseConfig;
+    private static DatabaseSettings dataDatabase;
+    private static DatabaseSettings configDatabase;
     private static String apiBypassword;
     private static int statsUpdateInterval;
 
@@ -365,7 +365,12 @@ public class DefaultConfigurationController extends ConfigurationController {
 
     @Override
     public DatabaseSettings getDatabaseSettings() throws ControllerException {
-        return databaseConfig;
+        return dataDatabase;
+    }
+
+    @Override
+    public DatabaseSettings getConfigDatabaseSettings() throws ControllerException {
+        return configDatabase;
     }
 
     @Override
@@ -659,7 +664,7 @@ public class DefaultConfigurationController extends ConfigurationController {
                     logger.error("Unable to update libraries: " + e.getMessage(), e);
                 }
             }
-            
+
             if (serverConfiguration.getChannelDependencies() != null) {
                 setChannelDependencies(serverConfiguration.getChannelDependencies());
             } else {
@@ -933,12 +938,19 @@ public class DefaultConfigurationController extends ConfigurationController {
     @Override
     public void initializeDatabaseSettings() {
         try {
-            databaseConfig = new DatabaseSettings(ConfigurationConverter.getProperties(mirthConfig));
+            dataDatabase = new DatabaseSettings(ConfigurationConverter.getProperties(mirthConfig));
+            configDatabase = new DatabaseSettings(this.getPropertiesByPrefix(DatabaseSettings.CONFIG_DATABASE_PREFIX, true));
+
+            // 如果未配置配置专用数据库，则使用整体数据库
+            if (null == configDatabase.getDatabase()) {
+                configDatabase = dataDatabase;
+            }
 
             // dir.base is not included in mirth.properties, so set it manually
-            databaseConfig.setDirBase(getBaseDir());
+            dataDatabase.setDirBase(getBaseDir());
+            configDatabase.setDirBase(getBaseDir());
 
-            String password = databaseConfig.getDatabasePassword();
+            String password = dataDatabase.getDatabasePassword();
 
             if (StringUtils.isNotEmpty(password)) {
                 ConfigurationController configurationController = ControllerFactory.getFactory().createConfigurationController();
@@ -949,7 +961,7 @@ public class DefaultConfigurationController extends ConfigurationController {
                     if (StringUtils.startsWith(password, EncryptionSettings.ENCRYPTION_PREFIX)) {
                         String encryptedPassword = StringUtils.removeStart(password, EncryptionSettings.ENCRYPTION_PREFIX);
                         String decryptedPassword = encryptor.decrypt(encryptedPassword);
-                        databaseConfig.setDatabasePassword(decryptedPassword);
+                        dataDatabase.setDatabasePassword(decryptedPassword);
                     } else if (StringUtils.isNotBlank(password)) {
                         // encrypt the password and write it back to the file
                         String encryptedPassword = EncryptionSettings.ENCRYPTION_PREFIX + encryptor.encrypt(password);
@@ -978,11 +990,11 @@ public class DefaultConfigurationController extends ConfigurationController {
     /*
      * If we have the encryption key property in the database, that means the previous keystore was
      * of type JKS, so we want to delete it so that a new JCEKS one can be created.
-     * 
+     *
      * If we migrated from a version prior to 2.2, then the key from the ENCRYTPION_KEY table has
      * been added to the CONFIGURATION table. We want to deserialize it and put it in the new
      * keystore. We also need to delete the property.
-     * 
+     *
      * NOTE that this method should only execute once.
      */
 
@@ -1059,13 +1071,10 @@ public class DefaultConfigurationController extends ConfigurationController {
     /**
      * Instantiates the encryptor and digester using the configuration properties. If the properties
      * are not found, reasonable defaults are used.
-     * 
-     * @param provider
-     *            The provider to use (ex. BC)
-     * @param keyStore
-     *            The keystore from which to load the secret encryption key
-     * @param keyPassword
-     *            The secret key password
+     *
+     * @param provider    The provider to use (ex. BC)
+     * @param keyStore    The keystore from which to load the secret encryption key
+     * @param keyPassword The secret key password
      * @throws Exception
      */
     private void configureEncryption(Provider provider, KeyStore keyStore, char[] keyPassword) throws Exception {
@@ -1103,7 +1112,6 @@ public class DefaultConfigurationController extends ConfigurationController {
     /**
      * Checks for an existing certificate to use for secure communication between the server and
      * client. If no certficate exists, this will generate a new one.
-     * 
      */
     private void generateDefaultCertificate(Provider provider, KeyStore keyStore, char[] keyPassword) throws Exception {
         final String certificateAlias = "mirthconnect";
@@ -1142,7 +1150,7 @@ public class DefaultConfigurationController extends ConfigurationController {
             logger.debug("generated new certificate with serial number: " + ((X509Certificate) sslCert).getSerialNumber());
 
             // add the generated SSL cert to the keystore using the key password
-            keyStore.setKeyEntry(certificateAlias, sslKeyPair.getPrivate(), keyPassword, new Certificate[] { sslCert });
+            keyStore.setKeyEntry(certificateAlias, sslKeyPair.getPrivate(), keyPassword, new Certificate[]{sslCert});
         } else {
             logger.debug("found certificate in keystore");
         }
@@ -1274,6 +1282,13 @@ public class DefaultConfigurationController extends ConfigurationController {
         }
     }
 
+    /**
+     * 获取配置文件中指定起始字符得配置信息
+     *
+     * @param prefix
+     * @param isRemovePrefix
+     * @return
+     */
     @Override
     public Properties getPropertiesByPrefix(String prefix, boolean isRemovePrefix) {
         Properties properties = new Properties();

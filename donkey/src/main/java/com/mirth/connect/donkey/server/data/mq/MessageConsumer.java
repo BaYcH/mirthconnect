@@ -74,17 +74,19 @@ public class MessageConsumer implements Runnable {
 
             JdbcDao jdbcDao = jdbcDaoFactory.getDao();
             Jedis jedis = jedisPool.getResource();
+            boolean lastCommit = false;
             for (ConsumerRecord<String, String> msg : records) {
                 try {
                     String key = msg.value();
                     List<String> messages = Collections.EMPTY_LIST;
                     String message = "";
+
                     while ((message = jedis.lpop(key)) != null && null != message && message.length() > 0) {
 
                         while (!rateLimiter.tryAcquire(500, TimeUnit.MILLISECONDS)) {
                             System.out.println("已限流!");
                         }
-
+                        lastCommit = false;
                         String base64 = message;//messages.get(1);
                         try {
                             byte[] decode = decoder.decode(base64);
@@ -188,7 +190,10 @@ public class MessageConsumer implements Runnable {
                                     break;
                                 case COMMIT:
                                     jdbcDao.commit(true);
+                                    jdbcDao.close();
+                                    jdbcDao = jdbcDaoFactory.getDao();
                                     jedis.expire(key, Long.valueOf(60));
+                                    lastCommit = true;
                                     break;
                                 default:
                                     throw new RuntimeException("未知的处理模块！");
@@ -201,9 +206,13 @@ public class MessageConsumer implements Runnable {
                 } catch (Exception ex) {
                     logger.error(ex);
                 }
+                if (!lastCommit) {
+                    jdbcDao.commit(true);
+                    jdbcDao.close();
+                    jdbcDao = jdbcDaoFactory.getDao();
+                }
             }
             try {
-                jdbcDao.commit(true);
                 consumer.commitSync();
                 jedis.close();
             } catch (Exception ex) {

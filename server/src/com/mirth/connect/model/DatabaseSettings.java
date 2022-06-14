@@ -1,19 +1,15 @@
 /*
  * Copyright (c) Mirth Corporation. All rights reserved.
- * 
+ *
  * http://www.mirthcorp.com
- * 
+ *
  * The software in this package is published under the terms of the MPL license a copy of which has
  * been included with this distribution in the LICENSE.txt file.
  */
 
 package com.mirth.connect.model;
 
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
-
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.configuration.ConfigurationConverter;
 import org.apache.commons.configuration.PropertiesConfiguration;
@@ -21,11 +17,16 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import com.thoughtworks.xstream.annotations.XStreamAlias;
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
 
 @XStreamAlias("databaseSettings")
 public class DatabaseSettings extends AbstractSettings implements Serializable, Auditable {
     private static final long serialVersionUID = 1L;
+
+    public static final String CONFIG_DATABASE_PREFIX = "config";
 
     private static final String DATABASE = "database";
     private static final String DATABASE_URL = "database.url";

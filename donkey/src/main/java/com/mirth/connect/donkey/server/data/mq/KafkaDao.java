@@ -391,6 +391,7 @@ public class KafkaDao implements DonkeyDao {
 
     @Override
     public void commit(boolean durable) {
+        redisPush(DaoTaskType.COMMIT, durable, "", -1);
         jdbcDao.commit(durable);
     }
 

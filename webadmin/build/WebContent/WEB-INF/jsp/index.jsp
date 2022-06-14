@@ -230,19 +230,19 @@
                 var heapSizeLetter = str.replace(/[^mg]/ig,'');
                 if (!/[mg]/i.test(heapSizeLetter)) {
                 	heapSizeLetter = 'm';
-                }
-                if (heapSizeLetter.toLowerCase() == 'g') {
-                	heapSize *= 1024;
-                }
-                
-                return heapSize;
-            }
-        </script>
-        <script type="text/javascript">
-       		function launchAdministrator(){
-				window.location.href = 'http://' + window.location.hostname + ':${actionBean.context.httpPort}${actionBean.context.contextPath}/webstart.jnlp?time=' + new Date().getTime() + '&maxHeapSize=' + $('#maxHeapSizeSelect').val();
-				//window.location.href = 'https://' + window.location.hostname + '${actionBean.context.contextPath}/webstart.jnlp?time=' + new Date().getTime() + '&maxHeapSize=' + $('#maxHeapSizeSelect').val();
-       		}
-        </script>
-    </body>
+				}
+				if (heapSizeLetter.toLowerCase() == 'g') {
+					heapSize *= 1024;
+				}
+
+				return heapSize;
+			}
+		</script>
+		<script type="text/javascript">
+			function launchAdministrator() {
+				//window.location.href = 'http://' + window.location.hostname + ':${actionBean.context.httpPort}${actionBean.context.contextPath}/webstart.jnlp?time=' + new Date().getTime() + '&maxHeapSize=' + $('#maxHeapSizeSelect').val();
+				window.location.href = 'https://' + window.location.hostname + '${actionBean.context.contextPath}/webstart.jnlp?time=' + new Date().getTime() + '&maxHeapSize=' + $('#maxHeapSizeSelect').val();
+			}
+		</script>
+	</body>
 </html>

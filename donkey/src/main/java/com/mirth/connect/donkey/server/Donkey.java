@@ -16,8 +16,6 @@ import com.mirth.connect.donkey.server.data.DonkeyDaoFactory;
 import com.mirth.connect.donkey.server.data.DonkeyStatisticsUpdater;
 import com.mirth.connect.donkey.server.data.jdbc.*;
 import com.mirth.connect.donkey.server.data.jdbc.XmlQuerySource.XmlQuerySourceException;
-import com.mirth.connect.donkey.server.data.mq.KafkaDaoFactory;
-import com.mirth.connect.donkey.server.data.mq.KafkaPool;
 import com.mirth.connect.donkey.server.data.mq.MessageConsumer;
 import com.mirth.connect.donkey.server.event.EventDispatcher;
 import com.mirth.connect.donkey.util.Serializer;
@@ -26,8 +24,6 @@ import com.mirth.connect.donkey.util.xstream.XStreamSerializer;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.log4j.Logger;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -163,32 +159,33 @@ public class Donkey {
 
         daoFactory = jdbcDaoFactory;
 
-        KafkaPool.setConsumerProps(donkeyConfiguration.getPropertiesByprefix("mq.kafka.consumer", true));
-        KafkaPool.setProducerProps(donkeyConfiguration.getPropertiesByprefix("mq.kafka.producer", true));
-
-        JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
-        jedisPoolConfig.setMaxTotal(50);
-        jedisPoolConfig.setMaxIdle(50);
-        jedisPoolConfig.setMinIdle(8);
-        jedisPoolConfig.setMaxWaitMillis(30 * 1000);
-        jedisPoolConfig.setTestOnBorrow(true);
-        jedisPoolConfig.setTestOnReturn(true);
-        jedisPoolConfig.setTimeBetweenEvictionRunsMillis(10 * 1000);
-        jedisPoolConfig.setMinEvictableIdleTimeMillis(30 * 1000);
-        jedisPoolConfig.setNumTestsPerEvictionRun(-1);
-        JedisPool jedisPool = new JedisPool(jedisPoolConfig, "127.0.0.1", 6379, 3000);
-
-        KafkaDaoFactory kafkaDaoFactory = new KafkaDaoFactory();
-        kafkaDaoFactory.setJdbcDaoFactory(jdbcDaoFactory);
-        kafkaDaoFactory.setJedisPool(jedisPool);
-        kafkaDaoFactory.setServerId(donkeyConfiguration.getServerId());
-        kafkaDaoFactory.setSerializerProvider(new SerializerProvider() {
-            @Override
-            public Serializer getSerializer(Integer metaDataId) {
-                return serializer;
-            }
-        });
-        daoFactory = kafkaDaoFactory;
+        // 暂不启用消息队列
+//        KafkaPool.setConsumerProps(donkeyConfiguration.getPropertiesByprefix("mq.kafka.consumer", true));
+//        KafkaPool.setProducerProps(donkeyConfiguration.getPropertiesByprefix("mq.kafka.producer", true));
+//
+//        JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
+//        jedisPoolConfig.setMaxTotal(50);
+//        jedisPoolConfig.setMaxIdle(50);
+//        jedisPoolConfig.setMinIdle(8);
+//        jedisPoolConfig.setMaxWaitMillis(30 * 1000);
+//        jedisPoolConfig.setTestOnBorrow(true);
+//        jedisPoolConfig.setTestOnReturn(true);
+//        jedisPoolConfig.setTimeBetweenEvictionRunsMillis(10 * 1000);
+//        jedisPoolConfig.setMinEvictableIdleTimeMillis(30 * 1000);
+//        jedisPoolConfig.setNumTestsPerEvictionRun(-1);
+//        JedisPool jedisPool = new JedisPool(jedisPoolConfig, "127.0.0.1", 6379, 3000);
+//
+//        KafkaDaoFactory kafkaDaoFactory = new KafkaDaoFactory();
+//        kafkaDaoFactory.setJdbcDaoFactory(jdbcDaoFactory);
+//        kafkaDaoFactory.setJedisPool(jedisPool);
+//        kafkaDaoFactory.setServerId(donkeyConfiguration.getServerId());
+//        kafkaDaoFactory.setSerializerProvider(new SerializerProvider() {
+//            @Override
+//            public Serializer getSerializer(Integer metaDataId) {
+//                return serializer;
+//            }
+//        });
+//        daoFactory = kafkaDaoFactory;
     }
 
     public DonkeyDaoFactory getDaoFactory() {

@@ -1,8 +1,8 @@
 /*
  * Copyright (c) Mirth Corporation. All rights reserved.
- * 
+ *
  * http://www.mirthcorp.com
- * 
+ *
  * The software in this package is published under the terms of the MPL license a copy of which has
  * been included with this distribution in the LICENSE.txt file.
  */
@@ -108,9 +108,12 @@ public class DonkeyEngineController implements EngineController {
 
     private enum StatusTask {
         START, STOP, PAUSE, RESUME
-    };
+    }
 
-    protected DonkeyEngineController() {}
+    ;
+
+    protected DonkeyEngineController() {
+    }
 
     @Override
     public void startEngine() throws StartException, StopException, ControllerException, InterruptedException {
@@ -147,6 +150,7 @@ public class DonkeyEngineController implements EngineController {
         donkeyProperties.putAll(configurationController.getPropertiesByPrefix("mq.kafka.consumer", false));
         donkeyProperties.putAll(configurationController.getPropertiesByPrefix("mq.kafka.producer", false));
         donkeyProperties.putAll(configurationController.getPropertiesByPrefix("redis", false));
+
         donkeyProperties.setProperty("donkey.statsupdateinterval", String.valueOf(configurationController.getStatsUpdateInterval()));
 
         donkey.startEngine(new DonkeyConfiguration(configurationController.getApplicationDataDir(), donkeyProperties, donkeyEncryptor, eventDispatcher, configurationController.getServerId()));
@@ -301,7 +305,7 @@ public class DonkeyEngineController implements EngineController {
                                 List<ChannelTask> nextTaskList = orderedDeployTasks.get(j);
 
                                 // Remove any channel task associated with one of the IDs to remove
-                                for (Iterator<ChannelTask> it = nextTaskList.iterator(); it.hasNext();) {
+                                for (Iterator<ChannelTask> it = nextTaskList.iterator(); it.hasNext(); ) {
                                     ChannelTask task = it.next();
                                     if (dependentIdsToRemove.contains(task.getChannelId())) {
                                         it.remove();
@@ -501,7 +505,7 @@ public class DonkeyEngineController implements EngineController {
                                 List<ChannelTask> nextTaskList = orderedTasks.get(j);
 
                                 // Remove any channel task associated with one of the IDs to remove
-                                for (Iterator<ChannelTask> it = nextTaskList.iterator(); it.hasNext();) {
+                                for (Iterator<ChannelTask> it = nextTaskList.iterator(); it.hasNext(); ) {
                                     ChannelTask channelTask = it.next();
                                     if (idsToRemove.contains(channelTask.getChannelId())) {
                                         it.remove();
@@ -563,7 +567,9 @@ public class DonkeyEngineController implements EngineController {
         tasks.add(new RemoveMessagesTask(channelId, results));
 
         waitForTasks(submitTasks(tasks, handler));
-    };
+    }
+
+    ;
 
     @Override
     public void removeAllMessages(Set<String> channelIds, boolean force, boolean clearStatistics, ChannelTaskHandler handler) {
