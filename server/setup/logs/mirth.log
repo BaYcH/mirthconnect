@@ -1,5 +1,0 @@
-INFO  2022-06-14 17:10:32,327 [Main Server Thread] com.mirth.connect.server.Mirth: Mirth Connect 3.4.1 (Built on ÁùÔÂ 14, 2022) server successfully started.
-INFO  2022-06-14 17:10:32,328 [Main Server Thread] com.mirth.connect.server.Mirth: This product was developed by Mirth Corporation (http://www.mirthcorp.com) and its contributors (c)2005-2022.
-INFO  2022-06-14 17:10:32,328 [Main Server Thread] com.mirth.connect.server.Mirth: Running Java HotSpot(TM) 64-Bit Server VM 1.8.0_311 on Windows 10 (10.0, amd64), derby, with charset GBK.
-INFO  2022-06-14 17:10:32,333 [Main Server Thread] com.mirth.connect.server.Mirth: Web server running at http://10.76.10.180:8080/ and https://10.76.10.180:8443/
-INFO  2022-06-14 17:20:48,320 [Shutdown Hook Thread] com.mirth.connect.server.Mirth: shutting down mirth due to normal request
