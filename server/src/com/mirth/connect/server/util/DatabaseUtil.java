@@ -1,31 +1,26 @@
 /*
  * Copyright (c) Mirth Corporation. All rights reserved.
- * 
+ *
  * http://www.mirthcorp.com
- * 
+ *
  * The software in this package is published under the terms of the MPL license a copy of which has
  * been included with this distribution in the LICENSE.txt file.
  */
 
 package com.mirth.connect.server.util;
 
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Scanner;
-
+import com.mirth.connect.donkey.server.data.DonkeyDaoException;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionManager;
 import org.apache.log4j.Logger;
 
-import com.mirth.connect.donkey.server.data.DonkeyDaoException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Scanner;
 
 public class DatabaseUtil {
     private static Logger logger = Logger.getLogger(DatabaseUtil.class);
@@ -137,14 +132,18 @@ public class DatabaseUtil {
 
     /**
      * Returns true if the statement exists in the SqlMap, false otherwise.
-     * 
-     * @param statement
-     *            the statement, including the namespace
+     *
+     * @param statement the statement, including the namespace
      * @return
      */
     public static boolean statementExists(String statement) {
         try {
-            SqlConfig.getSqlSessionManager().getConfiguration().getMappedStatement(statement);
+            // 如果是消息方面的，则使用日志数据源-SqlData  其他则使用配置数据源
+            if (statement.startsWith("Message.")) {
+                SqlData.getSqlSessionManager().getConfiguration().getMappedStatement(statement);
+            } else {
+                SqlConfig.getSqlSessionManager().getConfiguration().getMappedStatement(statement);
+            }
         } catch (IllegalArgumentException e) {
             // The statement does not exist
             return false;
@@ -155,11 +154,9 @@ public class DatabaseUtil {
 
     /**
      * Returns true if the statement exists in the SqlMap, false otherwise.
-     * 
-     * @param statement
-     *            the statement, including the namespace
-     * @param session
-     *            the SqlMapSession to use
+     *
+     * @param statement the statement, including the namespace
+     * @param session   the SqlMapSession to use
      * @return
      */
     public static boolean statementExists(String statement, SqlSession session) {
@@ -210,13 +207,13 @@ public class DatabaseUtil {
 
         try {
             DatabaseMetaData metaData = connection.getMetaData();
-            resultSet = metaData.getTables(null, null, tableName.toUpperCase(), new String[] { "TABLE" });
+            resultSet = metaData.getTables(null, null, tableName.toUpperCase(), new String[]{"TABLE"});
 
             if (resultSet.next()) {
                 return true;
             }
 
-            resultSet = metaData.getTables(null, null, tableName.toLowerCase(), new String[] { "TABLE" });
+            resultSet = metaData.getTables(null, null, tableName.toLowerCase(), new String[]{"TABLE"});
             return resultSet.next();
         } catch (SQLException e) {
             throw new DonkeyDaoException(e);

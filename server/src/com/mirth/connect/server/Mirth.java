@@ -1,8 +1,8 @@
 /*
  * Copyright (c) Mirth Corporation. All rights reserved.
- * 
+ *
  * http://www.mirthcorp.com
- * 
+ *
  * The software in this package is published under the terms of the MPL license a copy of which has
  * been included with this distribution in the LICENSE.txt file.
  */
@@ -21,6 +21,7 @@ import com.mirth.connect.server.logging.LogOutputStream;
 import com.mirth.connect.server.logging.MirthLog4jFilter;
 import com.mirth.connect.server.util.ResourceUtil;
 import com.mirth.connect.server.util.SqlConfig;
+import com.mirth.connect.server.util.SqlData;
 import com.mirth.connect.server.util.javascript.MirthContextFactory;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.io.IOUtils;
@@ -44,7 +45,6 @@ import java.util.*;
 
 /**
  * Instantiate a Mirth server that listens for commands from the CommandQueue.
- * 
  */
 public class Mirth extends Thread {
 
@@ -129,7 +129,7 @@ public class Mirth extends Thread {
 
     /**
      * Returns true if the resources required by the server have been successfully loaded
-     * 
+     *
      * @return true if the resources required by the server have been successfully loaded
      */
     public boolean initResources() {
@@ -162,7 +162,6 @@ public class Mirth extends Thread {
 
     /**
      * Starts up the server.
-     * 
      */
     public void startup() {
         try {
@@ -179,11 +178,24 @@ public class Mirth extends Thread {
             SqlConfig.getSqlSessionManager().getConnection();
         } catch (Exception e) {
             // the getCause is needed since the wrapper exception is from the connection pool
-            logger.error("Error establishing connection to database, aborting startup. " + e.getCause().getMessage());
+            logger.error("Error establishing connection to config database, aborting startup. " + e.getCause().getMessage());
             System.exit(0);
         } finally {
             if (SqlConfig.getSqlSessionManager().isManagedSessionStarted()) {
                 SqlConfig.getSqlSessionManager().close();
+            }
+        }
+
+        try {
+            SqlData.getSqlSessionManager().startManagedSession();
+            SqlData.getSqlSessionManager().getConnection();
+        } catch (Exception e) {
+            // the getCause is needed since the wrapper exception is from the connection pool
+            logger.error("Error establishing connection to database, aborting startup. " + e.getCause().getMessage());
+            System.exit(0);
+        } finally {
+            if (SqlData.getSqlSessionManager().isManagedSessionStarted()) {
+                SqlData.getSqlSessionManager().close();
             }
         }
 
@@ -277,7 +289,6 @@ public class Mirth extends Thread {
 
     /**
      * Shuts down the server.
-     * 
      */
     public void shutdown() {
         logger.info("shutting down mirth due to normal request");
@@ -291,10 +302,24 @@ public class Mirth extends Thread {
             // add event after stopping the engine, but before stopping the plugins
             eventController.dispatchEvent(new ServerEvent(configurationController.getServerId(), "Server shutdown"));
         } catch (Exception e) {
-            logger.debug("could not log shutdown even since database is unavailable", e);
+            logger.debug("could not log shutdown even since config database is unavailable", e);
         } finally {
             if (SqlConfig.getSqlSessionManager().isManagedSessionStarted()) {
                 SqlConfig.getSqlSessionManager().close();
+            }
+        }
+
+        try {
+            // check for database connection before trying to log shutdown event
+            SqlData.getSqlSessionManager().startManagedSession();
+            SqlData.getSqlSessionManager().getConnection();
+            // add event after stopping the engine, but before stopping the plugins
+            eventController.dispatchEvent(new ServerEvent(configurationController.getServerId(), "Data Server shutdown"));
+        } catch (Exception e) {
+            logger.debug("could not log shutdown even since database is unavailable", e);
+        } finally {
+            if (SqlData.getSqlSessionManager().isManagedSessionStarted()) {
+                SqlData.getSqlSessionManager().close();
             }
         }
 
@@ -306,7 +331,6 @@ public class Mirth extends Thread {
 
     /**
      * Starts the engine.
-     * 
      */
     private void startEngine() {
         logger.debug("starting engine");
@@ -320,7 +344,6 @@ public class Mirth extends Thread {
 
     /**
      * Stops the engine.
-     * 
      */
     private void stopEngine() {
         logger.debug("stopping engine");
@@ -334,7 +357,6 @@ public class Mirth extends Thread {
 
     /**
      * Starts the web server.
-     * 
      */
     private void startWebServer() {
         logger.debug("starting jetty web server");
@@ -359,7 +381,6 @@ public class Mirth extends Thread {
 
     /**
      * Stops the web server.
-     * 
      */
     private void stopWebServer() {
         logger.debug("stopping jetty web server");
@@ -446,11 +467,9 @@ public class Mirth extends Thread {
 
     /**
      * Test a port to see if it is already in use.
-     * 
-     * @param port
-     *            The port to test.
-     * @param name
-     *            A friendly name to display in case of an error.
+     *
+     * @param port The port to test.
+     * @param name A friendly name to display in case of an error.
      * @return
      */
     private boolean testPort(String host, String port, String name) {

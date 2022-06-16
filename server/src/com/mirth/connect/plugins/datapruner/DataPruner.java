@@ -1,35 +1,13 @@
 /*
  * Copyright (c) Mirth Corporation. All rights reserved.
- * 
+ *
  * http://www.mirthcorp.com
- * 
+ *
  * The software in this package is published under the terms of the MPL license a copy of which has
  * been included with this distribution in the LICENSE.txt file.
  */
 
 package com.mirth.connect.plugins.datapruner;
-
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
-import java.util.concurrent.atomic.AtomicBoolean;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.SerializationUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.log4j.Logger;
 
 import com.mirth.connect.client.core.ClientException;
 import com.mirth.connect.donkey.model.channel.PollConnectorProperties;
@@ -55,10 +33,25 @@ import com.mirth.connect.server.util.DatabaseUtil;
 import com.mirth.connect.server.util.ListRangeIterator;
 import com.mirth.connect.server.util.ListRangeIterator.ListRangeItem;
 import com.mirth.connect.server.util.SqlConfig;
+import com.mirth.connect.server.util.SqlData;
 import com.mirth.connect.util.messagewriter.AttachmentSource;
 import com.mirth.connect.util.messagewriter.MessageWriter;
 import com.mirth.connect.util.messagewriter.MessageWriterFactory;
 import com.mirth.connect.util.messagewriter.MessageWriterOptions;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.SerializationUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.log4j.Logger;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class DataPruner implements Runnable {
     public static final int DEFAULT_PRUNING_BLOCK_SIZE = 1000;
@@ -89,7 +82,7 @@ public class DataPruner implements Runnable {
     public DataPruner() {
         this.retryCount = 3;
         this.skipIncomplete = true;
-        this.skipStatuses = new Status[] { Status.ERROR, Status.QUEUED, Status.PENDING };
+        this.skipStatuses = new Status[]{Status.ERROR, Status.QUEUED, Status.PENDING};
         pollingProperties = new PollConnectorProperties();
     }
 
@@ -490,7 +483,7 @@ public class DataPruner implements Runnable {
         do {
             ThreadUtils.checkInterruptedStatus();
 
-            SqlSession session = SqlConfig.getSqlSessionManager().openSession(true);
+            SqlSession session = SqlData.getSqlSessionManager().openSession(true);
 
             try {
                 params.put("minMessageId", minMessageId);
@@ -547,7 +540,7 @@ public class DataPruner implements Runnable {
                 List<Map<String, Object>> maps;
                 do {
                     ThreadUtils.checkInterruptedStatus();
-                    SqlSession session = SqlConfig.getSqlSessionManager().openSession(true);
+                    SqlSession session = SqlData.getSqlSessionManager().openSession(true);
 
                     try {
                         params.put("minMessageId", minMessageId);
@@ -663,7 +656,7 @@ public class DataPruner implements Runnable {
             if (DatabaseUtil.statementExists("Message.pruneAttachments")) {
                 runDelete("Message.pruneAttachments", params);
             }
-            
+
             result.numContentPruned += runDelete("Message.pruneMessageContent", params);
         } else {
             if (DatabaseUtil.statementExists("Message.pruneAttachments")) {
@@ -685,7 +678,7 @@ public class DataPruner implements Runnable {
     }
 
     private int runDelete(String query, Map<String, Object> params) {
-        SqlSession session = SqlConfig.getSqlSessionManager().openSession(true);
+        SqlSession session = SqlData.getSqlSessionManager().openSession(true);
 
         try {
             if (DatabaseUtil.statementExists("initDataPruner", session)) {
@@ -762,7 +755,8 @@ public class DataPruner implements Runnable {
         }
 
         @Override
-        public void remove() {}
+        public void remove() {
+        }
     }
 
     private class PruneResult {

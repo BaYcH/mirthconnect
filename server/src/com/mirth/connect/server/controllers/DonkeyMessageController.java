@@ -1,42 +1,18 @@
 /*
  * Copyright (c) Mirth Corporation. All rights reserved.
- * 
+ *
  * http://www.mirthcorp.com
- * 
+ *
  * The software in this package is published under the terms of the MPL license a copy of which has
  * been included with this distribution in the LICENSE.txt file.
  */
 
 package com.mirth.connect.server.controllers;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.NavigableMap;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.log4j.Logger;
-
 import com.mirth.commons.encryption.Encryptor;
 import com.mirth.connect.client.core.ControllerException;
 import com.mirth.connect.donkey.model.DonkeyException;
-import com.mirth.connect.donkey.model.message.ConnectorMessage;
-import com.mirth.connect.donkey.model.message.ContentType;
-import com.mirth.connect.donkey.model.message.Message;
-import com.mirth.connect.donkey.model.message.MessageContent;
-import com.mirth.connect.donkey.model.message.RawMessage;
+import com.mirth.connect.donkey.model.message.*;
 import com.mirth.connect.donkey.model.message.attachment.Attachment;
 import com.mirth.connect.donkey.model.message.attachment.AttachmentHandlerProvider;
 import com.mirth.connect.donkey.server.Constants;
@@ -60,20 +36,20 @@ import com.mirth.connect.server.mybatis.MessageTextResult;
 import com.mirth.connect.server.util.DICOMMessageUtil;
 import com.mirth.connect.server.util.ListRangeIterator;
 import com.mirth.connect.server.util.ListRangeIterator.ListRangeItem;
-import com.mirth.connect.server.util.SqlConfig;
-import com.mirth.connect.util.AttachmentUtil;
-import com.mirth.connect.util.MessageEncryptionUtil;
-import com.mirth.connect.util.MessageExporter;
+import com.mirth.connect.server.util.SqlData;
+import com.mirth.connect.util.*;
 import com.mirth.connect.util.MessageExporter.MessageExportException;
-import com.mirth.connect.util.MessageImporter;
 import com.mirth.connect.util.MessageImporter.MessageImportException;
 import com.mirth.connect.util.MessageImporter.MessageImportInvalidPathException;
-import com.mirth.connect.util.PaginatedList;
-import com.mirth.connect.util.messagewriter.AttachmentSource;
-import com.mirth.connect.util.messagewriter.MessageWriter;
-import com.mirth.connect.util.messagewriter.MessageWriterException;
-import com.mirth.connect.util.messagewriter.MessageWriterFactory;
-import com.mirth.connect.util.messagewriter.MessageWriterOptions;
+import com.mirth.connect.util.messagewriter.*;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.log4j.Logger;
+
+import java.io.IOException;
+import java.util.*;
+import java.util.Map.Entry;
 
 public class DonkeyMessageController extends MessageController {
     private static MessageController instance = null;
@@ -95,7 +71,8 @@ public class DonkeyMessageController extends MessageController {
     private Donkey donkey = Donkey.getInstance();
     private Logger logger = Logger.getLogger(this.getClass());
 
-    private DonkeyMessageController() {}
+    private DonkeyMessageController() {
+    }
 
     private Map<String, Object> getBasicParameters(MessageFilter filter, Long localChannelId) {
         Map<String, Object> params = new HashMap<String, Object>();
@@ -158,7 +135,7 @@ public class DonkeyMessageController extends MessageController {
         Map<String, Object> params = getBasicParameters(filter, localChannelId);
 
         try {
-            SqlSession session = SqlConfig.getSqlSessionManager();
+            SqlSession session = SqlData.getSqlSessionManager();
 
             long count = 0;
             long batchSize = 50000;
@@ -233,7 +210,7 @@ public class DonkeyMessageController extends MessageController {
             params.put("localChannelId", ChannelController.getInstance().getLocalChannelId(channelId));
             params.put("messageId", messageId);
 
-            Message message = SqlConfig.getSqlSessionManager().selectOne("Message.selectMessageById", params);
+            Message message = SqlData.getSqlSessionManager().selectOne("Message.selectMessageById", params);
 
             if (message != null) {
                 message.setChannelId(channelId);
@@ -260,7 +237,7 @@ public class DonkeyMessageController extends MessageController {
         params.put("localChannelId", ChannelController.getInstance().getLocalChannelId(channelId));
         params.put("messageId", messageId);
 
-        return SqlConfig.getSqlSessionManager().selectList("Message.selectMessageAttachmentIds", params);
+        return SqlData.getSqlSessionManager().selectList("Message.selectMessageAttachmentIds", params);
     }
 
     @Override
@@ -301,7 +278,7 @@ public class DonkeyMessageController extends MessageController {
          */
         params.put("includeProcessed", true);
 
-        SqlSession session = SqlConfig.getSqlSessionManager();
+        SqlSession session = SqlData.getSqlSessionManager();
 
         long batchSize = 50000;
 
@@ -356,7 +333,7 @@ public class DonkeyMessageController extends MessageController {
          */
         params.put("includeImportId", true);
 
-        SqlSession session = SqlConfig.getSqlSessionManager();
+        SqlSession session = SqlData.getSqlSessionManager();
 
         long batchSize = 50000;
 
@@ -377,7 +354,7 @@ public class DonkeyMessageController extends MessageController {
                 Long importId = entry.getValue().getImportId();
                 params.put("messageId", messageId);
 
-                List<MessageContent> contentList = SqlConfig.getSqlSessionManager().selectList("Message.selectMessageForReprocessing", params);
+                List<MessageContent> contentList = SqlData.getSqlSessionManager().selectList("Message.selectMessageForReprocessing", params);
 
                 MessageContent rawContent = null;
                 MessageContent sourceMapContent = null;
@@ -547,7 +524,7 @@ public class DonkeyMessageController extends MessageController {
 
         try {
             NavigableMap<Long, MessageSearchResult> messages = new TreeMap<Long, MessageSearchResult>();
-            SqlSession session = SqlConfig.getSqlSessionManager();
+            SqlSession session = SqlData.getSqlSessionManager();
 
             int offsetRemaining = offset;
             /*
@@ -1114,7 +1091,8 @@ public class DonkeyMessageController extends MessageController {
         }
 
         @Override
-        public void finishWrite() {}
+        public void finishWrite() {
+        }
 
         @Override
         public void close() throws MessageWriterException {

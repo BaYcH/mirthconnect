@@ -85,19 +85,11 @@ public class BufferedDao implements DonkeyDao {
             return;
         }
 
-        logger.warn(Thread.currentThread().getName() + "：准备保存数据");
-//        if (executeResult != null && !executeResult.isDone()) {
-//            try {
-//                executeResult.wait();
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        }
-        executeResult = executors.submit(() -> {
-            logger.warn(Thread.currentThread().getName() + ":开始执行保存数据!");
-            executeTasks(durable);
-            logger.warn(Thread.currentThread().getName() + ":执行保存数据完毕!");
-        });
+        executeTasks(durable);
+
+//        executeResult = executors.submit(() -> {
+//            executeTasks(durable);
+//        });
     }
 
     private DonkeyDao getDelegateDao() {
