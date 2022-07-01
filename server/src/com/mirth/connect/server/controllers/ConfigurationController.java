@@ -154,6 +154,13 @@ public abstract class ConfigurationController extends Controller {
      */
     public abstract DatabaseSettings getConfigDatabaseSettings() throws ControllerException;
 
+    /**
+     * 获取Nacos的配置信息
+     *
+     * @return
+     * @throws ControllerException
+     */
+    public abstract Properties getNacosProperties() throws ControllerException;
 
     /**
      * Sets all server settings.

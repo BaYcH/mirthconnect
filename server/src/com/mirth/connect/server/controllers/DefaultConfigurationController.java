@@ -374,6 +374,11 @@ public class DefaultConfigurationController extends ConfigurationController {
     }
 
     @Override
+    public Properties getNacosProperties() throws ControllerException {
+        return this.getPropertiesByPrefix(DatabaseSettings.NACOS_PREFIX, true);
+    }
+
+    @Override
     public void setServerSettings(ServerSettings settings) throws ControllerException {
         String serverName = settings.getServerName();
         if (serverName != null) {

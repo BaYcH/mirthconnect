@@ -1,8 +1,8 @@
 /*
  * Copyright (c) Mirth Corporation. All rights reserved.
- * 
+ *
  * http://www.mirthcorp.com
- * 
+ *
  * The software in this package is published under the terms of the MPL license a copy of which has
  * been included with this distribution in the LICENSE.txt file.
  */
@@ -33,6 +33,7 @@ import com.mirth.connect.server.controllers.ControllerFactory;
 import com.mirth.connect.server.controllers.EventController;
 import com.mirth.connect.server.util.TemplateValueReplacer;
 import com.mirth.connect.server.util.javascript.MirthContextFactory;
+import com.mirth.connect.util.NacosUtil;
 import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpPrincipal;
@@ -145,6 +146,11 @@ public class WebServiceReceiver extends SourceConnector {
         server.setExecutor(executor);
         server.start();
 
+        boolean register = NacosUtil.registerHttpServer(host, port, channelName);
+        if (register) {
+            logger.info(String.format("服务【%s】注册成功！", channelName));
+        }
+
         AcceptMessage acceptMessageWebService = null;
 
         try {
@@ -156,7 +162,7 @@ public class WebServiceReceiver extends SourceConnector {
                 for (int i = 0; i < constructors.length; i++) {
                     Class<?>[] parameters = constructors[i].getParameterTypes();
                     if ((parameters.length == 1) && parameters[0].equals(this.getClass())) {
-                        acceptMessageWebService = (AcceptMessage) constructors[i].newInstance(new Object[] { this });
+                        acceptMessageWebService = (AcceptMessage) constructors[i].newInstance(new Object[]{this});
                     }
                 }
 
@@ -212,6 +218,13 @@ public class WebServiceReceiver extends SourceConnector {
             if (executor != null) {
                 executor.shutdown();
             }
+
+            String channelId = getChannelId();
+            String channelName = getChannel().getName();
+            String host = replacer.replaceValues(connectorProperties.getListenerConnectorProperties().getHost(), channelId, channelName);
+            int port = NumberUtils.toInt(replacer.replaceValues(connectorProperties.getListenerConnectorProperties().getPort(), channelId, channelName));
+
+            NacosUtil.deRegisterHttpServer(host, port, channelName);
         } catch (Exception e) {
             firstCause = new ConnectorTaskException("Failed to stop Web Service Listener", e);
         }

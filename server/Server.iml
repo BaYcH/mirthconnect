@@ -1422,5 +1422,36 @@
       </library>
     </orderEntry>
     <orderEntry type="module" module-name="Donkey" />
+    <orderEntry type="library" name="nacos-client-2.1.0" level="project" />
+    <orderEntry type="module-library">
+      <library name="commons-codec-1.11">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/nacos/commons-codec-1.11.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/nacos/commons-logging-1.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/nacos/httpasyncclient-4.1.3.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/nacos/httpclient-4.5.3.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/nacos/httpcore-4.4.6.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/nacos/httpcore-nio-4.4.6.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/nacos/jackson-annotations-2.12.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/nacos/jackson-core-2.12.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/nacos/jackson-databind-2.12.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/nacos/nacos-auth-plugin-2.1.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="nacos-encryption-plugin-2.1.0">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/nacos/nacos-encryption-plugin-2.1.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/nacos/simpleclient-0.5.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/nacos/snakeyaml-1.23.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="nacos-client-2.1.0  (2)" level="project" />
   </component>
 </module>

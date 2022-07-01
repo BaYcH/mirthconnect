@@ -27,6 +27,7 @@ public class DatabaseSettings extends AbstractSettings implements Serializable, 
     private static final long serialVersionUID = 1L;
 
     public static final String CONFIG_DATABASE_PREFIX = "config";
+    public static final String NACOS_PREFIX = "nacos";
 
     private static final String DATABASE = "database";
     private static final String DATABASE_URL = "database.url";
