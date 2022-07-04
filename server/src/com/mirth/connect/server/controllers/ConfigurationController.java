@@ -79,6 +79,13 @@ public abstract class ConfigurationController extends Controller {
     public abstract String getDatabaseType();
 
     /**
+     * Returns the database type (ex. derby)
+     *
+     * @return the database type
+     */
+    public abstract String getConfigDatabaseType();
+
+    /**
      * Returns the server's unique ID
      *
      * @return the server's unique ID

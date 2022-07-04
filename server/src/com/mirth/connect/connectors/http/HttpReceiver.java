@@ -1,51 +1,44 @@
 /*
  * Copyright (c) Mirth Corporation. All rights reserved.
- * 
+ *
  * http://www.mirthcorp.com
- * 
+ *
  * The software in this package is published under the terms of the MPL license a copy of which has
  * been included with this distribution in the LICENSE.txt file.
  */
 
 package com.mirth.connect.connectors.http;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLDecoder;
-import java.nio.charset.Charset;
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.NavigableMap;
-import java.util.TreeMap;
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
-import java.util.zip.GZIPInputStream;
-import java.util.zip.GZIPOutputStream;
-
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMultipart;
-import javax.mail.util.ByteArrayDataSource;
-import javax.security.auth.Subject;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.xml.parsers.ParserConfigurationException;
-
+import com.mirth.connect.connectors.http.HttpStaticResource.ResourceType;
+import com.mirth.connect.donkey.model.channel.ConnectorPluginProperties;
+import com.mirth.connect.donkey.model.event.ConnectionStatusEventType;
+import com.mirth.connect.donkey.model.event.ErrorEventType;
+import com.mirth.connect.donkey.model.message.*;
+import com.mirth.connect.donkey.server.ConnectorTaskException;
+import com.mirth.connect.donkey.server.channel.ChannelException;
+import com.mirth.connect.donkey.server.channel.DispatchResult;
+import com.mirth.connect.donkey.server.channel.SourceConnector;
+import com.mirth.connect.donkey.server.event.ConnectionStatusEvent;
+import com.mirth.connect.donkey.server.event.ErrorEvent;
+import com.mirth.connect.donkey.server.message.batch.BatchMessageException;
+import com.mirth.connect.donkey.server.message.batch.BatchMessageReader;
+import com.mirth.connect.donkey.server.message.batch.ResponseHandler;
+import com.mirth.connect.donkey.server.message.batch.SimpleResponseHandler;
+import com.mirth.connect.donkey.util.Base64Util;
+import com.mirth.connect.donkey.util.DonkeyElement.DonkeyElementException;
+import com.mirth.connect.plugins.httpauth.Authenticator;
+import com.mirth.connect.plugins.httpauth.*;
+import com.mirth.connect.plugins.httpauth.HttpAuthConnectorPluginProperties.AuthType;
+import com.mirth.connect.plugins.httpauth.RequestInfo.EntityProvider;
+import com.mirth.connect.server.controllers.ChannelController;
+import com.mirth.connect.server.controllers.ConfigurationController;
+import com.mirth.connect.server.controllers.ControllerFactory;
+import com.mirth.connect.server.controllers.EventController;
+import com.mirth.connect.server.util.TemplateValueReplacer;
+import com.mirth.connect.userutil.MessageHeaders;
+import com.mirth.connect.userutil.MessageParameters;
+import com.mirth.connect.util.CharsetUtils;
+import com.mirth.connect.util.NacosUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.ListUtils;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -60,12 +53,8 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.protocol.HTTP;
 import org.apache.log4j.Logger;
 import org.eclipse.jetty.http.HttpMethod;
-import org.eclipse.jetty.security.ConstraintMapping;
-import org.eclipse.jetty.security.ConstraintSecurityHandler;
-import org.eclipse.jetty.security.DefaultUserIdentity;
+import org.eclipse.jetty.security.*;
 import org.eclipse.jetty.security.MappedLoginService.KnownUser;
-import org.eclipse.jetty.security.ServerAuthException;
-import org.eclipse.jetty.security.UserAuthentication;
 import org.eclipse.jetty.server.Authentication;
 import org.eclipse.jetty.server.Authentication.User;
 import org.eclipse.jetty.server.Handler;
@@ -77,43 +66,28 @@ import org.eclipse.jetty.server.handler.HandlerCollection;
 import org.eclipse.jetty.util.URIUtil;
 import org.eclipse.jetty.util.security.Constraint;
 
-import com.mirth.connect.connectors.http.HttpStaticResource.ResourceType;
-import com.mirth.connect.donkey.model.channel.ConnectorPluginProperties;
-import com.mirth.connect.donkey.model.event.ConnectionStatusEventType;
-import com.mirth.connect.donkey.model.event.ErrorEventType;
-import com.mirth.connect.donkey.model.message.BatchRawMessage;
-import com.mirth.connect.donkey.model.message.ConnectorMessage;
-import com.mirth.connect.donkey.model.message.RawMessage;
-import com.mirth.connect.donkey.model.message.Response;
-import com.mirth.connect.donkey.model.message.Status;
-import com.mirth.connect.donkey.server.ConnectorTaskException;
-import com.mirth.connect.donkey.server.channel.ChannelException;
-import com.mirth.connect.donkey.server.channel.DispatchResult;
-import com.mirth.connect.donkey.server.channel.SourceConnector;
-import com.mirth.connect.donkey.server.event.ConnectionStatusEvent;
-import com.mirth.connect.donkey.server.event.ErrorEvent;
-import com.mirth.connect.donkey.server.message.batch.BatchMessageException;
-import com.mirth.connect.donkey.server.message.batch.BatchMessageReader;
-import com.mirth.connect.donkey.server.message.batch.ResponseHandler;
-import com.mirth.connect.donkey.server.message.batch.SimpleResponseHandler;
-import com.mirth.connect.donkey.util.Base64Util;
-import com.mirth.connect.donkey.util.DonkeyElement.DonkeyElementException;
-import com.mirth.connect.plugins.httpauth.AuthenticationResult;
-import com.mirth.connect.plugins.httpauth.Authenticator;
-import com.mirth.connect.plugins.httpauth.AuthenticatorProvider;
-import com.mirth.connect.plugins.httpauth.AuthenticatorProviderFactory;
-import com.mirth.connect.plugins.httpauth.HttpAuthConnectorPluginProperties;
-import com.mirth.connect.plugins.httpauth.HttpAuthConnectorPluginProperties.AuthType;
-import com.mirth.connect.plugins.httpauth.RequestInfo;
-import com.mirth.connect.plugins.httpauth.RequestInfo.EntityProvider;
-import com.mirth.connect.server.controllers.ChannelController;
-import com.mirth.connect.server.controllers.ConfigurationController;
-import com.mirth.connect.server.controllers.ControllerFactory;
-import com.mirth.connect.server.controllers.EventController;
-import com.mirth.connect.server.util.TemplateValueReplacer;
-import com.mirth.connect.userutil.MessageHeaders;
-import com.mirth.connect.userutil.MessageParameters;
-import com.mirth.connect.util.CharsetUtils;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMultipart;
+import javax.mail.util.ByteArrayDataSource;
+import javax.security.auth.Subject;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.nio.charset.Charset;
+import java.security.Principal;
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 public class HttpReceiver extends SourceConnector implements BinaryContentTypeResolver {
     private Logger logger = Logger.getLogger(this.getClass());
@@ -291,6 +265,11 @@ public class HttpReceiver extends SourceConnector implements BinaryContentTypeRe
             logger.debug("starting HTTP server with address: " + host + ":" + port);
             server.start();
             eventController.dispatchEvent(new ConnectionStatusEvent(getChannelId(), getMetaDataId(), getSourceName(), ConnectionStatusEventType.IDLE));
+
+            boolean register = NacosUtil.registerHttpServer(host, port, channelName);
+            if (register) {
+                logger.info(String.format("服务【%s】注册成功！", channelName));
+            }
         } catch (Exception e) {
             eventController.dispatchEvent(new ConnectionStatusEvent(getChannelId(), getMetaDataId(), getSourceName(), ConnectionStatusEventType.FAILURE));
             throw new ConnectorTaskException("Failed to start HTTP Listener", e);
@@ -300,6 +279,13 @@ public class HttpReceiver extends SourceConnector implements BinaryContentTypeRe
     @Override
     public void onStop() throws ConnectorTaskException {
         ConnectorTaskException firstCause = null;
+
+        String channelId = getChannelId();
+        String channelName = getChannel().getName();
+        logger.debug("注销服务【" + channelName + "】");
+        String host = replacer.replaceValues(connectorProperties.getListenerConnectorProperties().getHost(), channelId, channelName);
+        int port = NumberUtils.toInt(replacer.replaceValues(connectorProperties.getListenerConnectorProperties().getPort(), channelId, channelName));
+        NacosUtil.deRegisterHttpServer(host, port, channelName);
 
         if (server != null) {
             try {
@@ -446,7 +432,7 @@ public class HttpReceiver extends SourceConnector implements BinaryContentTypeRe
 
                 // If the client accepts GZIP compression, compress the content
                 boolean gzipResponse = false;
-                for (Enumeration<String> en = baseRequest.getHeaders("Accept-Encoding"); en.hasMoreElements();) {
+                for (Enumeration<String> en = baseRequest.getHeaders("Accept-Encoding"); en.hasMoreElements(); ) {
                     String acceptEncoding = en.nextElement();
 
                     if (acceptEncoding != null && acceptEncoding.contains("gzip")) {
@@ -847,7 +833,7 @@ public class HttpReceiver extends SourceConnector implements BinaryContentTypeRe
 
         Constraint constraint = new Constraint();
         constraint.setName(authMethod);
-        constraint.setRoles(new String[] { "user" });
+        constraint.setRoles(new String[]{"user"});
         constraint.setAuthenticate(true);
 
         ConstraintMapping constraintMapping = new ConstraintMapping();
@@ -857,7 +843,8 @@ public class HttpReceiver extends SourceConnector implements BinaryContentTypeRe
         ConstraintSecurityHandler securityHandler = new ConstraintSecurityHandler();
         securityHandler.setAuthenticator(new org.eclipse.jetty.security.Authenticator() {
             @Override
-            public void setConfiguration(AuthConfiguration configuration) {}
+            public void setConfiguration(AuthConfiguration configuration) {
+            }
 
             @Override
             public String getAuthMethod() {
@@ -865,7 +852,8 @@ public class HttpReceiver extends SourceConnector implements BinaryContentTypeRe
             }
 
             @Override
-            public void prepareRequest(ServletRequest request) {}
+            public void prepareRequest(ServletRequest request) {
+            }
 
             @Override
             public Authentication validateRequest(final ServletRequest req, ServletResponse res, boolean mandatory) throws ServerAuthException {
@@ -923,7 +911,7 @@ public class HttpReceiver extends SourceConnector implements BinaryContentTypeRe
                             Principal userPrincipal = new KnownUser(StringUtils.trimToEmpty(result.getUsername()), null);
                             Subject subject = new Subject();
                             subject.getPrincipals().add(userPrincipal);
-                            return new UserAuthentication(getAuthMethod(), new DefaultUserIdentity(subject, userPrincipal, new String[] { "user" }));
+                            return new UserAuthentication(getAuthMethod(), new DefaultUserIdentity(subject, userPrincipal, new String[]{"user"}));
                         case FAILURE:
                         default:
                             response.sendError(HttpServletResponse.SC_UNAUTHORIZED);

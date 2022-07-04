@@ -63,6 +63,7 @@ import com.mirth.connect.util.ChannelDependencyException;
 import com.mirth.connect.util.ChannelDependencyGraph;
 import com.mirth.connect.util.ChannelDependencyUtil;
 import com.mirth.connect.util.ChannelDependencyUtil.OrderedChannels;
+import com.mirth.connect.util.NacosUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -327,6 +328,9 @@ public class DonkeyEngineController implements EngineController {
             if (CollectionUtils.isNotEmpty(unorderedDeployFutures)) {
                 waitForTasks(unorderedDeployFutures);
             }
+        }
+        for (String channelId : channelIds) {
+            NacosUtil.publishConfig(channelId);
         }
     }
 

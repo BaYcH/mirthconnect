@@ -415,6 +415,19 @@ public class DefaultConfigurationController extends ConfigurationController {
         return mirthConfig.getString("database");
     }
 
+    /**
+     * Returns the database type (ex. derby)
+     *
+     * @return the database type
+     */
+    @Override
+    public String getConfigDatabaseType() {
+        if (mirthConfig.containsKey("config.database")) {
+            return mirthConfig.getString("config.database");
+        }
+        return mirthConfig.getString("database");
+    }
+
     @Override
     public Encryptor getEncryptor() {
         return encryptor;

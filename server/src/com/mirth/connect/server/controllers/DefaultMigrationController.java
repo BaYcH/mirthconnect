@@ -1,20 +1,13 @@
 /*
  * Copyright (c) Mirth Corporation. All rights reserved.
- * 
+ *
  * http://www.mirthcorp.com
- * 
+ *
  * The software in this package is published under the terms of the MPL license a copy of which has
  * been included with this distribution in the LICENSE.txt file.
  */
 
 package com.mirth.connect.server.controllers;
-
-import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.Collection;
-
-import org.apache.commons.configuration.PropertiesConfiguration;
-import org.apache.log4j.Logger;
 
 import com.mirth.connect.model.PluginMetaData;
 import com.mirth.connect.model.util.MigrationException;
@@ -22,6 +15,12 @@ import com.mirth.connect.server.ExtensionLoader;
 import com.mirth.connect.server.migration.Migrator;
 import com.mirth.connect.server.migration.ServerMigrator;
 import com.mirth.connect.server.util.SqlConfig;
+import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.log4j.Logger;
+
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class DefaultMigrationController extends MigrationController {
     private static MigrationController instance = null;
@@ -87,7 +86,7 @@ public class DefaultMigrationController extends MigrationController {
         try {
             // ServerMigrator will set its own starting version
             serverMigrator.setConnection(connection);
-            serverMigrator.setDatabaseType(configurationController.getDatabaseType());
+            serverMigrator.setDatabaseType(configurationController.getConfigDatabaseType());
             serverMigrator.migrate();
         } finally {
             if (SqlConfig.getSqlSessionManager().isManagedSessionStarted()) {

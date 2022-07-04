@@ -146,11 +146,6 @@ public class WebServiceReceiver extends SourceConnector {
         server.setExecutor(executor);
         server.start();
 
-        boolean register = NacosUtil.registerHttpServer(host, port, channelName);
-        if (register) {
-            logger.info(String.format("服务【%s】注册成功！", channelName));
-        }
-
         AcceptMessage acceptMessageWebService = null;
 
         try {
@@ -198,6 +193,11 @@ public class WebServiceReceiver extends SourceConnector {
         webServiceEndpoint.publish(context);
 
         eventController.dispatchEvent(new ConnectionStatusEvent(getChannelId(), getMetaDataId(), getSourceName(), ConnectionStatusEventType.IDLE));
+
+        boolean register = NacosUtil.registerHttpServer(host, port, channelName);
+        if (register) {
+            logger.info(String.format("服务【%s】注册成功！", channelName));
+        }
     }
 
     @Override
@@ -206,6 +206,14 @@ public class WebServiceReceiver extends SourceConnector {
 
         try {
             logger.debug("stopping Web Service HTTP server");
+
+            String channelId = getChannelId();
+            String channelName = getChannel().getName();
+            logger.debug("注销服务【" + channelName + "】");
+            String host = replacer.replaceValues(connectorProperties.getListenerConnectorProperties().getHost(), channelId, channelName);
+            int port = NumberUtils.toInt(replacer.replaceValues(connectorProperties.getListenerConnectorProperties().getPort(), channelId, channelName));
+            NacosUtil.deRegisterHttpServer(host, port, channelName);
+
 
             if (webServiceEndpoint != null) {
                 webServiceEndpoint.stop();
@@ -219,12 +227,6 @@ public class WebServiceReceiver extends SourceConnector {
                 executor.shutdown();
             }
 
-            String channelId = getChannelId();
-            String channelName = getChannel().getName();
-            String host = replacer.replaceValues(connectorProperties.getListenerConnectorProperties().getHost(), channelId, channelName);
-            int port = NumberUtils.toInt(replacer.replaceValues(connectorProperties.getListenerConnectorProperties().getPort(), channelId, channelName));
-
-            NacosUtil.deRegisterHttpServer(host, port, channelName);
         } catch (Exception e) {
             firstCause = new ConnectorTaskException("Failed to stop Web Service Listener", e);
         }

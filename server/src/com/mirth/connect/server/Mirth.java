@@ -23,6 +23,7 @@ import com.mirth.connect.server.util.ResourceUtil;
 import com.mirth.connect.server.util.SqlConfig;
 import com.mirth.connect.server.util.SqlData;
 import com.mirth.connect.server.util.javascript.MirthContextFactory;
+import com.mirth.connect.util.NacosUtil;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -282,6 +283,10 @@ public class Mirth extends Thread {
         configurationController.setStatus(ConfigurationController.STATUS_OK);
         printSplashScreen();
 
+        // 增加部署更新监听
+        NacosUtil.addChannelDeployListener();
+        NacosUtil.setIsRunning(true);
+
         // Send usage stats once a day.
         Timer timer = new Timer();
         timer.schedule(new UsageSenderTask(), 0, ConnectServiceUtil.MILLIS_PER_DAY);
@@ -292,6 +297,10 @@ public class Mirth extends Thread {
      */
     public void shutdown() {
         logger.info("shutting down mirth due to normal request");
+
+        // 注销部署监听
+        NacosUtil.removeChannelDeployListener();
+        NacosUtil.setIsRunning(false);
 
         stopEngine();
 
