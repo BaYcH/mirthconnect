@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "conf/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="DChannels">
+    <resultMap id="dChannel-data" type="map">
+        <result property="channel_id" column="CHANNEL_ID" javaType="String"/>
+        <result property="local_channel_id" column="LOCAL_CHANNEL_ID" javaType="Long"/>
+    </resultMap>
+
+    <select id="selectMaxLocalChannelId" resultType="long">
+        SELECT MAX(LOCAL_CHANNEL_ID)
+        FROM D_CHANNELS
+    </select>
+
+    <select id="getLocalChannelIds" resultMap="dChannel-data">
+        SELECT CHANNEL_ID, LOCAL_CHANNEL_ID
+        FROM D_CHANNELS
+    </select>
+
+    <select id="createChannel" parameterType='map'>
+        INSERT INTO D_CHANNELS (CHANNEL_ID, LOCAL_CHANNEL_ID) VALUES (#{channel_id}, #{local_channel_id})
+    </select>
+
+    <update id="createChannelsTable">
+        CREATE TABLE D_CHANNELS (
+        LOCAL_CHANNEL_ID BIGINT NOT NULL,
+        CHANNEL_ID CHARACTER VARYING(36) NOT NULL,
+        CONSTRAINT D_CHANNELS_PKEY PRIMARY KEY(LOCAL_CHANNEL_ID),
+        CONSTRAINT UNIQUE_CHANNEL_ID UNIQUE (CHANNEL_ID)
+        ) ENGINE=InnoDB
+    </update>
+
+    <delete id="deleteChannel" parameterType='map'>
+        DELETE FROM D_CHANNELS WHERE LOCAL_CHANNEL_ID = #{localChannelId}
+    </delete>
+</mapper>

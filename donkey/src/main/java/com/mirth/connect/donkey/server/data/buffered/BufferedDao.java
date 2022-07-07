@@ -419,6 +419,7 @@ public class BufferedDao implements DonkeyDao {
         tasks.add(new DaoTask(DaoTaskType.RESET_ALL_STATISTICS, new Object[]{channelId}));
     }
 
+    // 此处使用配置表中的链接
     @Override
     public Map<String, Long> getLocalChannelIds() {
         DonkeyDao dao = getDelegateDao();

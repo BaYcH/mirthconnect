@@ -193,7 +193,8 @@ public class Mirth extends Thread {
         } catch (Exception e) {
             // the getCause is needed since the wrapper exception is from the connection pool
             logger.error("Error establishing connection to database, aborting startup. " + e.getCause().getMessage());
-            System.exit(0);
+            //日志数据库失败不影响启动
+            //System.exit(0);
         } finally {
             if (SqlData.getSqlSessionManager().isManagedSessionStarted()) {
                 SqlData.getSqlSessionManager().close();

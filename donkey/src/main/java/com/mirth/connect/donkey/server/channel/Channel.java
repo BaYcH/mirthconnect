@@ -24,6 +24,7 @@ import com.mirth.connect.donkey.server.channel.components.PreProcessor;
 import com.mirth.connect.donkey.server.controllers.ChannelController;
 import com.mirth.connect.donkey.server.controllers.MessageController;
 import com.mirth.connect.donkey.server.data.DonkeyDao;
+import com.mirth.connect.donkey.server.data.DonkeyDaoException;
 import com.mirth.connect.donkey.server.data.DonkeyDaoFactory;
 import com.mirth.connect.donkey.server.event.DeployedStateEvent;
 import com.mirth.connect.donkey.server.event.ErrorEvent;
@@ -1165,6 +1166,8 @@ public class Channel implements Runnable {
                 if (responseSelector.canRespond()) {
                     response = responseSelector.getResponse(sourceMessage, processedMessage);
                 }
+            } catch (DonkeyDaoException e) {
+                logger.error("数据库操作错误：" + e.getMessage());
             } catch (RuntimeException e) {
                 // TODO determine behavior if this occurs.
                 throw new ChannelException(true, e);
