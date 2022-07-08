@@ -151,6 +151,8 @@ public class DonkeyEngineController implements EngineController {
         donkeyProperties.putAll(configurationController.getPropertiesByPrefix("mq.kafka.consumer", false));
         donkeyProperties.putAll(configurationController.getPropertiesByPrefix("mq.kafka.producer", false));
         donkeyProperties.putAll(configurationController.getPropertiesByPrefix("redis", false));
+        donkeyProperties.putAll(configurationController.getPropertiesAddPrefix(configurationController.getConfigDatabaseSettings().getProperties(), "config."));
+
 
         donkeyProperties.setProperty("donkey.statsupdateinterval", String.valueOf(configurationController.getStatsUpdateInterval()));
 
@@ -1674,7 +1676,8 @@ public class DonkeyEngineController implements EngineController {
             try {
                 channel = createChannelFromModel(channelModel);
             } catch (Exception e) {
-                throw new DeployException(e.getMessage(), e);
+                logger.error("创建日志表失败！ " + e.getMessage());
+                //throw new DeployException(e.getMessage(), e);
             }
 
             try {

@@ -9,19 +9,18 @@
 
 package com.mirth.connect.donkey.server.controllers;
 
-import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
-import org.apache.commons.lang3.StringUtils;
-
 import com.mirth.connect.donkey.model.message.Status;
 import com.mirth.connect.donkey.server.Donkey;
 import com.mirth.connect.donkey.server.channel.Statistics;
 import com.mirth.connect.donkey.server.data.DonkeyDao;
 import com.mirth.connect.donkey.server.data.DonkeyDaoException;
+import org.apache.commons.lang3.StringUtils;
+
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 public class ChannelController {
     private static ChannelController instance;

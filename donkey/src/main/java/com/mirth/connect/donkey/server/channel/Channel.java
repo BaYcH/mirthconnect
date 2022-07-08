@@ -186,7 +186,11 @@ public class Channel implements Runnable {
 
     public void updateCurrentState(DeployedState currentState) {
         this.currentState = currentState;
-        eventDispatcher.dispatchEvent(new DeployedStateEvent(channelId, name, null, null, DeployedStateEventType.getTypeFromDeployedState(currentState)));
+        try {
+            eventDispatcher.dispatchEvent(new DeployedStateEvent(channelId, name, null, null, DeployedStateEventType.getTypeFromDeployedState(currentState)));
+        } catch (Exception exception) {
+            logger.error("状态更新失败！" + exception.getMessage());
+        }
     }
 
     public StorageSettings getStorageSettings() {
@@ -435,7 +439,8 @@ public class Channel implements Runnable {
         try {
             updateMetaDataColumns();
         } catch (SQLException e) {
-            throw new DeployException("Failed to deploy channel " + name + " (" + channelId + "): Unable to update custom metadata columns.");
+            logger.error("Failed to deploy channel " + name + " (" + channelId + "): Unable to update custom metadata columns.");
+            //throw new DeployException("Failed to deploy channel " + name + " (" + channelId + "): Unable to update custom metadata columns.");
         }
 
         List<Integer> deployedMetaDataIds = new ArrayList<Integer>();

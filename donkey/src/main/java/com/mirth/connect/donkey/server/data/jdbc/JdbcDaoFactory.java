@@ -55,6 +55,8 @@ public class JdbcDaoFactory implements DonkeyDaoFactory {
     private Map<Connection, PreparedStatementSource> statementSources = new ConcurrentHashMap<Connection, PreparedStatementSource>();
     private Logger logger = Logger.getLogger(getClass());
 
+    private JdbcDaoFactory configJdbcDaoFactory;
+
     protected JdbcDaoFactory() {
         donkey = Donkey.getInstance();
         channelController = ChannelController.getInstance();
@@ -112,42 +114,67 @@ public class JdbcDaoFactory implements DonkeyDaoFactory {
         return getDao(serializerProvider);
     }
 
+    public JdbcDaoFactory getConfigJdbcDaoFactory() {
+        return configJdbcDaoFactory;
+    }
+
+    public void setConfigJdbcDaoFactory(JdbcDaoFactory configJdbcDaoFactory) {
+        this.configJdbcDaoFactory = configJdbcDaoFactory;
+    }
+
     @Override
     public JdbcDao getDao(SerializerProvider serializerProvider) {
-        PooledConnection pooledConnection;
+        PooledConnection pooledConnection = null;
+        PreparedStatementSource statementSource = null;
+        Connection connection = null;
+        Connection internalConnection = null;
 
         try {
             pooledConnection = connectionPool.getConnection();
-        } catch (SQLException e) {
-            throw new DonkeyDaoException(e);
-        }
 
-        PreparedStatementSource statementSource = null;
-        Connection connection = pooledConnection.getConnection();
-        Connection internalConnection = pooledConnection.getInternalConnection();
-        statementSource = statementSources.get(internalConnection);
+            connection = pooledConnection.getConnection();
+            internalConnection = pooledConnection.getInternalConnection();
+            statementSource = statementSources.get(internalConnection);
 
-        if (statementSource == null) {
-            statementSource = new CachedPreparedStatementSource(internalConnection, querySource);
-            statementSources.put(internalConnection, statementSource);
+            if (statementSource == null) {
+                statementSource = new CachedPreparedStatementSource(internalConnection, querySource);
+                statementSources.put(internalConnection, statementSource);
 
-            Integer maxConnections = connectionPool.getMaxConnections();
+                Integer maxConnections = connectionPool.getMaxConnections();
 
-            if (maxConnections == null || statementSources.size() > maxConnections) {
-                logger.debug("cleaning up prepared statement cache");
+                if (maxConnections == null || statementSources.size() > maxConnections) {
+                    logger.debug("cleaning up prepared statement cache");
 
-                try {
-                    for (Connection currentConnection : statementSources.keySet()) {
-                        if (currentConnection.isClosed()) {
-                            statementSources.remove(currentConnection);
+                    try {
+                        for (Connection currentConnection : statementSources.keySet()) {
+                            if (currentConnection.isClosed()) {
+                                statementSources.remove(currentConnection);
+                            }
                         }
+                    } catch (SQLException e) {
+                        throw new DonkeyDaoException(e);
                     }
-                } catch (SQLException e) {
-                    throw new DonkeyDaoException(e);
                 }
             }
+        } catch (Exception e) {
+            logger.error("cannot connect to database！ " + e.getMessage());
+            //throw new DonkeyDaoException(e);
         }
 
-        return new JdbcDao(donkey, connection, querySource, statementSource, serializerProvider, encryptData, decryptData, statisticsUpdater, channelController.getStatistics(), channelController.getTotalStatistics(), statsServerId);
+        JdbcDao jdbcDao = new JdbcDao(donkey, connection, querySource, statementSource, serializerProvider, encryptData, decryptData, statisticsUpdater, channelController.getStatistics(), channelController.getTotalStatistics(), statsServerId);
+
+        JdbcDao configJdbcDao = null;
+        try {
+            if (this.configJdbcDaoFactory != null) {
+                configJdbcDao = this.configJdbcDaoFactory.getDao();
+            }
+            jdbcDao.setConfigConnection(configJdbcDao.getConnection());
+            jdbcDao.setConfigQuerySource(configJdbcDao.getQuerySource());
+            jdbcDao.setConfigStatementSource(configJdbcDao.getStatementSource());
+        } catch (Exception exception) {
+            // 无需处理异常
+        }
+        return jdbcDao;
     }
+
 }

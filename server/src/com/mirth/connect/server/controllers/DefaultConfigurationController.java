@@ -1326,4 +1326,13 @@ public class DefaultConfigurationController extends ConfigurationController {
         }
         return properties;
     }
+
+    @Override
+    public Properties getPropertiesAddPrefix(Properties properties, String prefix) {
+        Properties ret = new Properties();
+        for (String name : properties.stringPropertyNames()) {
+            ret.put(prefix + name, properties.getProperty(name));
+        }
+        return ret;
+    }
 }

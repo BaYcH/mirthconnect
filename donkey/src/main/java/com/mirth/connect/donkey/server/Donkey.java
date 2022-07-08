@@ -147,59 +147,61 @@ public class Donkey {
         jdbcDaoFactory.setQuerySource(xmlQuerySource);
 
 
-//        String configDatabase = dbProperties.getProperty("config.database");
-//        String configDriver = dbProperties.getProperty("config.database.driver");
-//        String configUrl = dbProperties.getProperty("config.database.url");
-//        String configUsername = dbProperties.getProperty("config.database.username");
-//        String configPassword = dbProperties.getProperty("config.database.password");
-//        String configPool = dbProperties.getProperty("config.database.pool");
-//        boolean configJdbc4 = Boolean.parseBoolean(dbProperties.getProperty("config.database.jdbc4"));
-//        String configTestQuery = dbProperties.getProperty("config.database.test-query");
-//        int configMaxConnections;
-//
-//        try {
-//            configMaxConnections = Integer.parseInt(dbProperties.getProperty("config.database.max-connections"));
-//        } catch (NumberFormatException e) {
-//            throw new StartException("Failed to read the database.max-connections configuration property");
-//        }
-//
-//        if (configDriver != null) {
-//            try {
-//                Class.forName(configDriver);
-//            } catch (ClassNotFoundException e) {
-//                throw new StartException(e);
-//            }
-//        }
-//
-//        JdbcDaoFactory configJdbcDaoFactory = JdbcDaoFactory.getInstance(configDatabase);
-//        configJdbcDaoFactory.setStatsServerId(donkeyConfiguration.getServerId());
-//
-//        if (StringUtils.equalsIgnoreCase(configPool, "DBCP")) {
-//            logger.debug("Initializing DBCP");
-//            configJdbcDaoFactory.setConnectionPool(new DBCPConnectionPool(configUrl, configUsername, configPassword, configMaxConnections));
-//        } else {
-//            logger.debug("Initializing HikariCP");
-//            configJdbcDaoFactory.setConnectionPool(new HikariConnectionPool(configDriver, configUrl, configUsername, configPassword, configMaxConnections, configJdbc4, configTestQuery));
-//        }
-//
-//        configJdbcDaoFactory.setSerializerProvider(new SerializerProvider() {
-//            @Override
-//            public Serializer getSerializer(Integer metaDataId) {
-//                return serializer;
-//            }
-//        });
-//
-//        XmlQuerySource xmlConfigQuerySource = new XmlQuerySource();
-//
-//        try {
-//            xmlConfigQuerySource.load("default.xml");
-//            xmlConfigQuerySource.load(dbProperties.getProperty("database") + ".xml");
-//        } catch (XmlQuerySourceException e) {
-//            throw new StartException(e);
-//        }
-//
-//        configJdbcDaoFactory.setQuerySource(xmlConfigQuerySource);
+        String configDatabase = dbProperties.getProperty("config.database");
+        String configDriver = dbProperties.getProperty("config.database.driver");
+        String configUrl = dbProperties.getProperty("config.database.url");
+        String configUsername = dbProperties.getProperty("config.database.username");
+        String configPassword = dbProperties.getProperty("config.database.password");
+        String configPool = dbProperties.getProperty("config.database.pool");
+        boolean configJdbc4 = Boolean.parseBoolean(dbProperties.getProperty("config.database.jdbc4"));
+        String configTestQuery = dbProperties.getProperty("config.database.test-query");
+        int configMaxConnections;
 
+        try {
+            configMaxConnections = Integer.parseInt(dbProperties.getProperty("config.database.max-connections"));
+        } catch (NumberFormatException e) {
+            throw new StartException("Failed to read the database.max-connections configuration property");
+        }
+
+        if (configDriver != null) {
+            try {
+                Class.forName(configDriver);
+            } catch (ClassNotFoundException e) {
+                throw new StartException(e);
+            }
+        }
+        JdbcDaoFactory configJdbcDaoFactory = null;
+        if (!StringUtils.isEmpty(configDatabase)) {
+            configJdbcDaoFactory = JdbcDaoFactory.getInstance(configDatabase);
+            configJdbcDaoFactory.setStatsServerId(donkeyConfiguration.getServerId());
+
+            if (StringUtils.equalsIgnoreCase(configPool, "DBCP")) {
+                logger.debug("Initializing DBCP");
+                configJdbcDaoFactory.setConnectionPool(new DBCPConnectionPool(configUrl, configUsername, configPassword, configMaxConnections));
+            } else {
+                logger.debug("Initializing HikariCP");
+                configJdbcDaoFactory.setConnectionPool(new HikariConnectionPool(configDriver, configUrl, configUsername, configPassword, configMaxConnections, configJdbc4, configTestQuery));
+            }
+
+            configJdbcDaoFactory.setSerializerProvider(new SerializerProvider() {
+                @Override
+                public Serializer getSerializer(Integer metaDataId) {
+                    return serializer;
+                }
+            });
+
+            XmlQuerySource xmlConfigQuerySource = new XmlQuerySource();
+
+            try {
+                xmlConfigQuerySource.load("default.xml");
+                xmlConfigQuerySource.load(dbProperties.getProperty("config.database") + ".xml");
+            } catch (XmlQuerySourceException e) {
+                throw new StartException(e);
+            }
+
+            configJdbcDaoFactory.setQuerySource(xmlConfigQuerySource);
+            jdbcDaoFactory.setConfigJdbcDaoFactory(configJdbcDaoFactory);
+        }
 
         JdbcDao dao = jdbcDaoFactory.getDao();
 

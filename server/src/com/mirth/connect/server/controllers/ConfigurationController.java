@@ -318,4 +318,6 @@ public abstract class ConfigurationController extends Controller {
     public abstract ConnectionTestResponse sendTestEmail(Properties properties) throws Exception;
 
     public abstract Properties getPropertiesByPrefix(String prefix, boolean isRemovePrefix);
+
+    public abstract Properties getPropertiesAddPrefix(Properties properties, String prefix);
 }

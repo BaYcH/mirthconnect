@@ -61,7 +61,6 @@
     <mappers>
         <mapper resource="${database}/${database}-user.xml"/>
         <mapper resource="${database}/${database}-channel.xml"/>
-        <mapper resource="${database}/${database}-dChannels.xml.xml"/>
         <mapper resource="${database}/${database}-message.xml"/>
         <mapper resource="${database}/${database}-script.xml"/>
         <mapper resource="${database}/${database}-configuration.xml"/>
