@@ -1452,6 +1452,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="nacos-client-2.1.0  (2)" level="project" />
+    <orderEntry type="library" name="nacos-client-2.1.0" level="project" />
   </component>
 </module>
