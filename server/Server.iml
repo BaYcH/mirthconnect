@@ -1409,7 +1409,13 @@
           <root url="jar://$MODULE_DIR$/lib/rhino-1.7.6.jar!/" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.ideaLibSources/rhino-1.7.6-sources.jar!/rhino1.7.6/examples" />
+          <root url="jar://$USER_HOME$/.ideaLibSources/rhino-1.7.6-sources.jar!/rhino1.7.6/src" />
+          <root url="jar://$USER_HOME$/.ideaLibSources/rhino-1.7.6-sources.jar!/rhino1.7.6/testsrc" />
+          <root url="jar://$USER_HOME$/.ideaLibSources/rhino-1.7.6-sources.jar!/rhino1.7.6/toolsrc" />
+          <root url="jar://$USER_HOME$/.ideaLibSources/rhino-1.7.6-sources.jar!/rhino1.7.6/xmlimplsrc" />
+        </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library">
