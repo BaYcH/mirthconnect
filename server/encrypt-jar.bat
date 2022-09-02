@@ -1,0 +1,2 @@
+java -jar classfinal-fatjar-1.2.1.jar -file setup/mirth-server-launcher.jar -classpath setup/server-lib -packages com.mirth.connect,com.mirth.connect.server -pwd 123456 -Y
+java -jar classfinal-fatjar-1.2.1.jar -file setup/server-lib/mirth-server.jar -packages com.mirth.connect,com.mirth.connect.server -pwd 123456 -Y

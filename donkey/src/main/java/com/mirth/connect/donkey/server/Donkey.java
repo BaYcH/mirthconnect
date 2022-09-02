@@ -84,10 +84,7 @@ public class Donkey {
         int updateInterval = NumberUtils.toInt(donkeyConfiguration.getDonkeyProperties().getProperty("donkey.statsupdateinterval"), DonkeyStatisticsUpdater.DEFAULT_UPDATE_INTERVAL);
         statisticsUpdater = new DonkeyStatisticsUpdater(daoFactory, updateInterval);
         statisticsUpdater.start();
-
-//        messageConsumerThread = new Thread(new MessageConsumer(), "KafkaConsumer Thread");
-//        messageConsumerThread.start();
-
+        
         running = true;
     }
 
